@@ -1,0 +1,16 @@
+PODS:
+  - Swinject (2.8.2)
+
+DEPENDENCIES:
+  - Swinject (~> 2.8)
+
+SPEC REPOS:
+  trunk:
+    - Swinject
+
+SPEC CHECKSUMS:
+  Swinject: b4a11b31992e8668308dc594ba1cb9b3164a37ab
+
+PODFILE CHECKSUM: 8314ece0d7f05f5d0841328e7db28c946d672daf
+
+COCOAPODS: 1.11.3
