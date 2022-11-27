@@ -10,7 +10,6 @@
 		303B40AB02B2EF8DB8D06F67 /* Pods_VectorBuilder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0329634FFEDAACA5D6EE78B7 /* Pods_VectorBuilder.framework */; };
 		F24B949629325BDE003B12E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B949529325BDE003B12E9 /* AppDelegate.swift */; };
 		F24B949829325BDE003B12E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B949729325BDE003B12E9 /* SceneDelegate.swift */; };
-		F24B949A29325BDE003B12E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B949929325BDE003B12E9 /* ViewController.swift */; };
 		F24B94A029325BDE003B12E9 /* VectorBuilder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F24B949E29325BDE003B12E9 /* VectorBuilder.xcdatamodeld */; };
 		F24B94A229325BDF003B12E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F24B94A129325BDF003B12E9 /* Assets.xcassets */; };
 		F24B94A529325BDF003B12E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F24B94A329325BDF003B12E9 /* LaunchScreen.storyboard */; };
@@ -24,6 +23,13 @@
 		F24B94D929327BF4003B12E9 /* DataBaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94D829327BF4003B12E9 /* DataBaseDataSource.swift */; };
 		F24B94DC29327C75003B12E9 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94DB29327C75003B12E9 /* Vector.swift */; };
 		F24B94DF29327F68003B12E9 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94DE29327F68003B12E9 /* DIContainer.swift */; };
+		F24B94E32932BD34003B12E9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94E22932BD34003B12E9 /* MainViewController.swift */; };
+		F24B94E52932BE33003B12E9 /* AddVectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94E42932BE33003B12E9 /* AddVectorViewController.swift */; };
+		F24B94E829334B9F003B12E9 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94E729334B9F003B12E9 /* MainPresenter.swift */; };
+		F24B94EA29334BAD003B12E9 /* AddVectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94E929334BAD003B12E9 /* AddVectorPresenter.swift */; };
+		F24B94EC29334BC7003B12E9 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94EB29334BC7003B12E9 /* Router.swift */; };
+		F24B94EE29334CA9003B12E9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94ED29334CA9003B12E9 /* Constants.swift */; };
+		F24B94F129334D09003B12E9 /* UIVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94F029334D09003B12E9 /* UIVector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +56,6 @@
 		F24B949229325BDE003B12E9 /* VectorBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VectorBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F24B949529325BDE003B12E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F24B949729325BDE003B12E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F24B949929325BDE003B12E9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F24B949F29325BDE003B12E9 /* VectorBuilder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VectorBuilder.xcdatamodel; sourceTree = "<group>"; };
 		F24B94A129325BDF003B12E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F24B94A429325BDF003B12E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -67,6 +72,13 @@
 		F24B94D829327BF4003B12E9 /* DataBaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseDataSource.swift; sourceTree = "<group>"; };
 		F24B94DB29327C75003B12E9 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		F24B94DE29327F68003B12E9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		F24B94E22932BD34003B12E9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		F24B94E42932BE33003B12E9 /* AddVectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVectorViewController.swift; sourceTree = "<group>"; };
+		F24B94E729334B9F003B12E9 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		F24B94E929334BAD003B12E9 /* AddVectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVectorPresenter.swift; sourceTree = "<group>"; };
+		F24B94EB29334BC7003B12E9 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		F24B94ED29334CA9003B12E9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F24B94F029334D09003B12E9 /* UIVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,9 +189,12 @@
 		F24B94CB2932743B003B12E9 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				F24B949929325BDE003B12E9 /* ViewController.swift */,
-				F24B94A129325BDF003B12E9 /* Assets.xcassets */,
-				F24B94A329325BDF003B12E9 /* LaunchScreen.storyboard */,
+				F24B94EB29334BC7003B12E9 /* Router.swift */,
+				F24B94ED29334CA9003B12E9 /* Constants.swift */,
+				F24B94E02932A6B7003B12E9 /* UIElements */,
+				F24B94E12932BC69003B12E9 /* ViewConttrollers */,
+				F24B94E629334B6B003B12E9 /* Presenter */,
+				F24B94EF29334CE6003B12E9 /* Model */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -229,9 +244,9 @@
 		F24B94D129327B52003B12E9 /* DataBaseDataSource */ = {
 			isa = PBXGroup;
 			children = (
-				F24B949E29325BDE003B12E9 /* VectorBuilder.xcdatamodeld */,
 				F24B94D629327BCE003B12E9 /* CoreDataManager.swift */,
 				F24B94D829327BF4003B12E9 /* DataBaseDataSource.swift */,
+				F24B949E29325BDE003B12E9 /* VectorBuilder.xcdatamodeld */,
 			);
 			path = DataBaseDataSource;
 			sourceTree = "<group>";
@@ -240,6 +255,41 @@
 			isa = PBXGroup;
 			children = (
 				F24B94DB29327C75003B12E9 /* Vector.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F24B94E02932A6B7003B12E9 /* UIElements */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94A129325BDF003B12E9 /* Assets.xcassets */,
+				F24B94A329325BDF003B12E9 /* LaunchScreen.storyboard */,
+			);
+			path = UIElements;
+			sourceTree = "<group>";
+		};
+		F24B94E12932BC69003B12E9 /* ViewConttrollers */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94E22932BD34003B12E9 /* MainViewController.swift */,
+				F24B94E42932BE33003B12E9 /* AddVectorViewController.swift */,
+			);
+			path = ViewConttrollers;
+			sourceTree = "<group>";
+		};
+		F24B94E629334B6B003B12E9 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94E729334B9F003B12E9 /* MainPresenter.swift */,
+				F24B94E929334BAD003B12E9 /* AddVectorPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		F24B94EF29334CE6003B12E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94F029334D09003B12E9 /* UIVector.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -421,13 +471,19 @@
 				F24B94D429327B94003B12E9 /* VectorEntity+CoreDataClass.swift in Sources */,
 				F24B94DF29327F68003B12E9 /* DIContainer.swift in Sources */,
 				F24B94D929327BF4003B12E9 /* DataBaseDataSource.swift in Sources */,
+				F24B94E32932BD34003B12E9 /* MainViewController.swift in Sources */,
 				F24B94DC29327C75003B12E9 /* Vector.swift in Sources */,
+				F24B94E829334B9F003B12E9 /* MainPresenter.swift in Sources */,
 				F24B94D529327B94003B12E9 /* VectorEntity+CoreDataProperties.swift in Sources */,
+				F24B94EE29334CA9003B12E9 /* Constants.swift in Sources */,
 				F24B94C92932730E003B12E9 /* Extensions.swift in Sources */,
+				F24B94EC29334BC7003B12E9 /* Router.swift in Sources */,
 				F24B94A029325BDE003B12E9 /* VectorBuilder.xcdatamodeld in Sources */,
-				F24B949A29325BDE003B12E9 /* ViewController.swift in Sources */,
+				F24B94EA29334BAD003B12E9 /* AddVectorPresenter.swift in Sources */,
+				F24B94F129334D09003B12E9 /* UIVector.swift in Sources */,
 				F24B949629325BDE003B12E9 /* AppDelegate.swift in Sources */,
 				F24B94D729327BCE003B12E9 /* CoreDataManager.swift in Sources */,
+				F24B94E52932BE33003B12E9 /* AddVectorViewController.swift in Sources */,
 				F24B949829325BDE003B12E9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

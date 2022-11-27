@@ -6,7 +6,6 @@
 //
 //
 
-import UIKit
 import CoreData
 
 @objc(VectorEntity)
@@ -16,7 +15,7 @@ public class VectorEntity: NSManagedObject {
     return entities.map { entity in
       Vector(startPoint: CGPoint(x: entity.startX, y: entity.startY),
              endPoint: CGPoint(x: entity.endX, y: entity.endY),
-             color: UIColor(hex: entity.hexColor))
+             colorHex: entity.hexColor)
     }
   }
 }
