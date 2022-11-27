@@ -192,9 +192,9 @@
 				F24B94EB29334BC7003B12E9 /* Router.swift */,
 				F24B94ED29334CA9003B12E9 /* Constants.swift */,
 				F24B94E02932A6B7003B12E9 /* UIElements */,
+				F24B94EF29334CE6003B12E9 /* Model */,
 				F24B94E12932BC69003B12E9 /* ViewConttrollers */,
 				F24B94E629334B6B003B12E9 /* Presenter */,
-				F24B94EF29334CE6003B12E9 /* Model */,
 			);
 			path = UI;
 			sourceTree = "<group>";

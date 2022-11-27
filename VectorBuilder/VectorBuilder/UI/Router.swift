@@ -14,16 +14,6 @@ final class Router {
   
   // -MARK: - Properties -
   
-  var navigationController: UINavigationController = {
-    var navigationConrtoller = UINavigationController()
-    navigationConrtoller.isToolbarHidden = false
-    navigationConrtoller.isNavigationBarHidden = false
-    
-    navigationConrtoller.navigationBar.tintColor = Colors.color(.mainColorClear)()
-    
-    return navigationConrtoller
-  }()
-  
   lazy var mainViewController: UIViewController = {
     let presenter: MainPresenterProtocol =
     AppDelegate.DIContainer.resolve(MainPresenterProtocol.self)!
@@ -34,5 +24,12 @@ final class Router {
     
     return viewController
   }()
+  
+  // -MARK: - Funcs -
+  
+  func initialize() {
+    
+  }
+  
   
 }

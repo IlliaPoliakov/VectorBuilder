@@ -6,5 +6,6 @@ target 'VectorBuilder' do
   use_frameworks!
 
   pod 'Swinject', '~> 2.8'
-
+  pod 'SnapKit', '~> 5.6'
+  
 end
