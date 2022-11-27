@@ -10,11 +10,11 @@ import SpriteKit
 
 protocol AddVectorPresenterProtocol {
   func assignViewController(_ viewController: UIViewController)
-  func addVectorButtonTupped(withStartPointX: String?,
-                             withStartPointY: String?,
-                             withEndPointX: String?,
-                             withEndPointY: String?,
-                             withLength: String?)
+  func addVectorButtonTupped(withStartPointX startX: String?,
+                             withStartPointY startY: String?,
+                             withEndPointX endX: String?,
+                             withEndPointY endY: String?,
+                             withLength length: String?)
 }
 
 final class AddVectorPresenter: AddVectorPresenterProtocol {
@@ -33,11 +33,35 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
     self.viewController = (viewController as? AddVectorViewController)
   }
   
-  func addVectorButtonTupped(withStartPointX: String?,
-                             withStartPointY: String?,
-                             withEndPointX: String?,
-                             withEndPointY: String?,
-                             withLength: String?) {
-    
+  func addVectorButtonTupped(withStartPointX startX: String?,
+                             withStartPointY startY: String?,
+                             withEndPointX endX: String?,
+                             withEndPointY endY: String?,
+                             withLength length: String?) {
+    if let length {
+      if let startX, let startY, let endX, let endY {
+        AppDelegate.router.presentVectorDataColisionAlert { state in
+          if state == .withLength {
+            //do
+          }
+          else {
+            //do
+          }
+        }
+      }
+      else {
+        //do
+      }
+    }
+    else {
+      guard let startX, let startY, let endX, let endY
+      else {
+        AppDelegate.router.presentWarningAlert(withTitle: AlertData.wrongData,
+                                               withBody: AlertData.wrongDataBody)
+        return
+      }
+      
+      // do
+    }
   }
 }

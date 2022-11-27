@@ -71,8 +71,8 @@ final class MainViewController: UIViewController {
       button.layer.borderColor = ButtonData.borderColor.cgColor
       button.layer.cornerRadius = ButtonData.cornerRadius
       button.backgroundColor = ButtonData.backgroundColor
-      button.contentVerticalAlignment = .fill
-      button.contentHorizontalAlignment = .fill
+//      button.contentVerticalAlignment = .fill
+//      button.contentHorizontalAlignment = .fill
       button.addAction(UIAction(handler: {_ in self.presenter.addVectorButtonTupped()}),
                        for: .touchUpInside)
     }

@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		303B40AB02B2EF8DB8D06F67 /* Pods_VectorBuilder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0329634FFEDAACA5D6EE78B7 /* Pods_VectorBuilder.framework */; };
+		F23813AA2933E95B0007D79C /* GetVectorsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23813A92933E95B0007D79C /* GetVectorsUseCase.swift */; };
+		F23813AC2933E96D0007D79C /* SaveVectorUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23813AB2933E96D0007D79C /* SaveVectorUseCase.swift */; };
+		F23813AE2933E97B0007D79C /* DeleteVectorUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23813AD2933E97B0007D79C /* DeleteVectorUseCase.swift */; };
+		F23813B12933EA470007D79C /* VectorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23813B02933EA470007D79C /* VectorRepository.swift */; };
+		F23813B32933EB140007D79C /* VectorsRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23813B22933EB140007D79C /* VectorsRepositoryImpl.swift */; };
 		F24B949629325BDE003B12E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B949529325BDE003B12E9 /* AppDelegate.swift */; };
 		F24B949829325BDE003B12E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B949729325BDE003B12E9 /* SceneDelegate.swift */; };
 		F24B94A029325BDE003B12E9 /* VectorBuilder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F24B949E29325BDE003B12E9 /* VectorBuilder.xcdatamodeld */; };
@@ -53,6 +58,11 @@
 		0329634FFEDAACA5D6EE78B7 /* Pods_VectorBuilder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VectorBuilder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D8020836FC7C78CCA33E11D /* Pods-VectorBuilder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VectorBuilder.release.xcconfig"; path = "Target Support Files/Pods-VectorBuilder/Pods-VectorBuilder.release.xcconfig"; sourceTree = "<group>"; };
 		3DA276E10728002A48E5482C /* Pods-VectorBuilder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VectorBuilder.debug.xcconfig"; path = "Target Support Files/Pods-VectorBuilder/Pods-VectorBuilder.debug.xcconfig"; sourceTree = "<group>"; };
+		F23813A92933E95B0007D79C /* GetVectorsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVectorsUseCase.swift; sourceTree = "<group>"; };
+		F23813AB2933E96D0007D79C /* SaveVectorUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveVectorUseCase.swift; sourceTree = "<group>"; };
+		F23813AD2933E97B0007D79C /* DeleteVectorUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteVectorUseCase.swift; sourceTree = "<group>"; };
+		F23813B02933EA470007D79C /* VectorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorRepository.swift; sourceTree = "<group>"; };
+		F23813B22933EB140007D79C /* VectorsRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorsRepositoryImpl.swift; sourceTree = "<group>"; };
 		F24B949229325BDE003B12E9 /* VectorBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VectorBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F24B949529325BDE003B12E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F24B949729325BDE003B12E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +132,24 @@
 				0329634FFEDAACA5D6EE78B7 /* Pods_VectorBuilder.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F23813A82933E93F0007D79C /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				F23813A92933E95B0007D79C /* GetVectorsUseCase.swift */,
+				F23813AB2933E96D0007D79C /* SaveVectorUseCase.swift */,
+				F23813AD2933E97B0007D79C /* DeleteVectorUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		F23813AF2933EA2C0007D79C /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				F23813B02933EA470007D79C /* VectorRepository.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		F24B948929325BDE003B12E9 = {
@@ -202,7 +230,9 @@
 		F24B94CC29327440003B12E9 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				F23813A82933E93F0007D79C /* UseCases */,
 				F24B94DA29327C6A003B12E9 /* Model */,
+				F23813AF2933EA2C0007D79C /* Repositories */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -210,8 +240,8 @@
 		F24B94CD2932744B003B12E9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				F24B94CF29327AF9003B12E9 /* Repository */,
 				F24B94CE29327AEC003B12E9 /* Model */,
+				F24B94CF29327AF9003B12E9 /* Repository */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -228,6 +258,7 @@
 		F24B94CF29327AF9003B12E9 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				F23813B22933EB140007D79C /* VectorsRepositoryImpl.swift */,
 				F24B94D029327B42003B12E9 /* DataSources */,
 			);
 			path = Repository;
@@ -244,8 +275,8 @@
 		F24B94D129327B52003B12E9 /* DataBaseDataSource */ = {
 			isa = PBXGroup;
 			children = (
-				F24B94D629327BCE003B12E9 /* CoreDataManager.swift */,
 				F24B94D829327BF4003B12E9 /* DataBaseDataSource.swift */,
+				F24B94D629327BCE003B12E9 /* CoreDataManager.swift */,
 				F24B949E29325BDE003B12E9 /* VectorBuilder.xcdatamodeld */,
 			);
 			path = DataBaseDataSource;
@@ -468,13 +499,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F23813B32933EB140007D79C /* VectorsRepositoryImpl.swift in Sources */,
+				F23813AC2933E96D0007D79C /* SaveVectorUseCase.swift in Sources */,
 				F24B94D429327B94003B12E9 /* VectorEntity+CoreDataClass.swift in Sources */,
+				F23813AA2933E95B0007D79C /* GetVectorsUseCase.swift in Sources */,
 				F24B94DF29327F68003B12E9 /* DIContainer.swift in Sources */,
 				F24B94D929327BF4003B12E9 /* DataBaseDataSource.swift in Sources */,
 				F24B94E32932BD34003B12E9 /* MainViewController.swift in Sources */,
 				F24B94DC29327C75003B12E9 /* Vector.swift in Sources */,
 				F24B94E829334B9F003B12E9 /* MainPresenter.swift in Sources */,
 				F24B94D529327B94003B12E9 /* VectorEntity+CoreDataProperties.swift in Sources */,
+				F23813B12933EA470007D79C /* VectorRepository.swift in Sources */,
 				F24B94EE29334CA9003B12E9 /* Constants.swift in Sources */,
 				F24B94C92932730E003B12E9 /* Extensions.swift in Sources */,
 				F24B94EC29334BC7003B12E9 /* Router.swift in Sources */,
@@ -485,6 +520,7 @@
 				F24B94D729327BCE003B12E9 /* CoreDataManager.swift in Sources */,
 				F24B94E52932BE33003B12E9 /* AddVectorViewController.swift in Sources */,
 				F24B949829325BDE003B12E9 /* SceneDelegate.swift in Sources */,
+				F23813AE2933E97B0007D79C /* DeleteVectorUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
