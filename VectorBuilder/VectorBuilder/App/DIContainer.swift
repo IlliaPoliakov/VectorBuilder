@@ -33,6 +33,7 @@ class DependencyInjectionContainer {
     // -MARK: - Presenters -
     
     DependencyInjectionContainer.shared.register(MainPresenterProtocol.self) { _ in MainPresenter() }
+    DependencyInjectionContainer.shared.register(AddVectorPresenterProtocol.self) { _ in AddVectorPresenter() }
 
   }
 }

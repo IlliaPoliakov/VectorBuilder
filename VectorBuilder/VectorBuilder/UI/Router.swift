@@ -25,11 +25,33 @@ final class Router {
     return viewController
   }()
   
+  lazy var addVectorViewController: UIViewController = {
+    let presenter: AddVectorPresenterProtocol =
+    AppDelegate.DIContainer.resolve(AddVectorPresenterProtocol.self)!
+    
+    let viewController: UIViewController = AddVectorViewController(presenter)
+    viewController.modalPresentationStyle = .pageSheet
+    
+    presenter.assignViewController(viewController)
+    
+    return viewController
+  }()
+  
+  
   // -MARK: - Funcs -
   
-  func initialize() {
-    
+  func presentAddVectorViewController() {
+    mainViewController.present(addVectorViewController, animated: true)
   }
   
+  func dismissAddVectorViewController(){
+//    addFeedViewController.dismiss(animated: true)
+//    guard let viewController = mainViewController as? MainViewController
+//    else {
+//      return
+//    }
+//
+//    viewController.presenter.intialize()
+  }
   
 }

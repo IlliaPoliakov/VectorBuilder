@@ -10,6 +10,7 @@ import SpriteKit
 
 protocol MainPresenterProtocol {
   func assignViewController(_ viewController: UIViewController)
+  func addVectorButtonTupped()
 }
 
 final class MainPresenter: SKScene, MainPresenterProtocol {
@@ -27,14 +28,18 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   // -MARK: - Funcs -
   
   override func didMove(to view: SKView) {
-    
     setUpPhysics()
     setUpBackground()
-//    setUpvectors()
+    setUpVectors()
   }
+  
   
   func assignViewController(_ viewController: UIViewController) {
     self.viewController = (viewController as? MainViewController)
+  }
+  
+  func addVectorButtonTupped() {
+    AppDelegate.router.presentAddVectorViewController()
   }
   
   private func setUpPhysics() {
@@ -43,7 +48,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   }
   
   private func setUpBackground() {
-    let background = SKSpriteNode(imageNamed: "mainSceneBackground")
+    let background = SKSpriteNode(imageNamed: ImageName.background)
     
     background.anchorPoint = CGPoint(x: 0, y: 0)
     background.position = CGPoint(x: 0, y: 0)

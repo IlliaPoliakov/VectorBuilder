@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import SpriteKit
+import Then
 
 final class MainViewController: UIViewController {
   
@@ -43,29 +44,43 @@ final class MainViewController: UIViewController {
   
   private var spriteKitView: SKView!
   
+  private var addVectorButton: UIButton!
+  
   
   // -MARK: - Funcs -
   
   private func setupViews() {
-    scrollView = {
-      let scrollView = UIScrollView()
+    
+    scrollView = UIScrollView().then { scrollView in
       scrollView.translatesAutoresizingMaskIntoConstraints = false
       scrollView.bounces = false
-      scrollView.insetsLayoutMarginsFromSafeArea = false
-      return scrollView
-    }()
+      scrollView.insetsLayoutMarginsFromSafeArea = true
+    }
     
-    spriteKitView = {
-      let skView = SKView()
+    spriteKitView = SKView().then { skView in
+      skView.translatesAutoresizingMaskIntoConstraints = false
       skView.ignoresSiblingOrder = false
       skView.presentScene((presenter  as! SKScene))
-      
-      return skView
-    }()
+    }
+    
+    addVectorButton = UIButton().then { button in
+      button.translatesAutoresizingMaskIntoConstraints = false
+      button.setImage(UIImage(systemName: "plus"), for: .normal)
+      button.tintColor = Colors.mainColorClear
+      button.layer.borderWidth = ButtonData.borderWidth
+      button.layer.borderColor = ButtonData.borderColor.cgColor
+      button.layer.cornerRadius = ButtonData.cornerRadius
+      button.backgroundColor = ButtonData.backgroundColor
+      button.contentVerticalAlignment = .fill
+      button.contentHorizontalAlignment = .fill
+      button.addAction(UIAction(handler: {_ in self.presenter.addVectorButtonTupped()}),
+                       for: .touchUpInside)
+    }
   }
   
   private func layoutViews() {
     self.view.addSubview(scrollView)
+    self.view.addSubview(addVectorButton)
     scrollView.addSubview(spriteKitView)
     
     scrollView.snp.makeConstraints { make in
@@ -74,8 +89,14 @@ final class MainViewController: UIViewController {
     
     spriteKitView.snp.makeConstraints { make in
       make.top.trailing.bottom.leading.equalToSuperview()
-      make.width.equalTo(2560)
+      make.width.equalTo(2400)
       make.height.equalTo(1600)
+    }
+    
+    addVectorButton.snp.makeConstraints { make in
+      make.trailing.equalToSuperview().offset(-30)
+      make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-5)
+      make.width.height.equalTo(self.view.bounds.width / 10)
     }
   }
   

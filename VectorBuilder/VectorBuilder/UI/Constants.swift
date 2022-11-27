@@ -8,7 +8,8 @@
 import UIKit
 
 enum ImageName {
-  static let background = "mainSceneBackground"
+  static let background2 = "mainSceneBackground"
+  static let background = "mainSceneBackground2"
 }
 
 enum Layer {
@@ -23,19 +24,16 @@ enum CollectionViewSection {
   case main
 }
 
+enum ButtonData {
+  static let borderWidth: CGFloat = 2.5
+  static let borderColor: UIColor = Colors.mainColorClear
+  static let cornerRadius: CGFloat = 10
+  static let backgroundColor: UIColor = UIColor(named: "mainColor")!.withAlphaComponent(0.4)
+}
+
 enum Colors {
-  case mainColorClear
-  case mainColorBackground
-  
-  func color() -> UIColor {
-    switch self {
-    case .mainColorClear:
-      return UIColor(named: "mainColor")!
-      
-    case .mainColorBackground:
-      return UIColor(named: "mainColor")!.withAlphaComponent(0.2)
-    }
-  }
+  static let mainColorClear: UIColor = UIColor(named: "mainColor")!
+  static let mainColorBackground: UIColor = UIColor(named: "mainColor")!.withAlphaComponent(0.2)
 }
 
 func +(left: CGPoint, right: CGPoint) -> CGPoint {
