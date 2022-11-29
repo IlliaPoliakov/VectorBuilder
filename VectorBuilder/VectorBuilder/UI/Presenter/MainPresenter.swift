@@ -88,30 +88,31 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   func moveScrollViewToPoint(_ point: CGPoint){
     let frame = viewController!.scrollView.frame
     var safePoint = point
-    safePoint.x -= frame.width / 2
-    safePoint.y -= frame.height / 2
     
-    if safePoint.x < frame.width / 2 {
-      safePoint.x += frame.width / 2
+    safePoint.y = CGFloat(SceneSize.y) - safePoint.y - frame.height / 2
+    safePoint.x -= frame.width / 2
+    
+    if safePoint.x < 0 {
+      safePoint.x = 0
     }
-    if safePoint.x > CGFloat(SceneSize.x) - frame.width / 2{
-      safePoint.x -= frame.width / 2
+    if safePoint.x > CGFloat(SceneSize.x) - frame.width {
+      safePoint.x = CGFloat(SceneSize.x) - frame.width
     }
-    if safePoint.y < frame.height / 2 {
-      safePoint.y += frame.height / 2
+    if safePoint.y < 0 {
+      safePoint.y = 0
     }
-    if safePoint.y > CGFloat(SceneSize.y) - frame.height / 2{
-      safePoint.x -= frame.height / 2
+    if safePoint.y > CGFloat(SceneSize.y) - frame.height {
+      safePoint.x = CGFloat(SceneSize.y) - frame.height
     }
     
     viewController?.scrollView.setContentOffset(
-      CGPoint(x: safePoint.x, y: CGFloat(SceneSize.y) - safePoint.y),
+      CGPoint(x: safePoint.x, y: safePoint.y),
       animated: true)
   }
   
   func unwindFromAddViewController(withNewVector vector: UIVector) {
     vectors.append(vector)
-    moveScrollViewToPoint(vector.startPoint)
+    moveScrollViewToPoint(vector.endPoint)
     vector.addToScene(self)
     vector.zPosition = Layer.actualVector
   }
