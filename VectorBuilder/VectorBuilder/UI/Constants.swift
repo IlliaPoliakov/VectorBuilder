@@ -50,8 +50,8 @@ enum CollectionViewSection {
 }
 
 enum SceneSize {
-  static let x = 2700
-  static let y = 1500
+  static let x: Int = 2700
+  static let y: Int = 1500
 }
 
 enum ButtonData {

@@ -80,14 +80,14 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
             }
             
             let newVector = UIVector(
-              startPoint: CGPoint(x: SceneSize.x * 2, y: SceneSize.y * 2),
-              endPoint: CGPoint(x: SceneSize.x * 2, y: SceneSize.y * 2 + length),
+              startPoint: CGPoint(x: SceneSize.x / 2, y: SceneSize.y / 2),
+              endPoint: CGPoint(x: SceneSize.x / 2, y: SceneSize.y / 2 + length),
               color: .random())
             
             self.acceptWithVector(newVector)
           }
           else {
-            guard startX > 0, startY > 0, endX > 0, endY > 0,
+            guard startX >= 0, startY >= 0, endX >= 0, endY >= 0,
                   startX < SceneSize.x, endX < SceneSize.x &&
                     startY < SceneSize.y, endY < SceneSize.y
             else {
@@ -113,8 +113,8 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
           return
         }
         let newVector = UIVector(
-          startPoint: CGPoint(x: SceneSize.x * 2, y: SceneSize.y * 2),
-          endPoint: CGPoint(x: SceneSize.x * 2, y: SceneSize.y * 2 + length),
+          startPoint: CGPoint(x: SceneSize.x / 2, y: SceneSize.y / 2),
+          endPoint: CGPoint(x: SceneSize.x / 2, y: SceneSize.y / 2 + length),
           color: .random())
         
         acceptWithVector(newVector)
@@ -127,7 +127,7 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
                                                withBody: AlertData.wrongDataBody)
         return
       }
-      guard startX > 0, startY > 0, endX > 0, endY > 0,
+      guard startX >= 0, startY >= 0, endX >= 0, endY >= 0,
             startX < SceneSize.x, endX < SceneSize.x &&
               startY < SceneSize.y, endY < SceneSize.y
       else {

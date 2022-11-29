@@ -30,18 +30,19 @@ final class UIVector: SKNode {
     scene.addChild(self)
     
     let vecSize = CGSize(width: 0.002,
-                         height: startPoint.length(toPoint: endPoint) / scene.size.height * 0.001)
+                         height: startPoint.length(toPoint: endPoint)  * 0.001)
     let vector = SKSpriteNode(color: color, size: vecSize)
     vector.anchorPoint = CGPoint(x: 0.5, y: 0)
     vector.zPosition = Layer.vector
-    vector.position = CGPoint(x: startPoint.x / scene.size.width * 0.001,
-                              y: startPoint.y / scene.size.height * 0.001)
+    
+    vector.position = CGPoint(x: startPoint.x / CGFloat(SceneSize.x),
+                              y: startPoint.y / CGFloat(SceneSize.y))
     vector.zRotation = startPoint.angleWithPoint(endPoint)
     
     addChild(vector)
     
     let vectorHolder = SKSpriteNode(imageNamed: ImageName.vectorHolder)
-    vectorHolder.size = CGSize(width: scene.size.width * 0.008, height: scene.size.width * 0.008)
+    vectorHolder.size = CGSize(width:  0.008, height: 0.008)
     vectorHolder.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     vectorHolder.position = CGPoint(x: 0, y: 0)
     vectorHolder.zPosition = Layer.vectorHolder
@@ -49,8 +50,9 @@ final class UIVector: SKNode {
     vector.addChild(vectorHolder)
     
     let vectorArrow = SKSpriteNode(imageNamed: ImageName.vectorArrow)
-    vectorArrow.size = CGSize(width: 7 / scene.size.width * 0.001,
-                              height: 10 / scene.size.width * 0.001)
+    
+    vectorArrow.size = CGSize(width: 7 * 0.001,
+                              height: 10 * 0.001)
     vectorArrow.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     vectorArrow.zPosition = Layer.vectorArrow
     vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
