@@ -63,6 +63,8 @@ final class AddVectorViewController: UIViewController {
   private var setLengthLabel: UILabel!
   private var lengthTextField: UITextField!
   
+  private var manualLabel: UILabel!
+  
   private var addVectorButton: UIButton!
 
   
@@ -73,7 +75,7 @@ final class AddVectorViewController: UIViewController {
     
     createVectorLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = "Create New Vector:"
+      label.text = AddVcLabel.createNewVector
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .largeTitle)
       label.textAlignment = .center
@@ -82,7 +84,7 @@ final class AddVectorViewController: UIViewController {
     
     startPointLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = "Start Point:"
+      label.text = AddVcLabel.startPoint
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .title1)
       label.textAlignment = .center
@@ -127,7 +129,7 @@ final class AddVectorViewController: UIViewController {
     
     endPointLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = "End Point:"
+      label.text = AddVcLabel.endPoint
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .title1)
       label.textAlignment = .center
@@ -174,7 +176,7 @@ final class AddVectorViewController: UIViewController {
     
     setLengthLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = "Or Just Set The Length of The Vector and Positoin it Manually:"
+      label.text = AddVcLabel.setLength
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .largeTitle)
       label.textAlignment = .center
@@ -188,10 +190,22 @@ final class AddVectorViewController: UIViewController {
       textField.textAlignment = .center
     }
     
+    manualLabel = UILabel().then { label in
+      label.translatesAutoresizingMaskIntoConstraints = false
+      label.text = AddVcLabel.manual
+      label.textColor = Colors.mainColorClear
+      label.font = .preferredFont(forTextStyle: .title2)
+      label.textAlignment = .left
+      label.numberOfLines = 0
+      label.backgroundColor = Colors.mainColorBackground
+      label.layer.cornerRadius = 8
+      label.layer.masksToBounds = true
+    }
+    
     
     addVectorButton = UIButton().then { button in
       button.translatesAutoresizingMaskIntoConstraints = false
-      button.setTitle("Add Vector", for: .normal)
+      button.setTitle(AddVcLabel.addVector, for: .normal)
       button.setTitleColor(Colors.mainColorClear, for: .normal)
       button.setTitleColor(ButtonData.backgroundColor, for: .highlighted)
       button.tintColor = Colors.mainColorClear
@@ -213,14 +227,16 @@ final class AddVectorViewController: UIViewController {
     }
   }
   
-  private func layoutViews() {
+  private func layoutViews() { 
     [createVectorLabel, startPointLabel, startXLabel,
      startXTextField, startYLabel, startYTextField,
-     endPointLabel, endXLabel, endXTextField,
-     endYLabel, endYTextField, setLengthLabel,
-     lengthTextField, addVectorButton].forEach { view in
+     endPointLabel, endXLabel, endXTextField].forEach { view in
       self.view.addSubview(view)
     }
+    [endYLabel, endYTextField, setLengthLabel,
+    lengthTextField, manualLabel, addVectorButton].forEach { view in
+     self.view.addSubview(view)
+   }
     
     //grandad
     createVectorLabel.snp.makeConstraints { make in
@@ -296,6 +312,11 @@ final class AddVectorViewController: UIViewController {
       make.top.equalTo(setLengthLabel.snp.bottom).offset(10)
       make.leading.trailing.equalToSuperview().inset(15)
       make.height.equalTo(44)
+    }
+    
+    manualLabel.snp.makeConstraints { make in
+      make.top.equalTo(lengthTextField.snp.bottom).offset(30)
+      make.leading.trailing.equalToSuperview().inset(15)
     }
     
     

@@ -18,30 +18,13 @@ final class DataBaseDataSource {
   // -MARK: - Functions -
   
   func loadVectors() -> [VectorEntity]? {
-    let fetchRequest = VectorEntity.fetchRequest()
-    
-    let sortDescriptor = NSSortDescriptor(key: "startX", ascending: false)
-    fetchRequest.sortDescriptors = [sortDescriptor]
-
-      let fetchedResultsController = NSFetchedResultsController(
-        fetchRequest: fetchRequest,
-        managedObjectContext: self.coreDataManager.managedObjectContext,
-        sectionNameKeyPath: nil,
-        cacheName: nil)
-
-    do {
-        try fetchedResultsController.performFetch()
-    } catch {
-        let fetchError = error as NSError
-        print("Unable to Load Vectors")
-        print("\(fetchError), \(fetchError.localizedDescription)")
-    }
-    
-    guard let vectors = fetchedResultsController.fetchedObjects
+    guard let vectors = try? coreDataManager.managedObjectContext.fetch(VectorEntity.fetchRequest()),
+          !vectors.isEmpty
     else {
       print("CoreData vector-fetch is failed")
       return nil
     }
+    
     guard !vectors.isEmpty
     else {
       print("CoreData is empty.")
@@ -60,13 +43,7 @@ final class DataBaseDataSource {
     newVector.endY = modelVector.endPoint.y
     newVector.hexColor = modelVector.colorHex
     
-    do {
-        try newVector.managedObjectContext?.save()
-    } catch {
-        let saveError = error as NSError
-        print("Unable to Save Note")
-        print("\(saveError), \(saveError.localizedDescription)")
-    }
+    try? newVector.managedObjectContext?.save()
   }
   
   func deleteVector(withDataFrom modelVector: Vector) {
@@ -78,29 +55,12 @@ final class DataBaseDataSource {
       "\(modelVector.colorHex)"
     )
     
-    let vectorsSortDescriptor = NSSortDescriptor(key: "startX", ascending: false)
-    
-    vectorsFetchRequest.sortDescriptors = [vectorsSortDescriptor]
     vectorsFetchRequest.predicate = vectorsPredicate
     
-    let vectorsFetchedResultsController = NSFetchedResultsController(
-      fetchRequest: vectorsFetchRequest,
-      managedObjectContext: self.coreDataManager.managedObjectContext,
-      sectionNameKeyPath: nil,
-      cacheName: nil)
-    
-    do {
-      try vectorsFetchedResultsController.performFetch()
-    } catch {
-      let fetchError = error as NSError
-      print("Unable to Save Note")
-      print("\(fetchError), \(fetchError.localizedDescription)")
-    }
-    
-    guard let vectors = vectorsFetchedResultsController.fetchedObjects,
+    guard let vectors = try? coreDataManager.managedObjectContext.fetch(VectorEntity.fetchRequest()),
           !vectors.isEmpty
     else {
-      print("CoreData items-fetch is failed")
+      print("CoreData vector-fetch is failed")
       return
     }
     

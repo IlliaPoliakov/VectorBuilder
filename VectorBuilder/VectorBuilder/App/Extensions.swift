@@ -113,8 +113,6 @@ extension CGPoint {
     let vec = CGVector(dx: distX, dy: distY)
 
     let angle = atan2(vec.dx, -vec.dy)
-
-//    let deg = angle * CGFloat(180.0 / .pi)
     
     return angle
   }

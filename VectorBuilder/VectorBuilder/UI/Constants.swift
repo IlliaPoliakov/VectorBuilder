@@ -12,12 +12,27 @@ enum VectorBuildState {
   case withLength
 }
 
+enum AddVcLabel {
+  static let createNewVector = "Create New Vector:"
+  static let startPoint = "Start Point:"
+  static let endPoint = "End Point:"
+  static let setLength = "Or Just Set The Length of The Vector and Position it Manually:"
+  static let addVector = "Add Vector"
+  static let manual = " Just in case:\n Origin - left bottom angel of the screen.\n Length value belongs to (0, 2700)\n X and Y belongs to (0, 2700) and (0, 1500) accordingly."
+}
+
 enum AlertData {
   static let tooMuch = "Oops... Too Much Data!"
   static let bothCases = "You just entered Data for both Cases of creating Vector. Please, choose One."
   
   static let wrongData = "Oops... Wrang data."
   static let wrongDataBody = "Please, check entered data and try again."
+  
+  static let wrongLength = "Oops... Wrang length."
+  static let wrongLengthBody = "Please, make sure that the length value belongs to (0, 2700)."
+  
+  static let wrongPoints = "Oops... Wrang points."
+  static let wrongPointsBody = "Please, make sure that points values belong to: X(0, 2700), Y(0, 1500)."
 }
 
 enum ImageName {
@@ -41,6 +56,11 @@ enum PhysicsCategory {
 
 enum CollectionViewSection {
   case main
+}
+
+enum SceneSize {
+  static let x: Int = 2700
+  static let y: Int = 1500
 }
 
 enum ButtonData {

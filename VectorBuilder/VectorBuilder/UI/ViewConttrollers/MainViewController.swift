@@ -54,6 +54,7 @@ final class MainViewController: UIViewController {
     scrollView = UIScrollView().then { scrollView in
       scrollView.translatesAutoresizingMaskIntoConstraints = false
       scrollView.bounces = false
+      scrollView.maximumZoomScale = 2
     }
     
     spriteKitView = SKView().then { skView in
@@ -88,8 +89,8 @@ final class MainViewController: UIViewController {
     
     spriteKitView.snp.makeConstraints { make in
       make.top.trailing.bottom.leading.equalToSuperview()
-      make.width.equalTo(2400)
-      make.height.equalTo(1600)
+      make.width.equalTo(2700)
+      make.height.equalTo(1500)
     }
     
     addVectorButton.snp.makeConstraints { make in
