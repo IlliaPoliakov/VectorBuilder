@@ -12,6 +12,15 @@ enum VectorBuildState {
   case withLength
 }
 
+enum AddVcLabel {
+  static let createNewVector = "Create New Vector:"
+  static let startPoint = "Start Point:"
+  static let endPoint = "End Point:"
+  static let setLength = "Or Just Set The Length of The Vector and Position it Manually:"
+  static let addVector = "Add Vector"
+  static let manual = " Just in case:\n Origin - left bottom angel of the screen.\n Length value belongs to (0, 2700)\n X and Y belongs to (0, 2700) and (0, 1500) accordingly."
+}
+
 enum AlertData {
   static let tooMuch = "Oops... Too Much Data!"
   static let bothCases = "You just entered Data for both Cases of creating Vector. Please, choose One."

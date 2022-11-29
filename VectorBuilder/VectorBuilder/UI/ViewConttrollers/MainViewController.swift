@@ -54,6 +54,7 @@ final class MainViewController: UIViewController {
     scrollView = UIScrollView().then { scrollView in
       scrollView.translatesAutoresizingMaskIntoConstraints = false
       scrollView.bounces = false
+      scrollView.maximumZoomScale = 2
     }
     
     spriteKitView = SKView().then { skView in
