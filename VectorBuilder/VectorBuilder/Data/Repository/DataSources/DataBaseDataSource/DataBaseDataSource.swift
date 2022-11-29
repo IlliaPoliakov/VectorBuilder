@@ -20,8 +20,8 @@ final class DataBaseDataSource {
   func loadVectors() -> [VectorEntity]? {
     let fetchRequest = VectorEntity.fetchRequest()
     
-//    let sortDescriptor = NSSortDescriptor(key: "startX", ascending: false)
-    fetchRequest.sortDescriptors = []////////////////////////////////////////////////////////////////////////////////////////////////
+    let sortDescriptor = NSSortDescriptor(key: "startX", ascending: false)
+    fetchRequest.sortDescriptors = [sortDescriptor]
 
       let fetchedResultsController = NSFetchedResultsController(
         fetchRequest: fetchRequest,
@@ -37,24 +37,28 @@ final class DataBaseDataSource {
         print("\(fetchError), \(fetchError.localizedDescription)")
     }
     
-    guard let vectors = fetchedResultsController.fetchedObjects,
-          !vectors.isEmpty
+    guard let vectors = fetchedResultsController.fetchedObjects
     else {
       print("CoreData vector-fetch is failed")
+      return nil
+    }
+    guard !vectors.isEmpty
+    else {
+      print("CoreData is empty.")
       return nil
     }
     
     return vectors
   }
   
-  func saveNewVector(withDatafromModel vectorModel: Vector) {
+  func saveNewVector(withDatafrom modelVector: Vector) {
     let newVector = VectorEntity(context: coreDataManager.managedObjectContext)
     
-    newVector.startX = vectorModel.startPoint.x
-    newVector.startY = vectorModel.startPoint.y
-    newVector.endX = vectorModel.endPoint.x
-    newVector.endY = vectorModel.endPoint.y
-    newVector.hexColor = vectorModel.colorHex
+    newVector.startX = modelVector.startPoint.x
+    newVector.startY = modelVector.startPoint.y
+    newVector.endX = modelVector.endPoint.x
+    newVector.endY = modelVector.endPoint.y
+    newVector.hexColor = modelVector.colorHex
     
     do {
         try newVector.managedObjectContext?.save()
@@ -65,18 +69,18 @@ final class DataBaseDataSource {
     }
   }
   
-  func deleteVector(withDataFromModel vectorModel: Vector) {
+  func deleteVector(withDataFrom modelVector: Vector) {
     let vectorsFetchRequest = NSFetchRequest<VectorEntity>(entityName: "VectorEntity")
     
     let vectorsPredicate = NSPredicate(
       format: "%K == %@",
       #keyPath(VectorEntity.hexColor),
-      "\(vectorModel.colorHex)"
+      "\(modelVector.colorHex)"
     )
     
     let vectorsSortDescriptor = NSSortDescriptor(key: "startX", ascending: false)
     
-    vectorsFetchRequest.sortDescriptors = [] //
+    vectorsFetchRequest.sortDescriptors = [vectorsSortDescriptor]
     vectorsFetchRequest.predicate = vectorsPredicate
     
     let vectorsFetchedResultsController = NSFetchedResultsController(
@@ -101,10 +105,10 @@ final class DataBaseDataSource {
     }
     
     let filteredVectors = vectors.filter { vector in
-      vector.startX == vectorModel.startPoint.x &&
-      vector.startY == vectorModel.startPoint.y &&
-      vector.endX == vectorModel.endPoint.x &&
-      vector.endY == vectorModel.endPoint.y
+      vector.startX == modelVector.startPoint.x &&
+      vector.startY == modelVector.startPoint.y &&
+      vector.endX == modelVector.endPoint.x &&
+      vector.endY == modelVector.endPoint.y
     }
     
     guard let vector = filteredVectors.first

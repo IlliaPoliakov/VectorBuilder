@@ -22,14 +22,21 @@ enum AlertData {
 
 enum ImageName {
   static let background = "mainSceneBackground2"
+  static let vectorHolder = "vectorHolder"
+  static let vectorArrow = "arrow"
 }
 
 enum Layer {
   static let background: CGFloat = 0
-  static let crocodile: CGFloat = 1
-  static let vine: CGFloat = 1
-  static let prize: CGFloat = 2
-  static let foreground: CGFloat = 3
+  static let vectorArrow: CGFloat = 1
+  static let vector: CGFloat = 2
+  static let vectorHolder:CGFloat = 3
+  static let actualVector: CGFloat = 4
+  static let foreground: CGFloat = 5
+}
+
+enum PhysicsCategory {
+  static let vectorEnds: UInt32 = 1
 }
 
 enum CollectionViewSection {

@@ -174,7 +174,7 @@ final class AddVectorViewController: UIViewController {
     
     setLengthLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = "Or Just Enter The Length of The Vector:"
+      label.text = "Or Just Set The Length of The Vector and Positoin it Manually:"
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .largeTitle)
       label.textAlignment = .center
@@ -305,4 +305,12 @@ final class AddVectorViewController: UIViewController {
     }
   }
   
+  
+  func erraseAllTextFields() {
+    startXTextField.text = ""
+    endXTextField.text = ""
+    startYTextField.text = ""
+    endYTextField.text = ""
+    lengthTextField.text = ""
+  }
 }

@@ -7,17 +7,14 @@
 
 import Foundation
 
-class GetVectorsUseCase {
+class SaveNewVectorUseCase {
   private let repo: VectorRepository
 
   init(repo: VectorRepository) {
     self.repo = repo
   }
   
-  func execute() -> AnyPublisher<[Vector], Never> {
-    repo.getVectors()
-      .map {
-        
-      }
+  func execute(withDataFrom uivector: UIVector) {
+    repo.saveNewVector(withDataFrom: Vector.convertToModel(withUIVectors: [uivector]).first!)
   }
 }

@@ -10,7 +10,9 @@ import UIKit
 
 final class CoreDataManager {
   
-  init(modelName: String) {
+  static let shared = CoreDataManager(modelName: "VectorBuilder")
+  
+  private init(modelName: String) {
     self.modelName = modelName
     
     setupNotificationHandling()

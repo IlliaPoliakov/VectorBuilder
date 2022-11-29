@@ -22,6 +22,9 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
   // -MARK: - Dependensies -
   
   private weak var viewController: AddVectorViewController?
+  
+  private let saveNewVectorUseCase: SaveNewVectorUseCase =
+  AppDelegate.DIContainer.resolve(SaveNewVectorUseCase.self)!
  
   
   // -MARK: - Properties -
@@ -38,30 +41,59 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
                              withEndPointX endX: String?,
                              withEndPointY endY: String?,
                              withLength length: String?) {
-    if let length {
-      if let startX, let startY, let endX, let endY {
+    if let lengthStr = length,
+       let length = Int(lengthStr){
+      if let startXStr = startX, let startYStr = startY, let endXStr = endX, let endYStr = endY,
+         let startX = Int(startXStr), let startY = Int(startYStr), let endX = Int(endXStr),
+         let endY = Int(endYStr){
         AppDelegate.router.presentVectorDataColisionAlert { state in
           if state == .withLength {
-            //do
+            let vector = UIVector(startPoint: CGPoint(x: 10, y: 10),
+                                  endPoint: CGPoint(x: 10 + length, y: 10),
+                                  color: .random())
+            
+            self.saveNewVectorUseCase.execute(withDataFrom: vector)
+            self.viewController?.erraseAllTextFields()
+            AppDelegate.router.dismissAddVectorViewController(withNewVector: vector)
           }
           else {
-            //do
+            let vector = UIVector(startPoint: CGPoint(x: startX, y: startY),
+                                  endPoint: CGPoint(x: endX, y: endY),
+                                  color: .random())
+            
+            self.saveNewVectorUseCase.execute(withDataFrom: vector)
+            self.viewController?.erraseAllTextFields()
+            AppDelegate.router.dismissAddVectorViewController(withNewVector: vector)
           }
         }
       }
       else {
-        //do
+        let vector = UIVector(startPoint: CGPoint(x: 10, y: 10),
+                              endPoint: CGPoint(x: 10 + length, y: 10),
+                              color: .random())
+        
+        self.saveNewVectorUseCase.execute(withDataFrom: vector)
+        viewController?.erraseAllTextFields()
+        AppDelegate.router.dismissAddVectorViewController(withNewVector: vector)
       }
     }
     else {
-      guard let startX, let startY, let endX, let endY
+      guard let startXStr = startX, let startYStr = startY, let endXStr = endX, let endYStr = endY,
+            let startX = Int(startXStr), let startY = Int(startYStr), let endX = Int(endXStr),
+            let endY = Int(endYStr)
       else {
         AppDelegate.router.presentWarningAlert(withTitle: AlertData.wrongData,
                                                withBody: AlertData.wrongDataBody)
         return
       }
       
-      // do
+      let vector = UIVector(startPoint: CGPoint(x: startX, y: startY),
+                            endPoint: CGPoint(x: endX, y: endY),
+                            color: .random())
+      
+      self.saveNewVectorUseCase.execute(withDataFrom: vector)
+      viewController?.erraseAllTextFields()
+      AppDelegate.router.dismissAddVectorViewController(withNewVector: vector)
     }
   }
 }

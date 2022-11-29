@@ -6,12 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 final class VectorRepositoryImpl: VectorRepository {
   
   // -MARK: - Properties -
-  
-  private var parser = XMLDataParser()
   
   private let localDataSource: DataBaseDataSource
   
@@ -23,7 +22,7 @@ final class VectorRepositoryImpl: VectorRepository {
   // -MARK: - UseCase Funcs -
   
   func getVectors() -> AnyPublisher<[Vector], Never> {
-    let publisher = PassthroughSubject<[Feed], Never>()
+    let publisher = PassthroughSubject<[Vector], Never>()
     
     DispatchQueue.global(qos: .userInitiated).async {
       let vectorEntities = self.localDataSource.loadVectors()
@@ -31,7 +30,7 @@ final class VectorRepositoryImpl: VectorRepository {
       if let vectorEntities {
         let vectors = VectorEntity.convertToDomain(withEntities: vectorEntities)
         DispatchQueue.main.async {
-          publisher.send(feeds)
+          publisher.send(vectors)
         }
       }
       
@@ -42,4 +41,14 @@ final class VectorRepositoryImpl: VectorRepository {
     
     return publisher.eraseToAnyPublisher()
   }
+  
+  func saveNewVector(withDataFrom modelVector: Vector) {
+    localDataSource.saveNewVector(withDatafrom: modelVector)
+  }
+  
+  func deleteVector(withDataFrom modelVector: Vector) {
+    localDataSource.deleteVector(withDataFrom: modelVector)
+  }
+  
+  
 }

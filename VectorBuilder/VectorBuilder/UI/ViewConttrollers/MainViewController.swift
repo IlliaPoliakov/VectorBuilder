@@ -40,9 +40,9 @@ final class MainViewController: UIViewController {
   
   // -MARK: - Views -
   
-  private var scrollView: UIScrollView!
+  private(set) var scrollView: UIScrollView!
   
-  private var spriteKitView: SKView!
+  private(set) var spriteKitView: SKView!
   
   private var addVectorButton: UIButton!
   
@@ -54,13 +54,14 @@ final class MainViewController: UIViewController {
     scrollView = UIScrollView().then { scrollView in
       scrollView.translatesAutoresizingMaskIntoConstraints = false
       scrollView.bounces = false
-      scrollView.insetsLayoutMarginsFromSafeArea = true
     }
     
     spriteKitView = SKView().then { skView in
       skView.translatesAutoresizingMaskIntoConstraints = false
-      skView.ignoresSiblingOrder = false
-      skView.presentScene((presenter  as! SKScene))
+      skView.ignoresSiblingOrder = true
+      
+      let scene = presenter as! SKScene
+      skView.presentScene(scene)
     }
     
     addVectorButton = UIButton().then { button in
@@ -71,8 +72,6 @@ final class MainViewController: UIViewController {
       button.layer.borderColor = ButtonData.borderColor.cgColor
       button.layer.cornerRadius = ButtonData.cornerRadius
       button.backgroundColor = ButtonData.backgroundColor
-//      button.contentVerticalAlignment = .fill
-//      button.contentHorizontalAlignment = .fill
       button.addAction(UIAction(handler: {_ in self.presenter.addVectorButtonTupped()}),
                        for: .touchUpInside)
     }

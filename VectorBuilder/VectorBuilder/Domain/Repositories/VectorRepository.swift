@@ -10,4 +10,6 @@ import Combine
 
 protocol VectorRepository {
   func getVectors() -> AnyPublisher<[Vector], Never>
+  func saveNewVector(withDataFrom modelVector: Vector)
+  func deleteVector(withDataFrom modelVector: Vector)
 }

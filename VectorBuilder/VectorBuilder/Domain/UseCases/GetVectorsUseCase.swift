@@ -17,8 +17,9 @@ class GetVectorsUseCase {
   
   func execute() -> AnyPublisher<[UIVector], Never> {
     repo.getVectors()
-      .map {
-        
+      .map { vectors in
+        return Vector.convertToUI(withModels: vectors)
       }
+      .eraseToAnyPublisher()
   }
 }

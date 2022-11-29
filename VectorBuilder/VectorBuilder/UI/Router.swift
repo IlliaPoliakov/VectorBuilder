@@ -44,14 +44,15 @@ final class Router {
     mainViewController.present(addVectorViewController, animated: true)
   }
   
-  func dismissAddVectorViewController(){
-//    addFeedViewController.dismiss(animated: true)
-//    guard let viewController = mainViewController as? MainViewController
-//    else {
-//      return
-//    }
-//
-//    viewController.presenter.intialize()
+  func dismissAddVectorViewController(withNewVector vector: UIVector){
+    addVectorViewController.dismiss(animated: true)
+    
+    guard let viewController = mainViewController as? MainViewController
+    else {
+      return
+    }
+
+    viewController.presenter.unwindFromAddViewController(withNewVector: vector)
   }
   
   func presentWarningAlert(withTitle title: String, withBody body: String) {
@@ -80,15 +81,13 @@ final class Router {
                                   message: AlertData.bothCases,
                                   preferredStyle: .alert)
     
-    alert.addTextField { _ in }
-    
     let cancelAction = UIAlertAction(title: "Cancel", style: .default)
     
-    let withPointsAction = UIAlertAction(title: "Add", style: .cancel) { [weak alert] _ in
+    let withPointsAction = UIAlertAction(title: "With Points", style: .default) { _ in
       completion(.withPoints)
     }
     
-    let withLengthAction = UIAlertAction(title: "Add", style: .cancel) { [weak alert] _ in
+    let withLengthAction = UIAlertAction(title: "With Length", style: .default) { _ in
       completion(.withLength)
     }
     

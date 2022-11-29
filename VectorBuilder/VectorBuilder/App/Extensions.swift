@@ -88,15 +88,51 @@ func /(point: CGPoint, scalar: CGFloat) -> CGPoint {
 #endif
 
 extension CGPoint {
-  func length() -> CGFloat {
+  func distance() -> CGFloat {
     return sqrt(x*x + y*y)
   }
   
-  func distance(toPoint point: CGPoint) -> CGFloat {
-    sqrt((x - point.x)(x - point.x) + (y - point.y)(y - point.y))
+  func length(toPoint point: CGPoint) -> CGFloat {
+    return sqrt((x - point.x) * (x - point.x) + (y - point.y) * (y - point.y))
+  }
+  
+  func centerPoint(withPoint point: CGPoint) -> CGPoint {
+    return CGPoint(x: (x + point.x)/2, y: (y + point.y)/2)
   }
   
   func normalized() -> CGPoint {
-    return self / length()
+    return self / distance()
   }
+  
+  func angleWithPoint(_ point: CGPoint) -> CGFloat {
+    let offset = self - point
+
+    let distX = CGFloat(offset.x)
+    let distY = CGFloat(offset.y)
+    
+    let vec = CGVector(dx: distX, dy: distY)
+
+    let angle = atan2(vec.dx, -vec.dy)
+
+//    let deg = angle * CGFloat(180.0 / .pi)
+    
+    return angle
+  }
+}
+
+extension CGFloat {
+    static func random() -> CGFloat {
+        return CGFloat(arc4random()) / CGFloat(UInt32.max)
+    }
+}
+
+extension UIColor {
+    static func random() -> UIColor {
+        return UIColor(
+           red:   .random(),
+           green: .random(),
+           blue:  .random(),
+           alpha: 1.0
+        )
+    }
 }
