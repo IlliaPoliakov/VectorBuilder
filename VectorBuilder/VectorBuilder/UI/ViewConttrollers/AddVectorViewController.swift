@@ -195,7 +195,7 @@ final class AddVectorViewController: UIViewController {
       label.text = AddVcLabel.manual
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .title2)
-      label.textAlignment = .left
+      label.textAlignment = .center
       label.numberOfLines = 0
       label.backgroundColor = Colors.mainColorBackground
       label.layer.cornerRadius = 8
@@ -258,7 +258,7 @@ final class AddVectorViewController: UIViewController {
       make.centerY.equalTo(startXLabel.snp.centerY)
       make.centerX.equalTo(startPointLabel.snp.centerX)
       make.leading.equalTo(startXLabel.snp.trailing).offset(5)
-      make.width.equalTo(44)
+      make.width.equalTo(48)
       make.height.equalTo(38)
     }
     //son/daughter 1.2
@@ -269,7 +269,7 @@ final class AddVectorViewController: UIViewController {
       make.centerY.equalTo(startYLabel.snp.centerY)
       make.centerX.equalTo(startPointLabel.snp.centerX)
       make.leading.equalTo(startYLabel.snp.trailing).offset(5)
-      make.width.equalTo(44)
+      make.width.equalTo(48)
       make.height.equalTo(38)
     }
     
@@ -287,7 +287,7 @@ final class AddVectorViewController: UIViewController {
       make.centerY.equalTo(endXLabel.snp.centerY)
       make.centerX.equalTo(endPointLabel.snp.centerX)
       make.leading.equalTo(endXLabel.snp.trailing).offset(5)
-      make.width.equalTo(44)
+      make.width.equalTo(48)
       make.height.equalTo(38)
     }
     //son/daughter 2.2
@@ -298,7 +298,7 @@ final class AddVectorViewController: UIViewController {
       make.centerY.equalTo(endYLabel.snp.centerY)
       make.centerX.equalTo(endPointLabel.snp.centerX)
       make.leading.equalTo(endYLabel.snp.trailing).offset(5)
-      make.width.equalTo(44)
+      make.width.equalTo(48)
       make.height.equalTo(38)
     }
     

@@ -13,6 +13,14 @@ final class UIVector: SKNode {
   var endPoint: CGPoint
   var color: UIColor
   
+  private lazy var vector: SKSpriteNode = {
+    let vecSize = CGSize(width: 0.002,
+                         height: startPoint.length(toPoint: endPoint) / CGFloat(SceneSize.x))
+    let vector = SKSpriteNode(color: color, size: vecSize)
+    
+    return vector
+  }()
+  
   init(startPoint: CGPoint, endPoint: CGPoint, color: UIColor) {
     self.startPoint = startPoint
     self.endPoint = endPoint
@@ -29,9 +37,6 @@ final class UIVector: SKNode {
     self.zPosition = Layer.vector
     scene.addChild(self)
     
-    let vecSize = CGSize(width: 0.002,
-                         height: startPoint.length(toPoint: endPoint)  * 0.001)
-    let vector = SKSpriteNode(color: color, size: vecSize)
     vector.anchorPoint = CGPoint(x: 0.5, y: 0)
     vector.zPosition = Layer.vector
     
@@ -60,5 +65,16 @@ final class UIVector: SKNode {
     vectorArrow.color = color
 
     vector.addChild(vectorArrow)
+  }
+  
+  func highlight() {
+    if vector.size.width == 0.005 {
+      vector.size.width = 0.002
+      vector.color = color
+    }
+    else {
+      vector.size.width = 0.005
+      vector.color = .white
+    }
   }
 }
