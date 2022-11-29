@@ -18,6 +18,12 @@ enum AlertData {
   
   static let wrongData = "Oops... Wrang data."
   static let wrongDataBody = "Please, check entered data and try again."
+  
+  static let wrongLength = "Oops... Wrang length."
+  static let wrongLengthBody = "Please, make sure that the length value belongs to (0, 2700)."
+  
+  static let wrongPoints = "Oops... Wrang points."
+  static let wrongPointsBody = "Please, make sure that points values belong to: X(0, 2700), Y(0, 1500)."
 }
 
 enum ImageName {
@@ -41,6 +47,11 @@ enum PhysicsCategory {
 
 enum CollectionViewSection {
   case main
+}
+
+enum SceneSize {
+  static let x = 2700
+  static let y = 1500
 }
 
 enum ButtonData {

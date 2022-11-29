@@ -45,12 +45,7 @@ final class UIVector: SKNode {
     vectorHolder.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     vectorHolder.position = CGPoint(x: 0, y: 0)
     vectorHolder.zPosition = Layer.vectorHolder
-    
-//    vectorHolder.physicsBody = SKPhysicsBody(circleOfRadius: vectorHolder.size.width)// tmp
-//    vectorHolder.physicsBody?.isDynamic = true
-//    vectorHolder.physicsBody?.categoryBitMask = PhysicsCategory.vectorEnds
-//    vectorHolder.physicsBody?.collisionBitMask = PhysicsCategory.vectorEnds
-//
+
     vector.addChild(vectorHolder)
     
     let vectorArrow = SKSpriteNode(imageNamed: ImageName.vectorArrow)
@@ -62,11 +57,6 @@ final class UIVector: SKNode {
     vectorArrow.colorBlendFactor = 1
     vectorArrow.color = color
 
-//    vectorArrow.physicsBody = SKPhysicsBody(circleOfRadius: vectorArrow.size.width)// tmp
-//    vectorArrow.physicsBody?.isDynamic = true
-//    vectorArrow.physicsBody?.categoryBitMask = PhysicsCategory.vectorEnds
-//    vectorArrow.physicsBody?.collisionBitMask = PhysicsCategory.vectorEnds
-//
     vector.addChild(vectorArrow)
   }
 }

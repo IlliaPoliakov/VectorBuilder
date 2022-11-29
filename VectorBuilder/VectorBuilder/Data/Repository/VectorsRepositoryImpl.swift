@@ -49,6 +49,4 @@ final class VectorRepositoryImpl: VectorRepository {
   func deleteVector(withDataFrom modelVector: Vector) {
     localDataSource.deleteVector(withDataFrom: modelVector)
   }
-  
-  
 }
