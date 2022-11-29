@@ -37,7 +37,6 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     setUpPhysics()
     setUpBackground()
     initialize()
-    addvec()
   }
   
   
@@ -63,7 +62,54 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     
     addChild(background)
   }
+  
+  func setUpVector(_ vector: UIVector) {
+    let startPoint = vector.startPoint
+    let endPoint = vector.endPoint
+    let color = vector.color
+    
+    let size = CGSize(width: 0.002, height: startPoint.length(toPoint: endPoint) / self.size.height * 0.001)
+    let vector = SKSpriteNode( color: color, size: size)
+    
+    vector.anchorPoint = CGPoint(x: 0.5, y: 0)
+    vector.zPosition = Layer.vector
+    vector.position = CGPoint(x: startPoint.x / self.size.width * 0.001,
+                              y: startPoint.y / self.size.height * 0.001)
+    vector.zRotation = startPoint.angleWithPoint(endPoint)
+    
+    
+    let vectorHolder = SKSpriteNode(imageNamed: ImageName.vectorHolder)
+    vectorHolder.size = CGSize(width: self.size.width * 0.008, height: self.size.width * 0.008)
+    vectorHolder.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+    vectorHolder.position = CGPoint(x: 0, y: 0)
+    vectorHolder.zPosition = Layer.vectorHolder
+    
+//    vectorHolder.physicsBody = SKPhysicsBody(circleOfRadius: vectorHolder.size.width)
+//    vectorHolder.physicsBody?.isDynamic = true
+//    vectorHolder.physicsBody?.categoryBitMask = PhysicsCategory.vectorEnds
+//    vectorHolder.physicsBody?.collisionBitMask = PhysicsCategory.vectorEnds
+//
+    vector.addChild(vectorHolder)
+    
+    let vectorArrow = SKSpriteNode(imageNamed: ImageName.vectorArrow)
+    vectorArrow.size = CGSize(width: 7 / self.size.width * 0.001,
+                              height: 10 / self.size.width * 0.001)
+    vectorArrow.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+    vectorArrow.zPosition = Layer.vectorArrow
+    vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
+    vectorArrow.colorBlendFactor = 1
+    vectorArrow.color = color
 
+//    vectorArrow.physicsBody = SKPhysicsBody(circleOfRadius: vectorArrow.size.width)// tmp
+//    vectorArrow.physicsBody?.isDynamic = true
+//    vectorArrow.physicsBody?.categoryBitMask = PhysicsCategory.vectorEnds
+//    vectorArrow.physicsBody?.collisionBitMask = PhysicsCategory.vectorEnds
+//    
+    vector.addChild(vectorArrow)
+    
+    self.addChild(vector)
+  }
+  
   private func initialize() {
     var subscription: AnyCancellable? = nil
     
@@ -77,7 +123,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
         var lastVector: UIVector?
         
         for vector in vectors {
-          vector.addToScene(self)
+          self.setUpVector(vector)
           lastVector = vector
         }
         if let lastVector {
@@ -88,14 +134,13 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   }
   
   func moveScrollViewToPoint(_ point: CGPoint){
-//    let bounds = viewController?.spriteKitView.bounds
     viewController?.scrollView.setContentOffset(CGPoint(x:  point.x, y: point.y), animated: true)
   }
   
   func unwindFromAddViewController(withNewVector vector: UIVector) {
     vectors.append(vector)
     moveScrollViewToPoint(vector.endPoint)
-    vector.addToScene(self)
+    setUpVector(vector)
   }
 }
 

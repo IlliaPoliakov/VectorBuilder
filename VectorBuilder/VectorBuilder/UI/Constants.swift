@@ -28,9 +28,9 @@ enum ImageName {
 
 enum Layer {
   static let background: CGFloat = 0
-  static let vectorArrow: CGFloat = 1
-  static let vector: CGFloat = 2
-  static let vectorHolder:CGFloat = 3
+  static let vector: CGFloat = 1
+  static let vectorHolder:CGFloat = 2
+  static let vectorArrow: CGFloat = 3
   static let actualVector: CGFloat = 4
   static let foreground: CGFloat = 5
 }
