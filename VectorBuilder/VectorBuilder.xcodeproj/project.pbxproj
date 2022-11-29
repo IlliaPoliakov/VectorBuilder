@@ -1,0 +1,866 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		303B40AB02B2EF8DB8D06F67 /* Pods_VectorBuilder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0329634FFEDAACA5D6EE78B7 /* Pods_VectorBuilder.framework */; };
+		F23813AA2933E95B0007D79C /* GetVectorsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23813A92933E95B0007D79C /* GetVectorsUseCase.swift */; };
+		F23813AC2933E96D0007D79C /* SaveVectorUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23813AB2933E96D0007D79C /* SaveVectorUseCase.swift */; };
+		F23813AE2933E97B0007D79C /* DeleteVectorUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23813AD2933E97B0007D79C /* DeleteVectorUseCase.swift */; };
+		F23813B12933EA470007D79C /* VectorRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23813B02933EA470007D79C /* VectorRepository.swift */; };
+		F23813B32933EB140007D79C /* VectorsRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23813B22933EB140007D79C /* VectorsRepositoryImpl.swift */; };
+		F24B949629325BDE003B12E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B949529325BDE003B12E9 /* AppDelegate.swift */; };
+		F24B949829325BDE003B12E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B949729325BDE003B12E9 /* SceneDelegate.swift */; };
+		F24B94A029325BDE003B12E9 /* VectorBuilder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F24B949E29325BDE003B12E9 /* VectorBuilder.xcdatamodeld */; };
+		F24B94A229325BDF003B12E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F24B94A129325BDF003B12E9 /* Assets.xcassets */; };
+		F24B94A529325BDF003B12E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F24B94A329325BDF003B12E9 /* LaunchScreen.storyboard */; };
+		F24B94B029325BE0003B12E9 /* VectorBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94AF29325BE0003B12E9 /* VectorBuilderTests.swift */; };
+		F24B94BA29325BE0003B12E9 /* VectorBuilderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94B929325BE0003B12E9 /* VectorBuilderUITests.swift */; };
+		F24B94BC29325BE0003B12E9 /* VectorBuilderUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94BB29325BE0003B12E9 /* VectorBuilderUITestsLaunchTests.swift */; };
+		F24B94C92932730E003B12E9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94C82932730E003B12E9 /* Extensions.swift */; };
+		F24B94D429327B94003B12E9 /* VectorEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94D229327B94003B12E9 /* VectorEntity+CoreDataClass.swift */; };
+		F24B94D529327B94003B12E9 /* VectorEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94D329327B94003B12E9 /* VectorEntity+CoreDataProperties.swift */; };
+		F24B94D729327BCE003B12E9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94D629327BCE003B12E9 /* CoreDataManager.swift */; };
+		F24B94D929327BF4003B12E9 /* DataBaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94D829327BF4003B12E9 /* DataBaseDataSource.swift */; };
+		F24B94DC29327C75003B12E9 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94DB29327C75003B12E9 /* Vector.swift */; };
+		F24B94DF29327F68003B12E9 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94DE29327F68003B12E9 /* DIContainer.swift */; };
+		F24B94E32932BD34003B12E9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94E22932BD34003B12E9 /* MainViewController.swift */; };
+		F24B94E52932BE33003B12E9 /* AddVectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94E42932BE33003B12E9 /* AddVectorViewController.swift */; };
+		F24B94E829334B9F003B12E9 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94E729334B9F003B12E9 /* MainPresenter.swift */; };
+		F24B94EA29334BAD003B12E9 /* AddVectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94E929334BAD003B12E9 /* AddVectorPresenter.swift */; };
+		F24B94EC29334BC7003B12E9 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94EB29334BC7003B12E9 /* Router.swift */; };
+		F24B94EE29334CA9003B12E9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94ED29334CA9003B12E9 /* Constants.swift */; };
+		F24B94F129334D09003B12E9 /* UIVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94F029334D09003B12E9 /* UIVector.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F24B94AC29325BE0003B12E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F24B948A29325BDE003B12E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F24B949129325BDE003B12E9;
+			remoteInfo = VectorBuilder;
+		};
+		F24B94B629325BE0003B12E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F24B948A29325BDE003B12E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F24B949129325BDE003B12E9;
+			remoteInfo = VectorBuilder;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0329634FFEDAACA5D6EE78B7 /* Pods_VectorBuilder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VectorBuilder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D8020836FC7C78CCA33E11D /* Pods-VectorBuilder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VectorBuilder.release.xcconfig"; path = "Target Support Files/Pods-VectorBuilder/Pods-VectorBuilder.release.xcconfig"; sourceTree = "<group>"; };
+		3DA276E10728002A48E5482C /* Pods-VectorBuilder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VectorBuilder.debug.xcconfig"; path = "Target Support Files/Pods-VectorBuilder/Pods-VectorBuilder.debug.xcconfig"; sourceTree = "<group>"; };
+		F23813A92933E95B0007D79C /* GetVectorsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVectorsUseCase.swift; sourceTree = "<group>"; };
+		F23813AB2933E96D0007D79C /* SaveVectorUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveVectorUseCase.swift; sourceTree = "<group>"; };
+		F23813AD2933E97B0007D79C /* DeleteVectorUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteVectorUseCase.swift; sourceTree = "<group>"; };
+		F23813B02933EA470007D79C /* VectorRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorRepository.swift; sourceTree = "<group>"; };
+		F23813B22933EB140007D79C /* VectorsRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorsRepositoryImpl.swift; sourceTree = "<group>"; };
+		F24B949229325BDE003B12E9 /* VectorBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VectorBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F24B949529325BDE003B12E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F24B949729325BDE003B12E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		F24B949F29325BDE003B12E9 /* VectorBuilder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VectorBuilder.xcdatamodel; sourceTree = "<group>"; };
+		F24B94A129325BDF003B12E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F24B94A429325BDF003B12E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F24B94A629325BDF003B12E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F24B94AB29325BE0003B12E9 /* VectorBuilderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VectorBuilderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F24B94AF29325BE0003B12E9 /* VectorBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorBuilderTests.swift; sourceTree = "<group>"; };
+		F24B94B529325BE0003B12E9 /* VectorBuilderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VectorBuilderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F24B94B929325BE0003B12E9 /* VectorBuilderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorBuilderUITests.swift; sourceTree = "<group>"; };
+		F24B94BB29325BE0003B12E9 /* VectorBuilderUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorBuilderUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F24B94C82932730E003B12E9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F24B94D229327B94003B12E9 /* VectorEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VectorEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		F24B94D329327B94003B12E9 /* VectorEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VectorEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		F24B94D629327BCE003B12E9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		F24B94D829327BF4003B12E9 /* DataBaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseDataSource.swift; sourceTree = "<group>"; };
+		F24B94DB29327C75003B12E9 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
+		F24B94DE29327F68003B12E9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		F24B94E22932BD34003B12E9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		F24B94E42932BE33003B12E9 /* AddVectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVectorViewController.swift; sourceTree = "<group>"; };
+		F24B94E729334B9F003B12E9 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		F24B94E929334BAD003B12E9 /* AddVectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVectorPresenter.swift; sourceTree = "<group>"; };
+		F24B94EB29334BC7003B12E9 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		F24B94ED29334CA9003B12E9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F24B94F029334D09003B12E9 /* UIVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVector.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F24B948F29325BDE003B12E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				303B40AB02B2EF8DB8D06F67 /* Pods_VectorBuilder.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F24B94A829325BE0003B12E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F24B94B229325BE0003B12E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		24E7049726331F8F2F84D566 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3DA276E10728002A48E5482C /* Pods-VectorBuilder.debug.xcconfig */,
+				0D8020836FC7C78CCA33E11D /* Pods-VectorBuilder.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D4F81CC24E5F6C367CC77D2C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0329634FFEDAACA5D6EE78B7 /* Pods_VectorBuilder.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F23813A82933E93F0007D79C /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				F23813A92933E95B0007D79C /* GetVectorsUseCase.swift */,
+				F23813AB2933E96D0007D79C /* SaveVectorUseCase.swift */,
+				F23813AD2933E97B0007D79C /* DeleteVectorUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		F23813AF2933EA2C0007D79C /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				F23813B02933EA470007D79C /* VectorRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		F24B948929325BDE003B12E9 = {
+			isa = PBXGroup;
+			children = (
+				F24B949429325BDE003B12E9 /* VectorBuilder */,
+				F24B94AE29325BE0003B12E9 /* VectorBuilderTests */,
+				F24B94B829325BE0003B12E9 /* VectorBuilderUITests */,
+				F24B949329325BDE003B12E9 /* Products */,
+				24E7049726331F8F2F84D566 /* Pods */,
+				D4F81CC24E5F6C367CC77D2C /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F24B949329325BDE003B12E9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F24B949229325BDE003B12E9 /* VectorBuilder.app */,
+				F24B94AB29325BE0003B12E9 /* VectorBuilderTests.xctest */,
+				F24B94B529325BE0003B12E9 /* VectorBuilderUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F24B949429325BDE003B12E9 /* VectorBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94CA29327435003B12E9 /* App */,
+				F24B94CB2932743B003B12E9 /* UI */,
+				F24B94CC29327440003B12E9 /* Domain */,
+				F24B94CD2932744B003B12E9 /* Data */,
+			);
+			path = VectorBuilder;
+			sourceTree = "<group>";
+		};
+		F24B94AE29325BE0003B12E9 /* VectorBuilderTests */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94AF29325BE0003B12E9 /* VectorBuilderTests.swift */,
+			);
+			path = VectorBuilderTests;
+			sourceTree = "<group>";
+		};
+		F24B94B829325BE0003B12E9 /* VectorBuilderUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94B929325BE0003B12E9 /* VectorBuilderUITests.swift */,
+				F24B94BB29325BE0003B12E9 /* VectorBuilderUITestsLaunchTests.swift */,
+			);
+			path = VectorBuilderUITests;
+			sourceTree = "<group>";
+		};
+		F24B94CA29327435003B12E9 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F24B949529325BDE003B12E9 /* AppDelegate.swift */,
+				F24B949729325BDE003B12E9 /* SceneDelegate.swift */,
+				F24B94C82932730E003B12E9 /* Extensions.swift */,
+				F24B94DE29327F68003B12E9 /* DIContainer.swift */,
+				F24B94A629325BDF003B12E9 /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		F24B94CB2932743B003B12E9 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94EB29334BC7003B12E9 /* Router.swift */,
+				F24B94ED29334CA9003B12E9 /* Constants.swift */,
+				F24B94E02932A6B7003B12E9 /* UIElements */,
+				F24B94EF29334CE6003B12E9 /* Model */,
+				F24B94E12932BC69003B12E9 /* ViewConttrollers */,
+				F24B94E629334B6B003B12E9 /* Presenter */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		F24B94CC29327440003B12E9 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				F23813A82933E93F0007D79C /* UseCases */,
+				F24B94DA29327C6A003B12E9 /* Model */,
+				F23813AF2933EA2C0007D79C /* Repositories */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		F24B94CD2932744B003B12E9 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94CE29327AEC003B12E9 /* Model */,
+				F24B94CF29327AF9003B12E9 /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		F24B94CE29327AEC003B12E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94D229327B94003B12E9 /* VectorEntity+CoreDataClass.swift */,
+				F24B94D329327B94003B12E9 /* VectorEntity+CoreDataProperties.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F24B94CF29327AF9003B12E9 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				F23813B22933EB140007D79C /* VectorsRepositoryImpl.swift */,
+				F24B94D029327B42003B12E9 /* DataSources */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		F24B94D029327B42003B12E9 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94D129327B52003B12E9 /* DataBaseDataSource */,
+			);
+			path = DataSources;
+			sourceTree = "<group>";
+		};
+		F24B94D129327B52003B12E9 /* DataBaseDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94D829327BF4003B12E9 /* DataBaseDataSource.swift */,
+				F24B94D629327BCE003B12E9 /* CoreDataManager.swift */,
+				F24B949E29325BDE003B12E9 /* VectorBuilder.xcdatamodeld */,
+			);
+			path = DataBaseDataSource;
+			sourceTree = "<group>";
+		};
+		F24B94DA29327C6A003B12E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94DB29327C75003B12E9 /* Vector.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F24B94E02932A6B7003B12E9 /* UIElements */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94A129325BDF003B12E9 /* Assets.xcassets */,
+				F24B94A329325BDF003B12E9 /* LaunchScreen.storyboard */,
+			);
+			path = UIElements;
+			sourceTree = "<group>";
+		};
+		F24B94E12932BC69003B12E9 /* ViewConttrollers */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94E22932BD34003B12E9 /* MainViewController.swift */,
+				F24B94E42932BE33003B12E9 /* AddVectorViewController.swift */,
+			);
+			path = ViewConttrollers;
+			sourceTree = "<group>";
+		};
+		F24B94E629334B6B003B12E9 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94E729334B9F003B12E9 /* MainPresenter.swift */,
+				F24B94E929334BAD003B12E9 /* AddVectorPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		F24B94EF29334CE6003B12E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F24B94F029334D09003B12E9 /* UIVector.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F24B949129325BDE003B12E9 /* VectorBuilder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F24B94BF29325BE0003B12E9 /* Build configuration list for PBXNativeTarget "VectorBuilder" */;
+			buildPhases = (
+				1C056074FB3D5A1B3554D237 /* [CP] Check Pods Manifest.lock */,
+				F24B948E29325BDE003B12E9 /* Sources */,
+				F24B948F29325BDE003B12E9 /* Frameworks */,
+				F24B949029325BDE003B12E9 /* Resources */,
+				651F2A99A6DB81C54F19DEA9 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VectorBuilder;
+			productName = VectorBuilder;
+			productReference = F24B949229325BDE003B12E9 /* VectorBuilder.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F24B94AA29325BE0003B12E9 /* VectorBuilderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F24B94C229325BE0003B12E9 /* Build configuration list for PBXNativeTarget "VectorBuilderTests" */;
+			buildPhases = (
+				F24B94A729325BE0003B12E9 /* Sources */,
+				F24B94A829325BE0003B12E9 /* Frameworks */,
+				F24B94A929325BE0003B12E9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F24B94AD29325BE0003B12E9 /* PBXTargetDependency */,
+			);
+			name = VectorBuilderTests;
+			productName = VectorBuilderTests;
+			productReference = F24B94AB29325BE0003B12E9 /* VectorBuilderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F24B94B429325BE0003B12E9 /* VectorBuilderUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F24B94C529325BE0003B12E9 /* Build configuration list for PBXNativeTarget "VectorBuilderUITests" */;
+			buildPhases = (
+				F24B94B129325BE0003B12E9 /* Sources */,
+				F24B94B229325BE0003B12E9 /* Frameworks */,
+				F24B94B329325BE0003B12E9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F24B94B729325BE0003B12E9 /* PBXTargetDependency */,
+			);
+			name = VectorBuilderUITests;
+			productName = VectorBuilderUITests;
+			productReference = F24B94B529325BE0003B12E9 /* VectorBuilderUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F24B948A29325BDE003B12E9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					F24B949129325BDE003B12E9 = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					F24B94AA29325BE0003B12E9 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = F24B949129325BDE003B12E9;
+					};
+					F24B94B429325BE0003B12E9 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = F24B949129325BDE003B12E9;
+					};
+				};
+			};
+			buildConfigurationList = F24B948D29325BDE003B12E9 /* Build configuration list for PBXProject "VectorBuilder" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F24B948929325BDE003B12E9;
+			productRefGroup = F24B949329325BDE003B12E9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F24B949129325BDE003B12E9 /* VectorBuilder */,
+				F24B94AA29325BE0003B12E9 /* VectorBuilderTests */,
+				F24B94B429325BE0003B12E9 /* VectorBuilderUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F24B949029325BDE003B12E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F24B94A529325BDF003B12E9 /* LaunchScreen.storyboard in Resources */,
+				F24B94A229325BDF003B12E9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F24B94A929325BE0003B12E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F24B94B329325BE0003B12E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1C056074FB3D5A1B3554D237 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VectorBuilder-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		651F2A99A6DB81C54F19DEA9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VectorBuilder/Pods-VectorBuilder-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VectorBuilder/Pods-VectorBuilder-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VectorBuilder/Pods-VectorBuilder-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F24B948E29325BDE003B12E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F23813B32933EB140007D79C /* VectorsRepositoryImpl.swift in Sources */,
+				F23813AC2933E96D0007D79C /* SaveVectorUseCase.swift in Sources */,
+				F24B94D429327B94003B12E9 /* VectorEntity+CoreDataClass.swift in Sources */,
+				F23813AA2933E95B0007D79C /* GetVectorsUseCase.swift in Sources */,
+				F24B94DF29327F68003B12E9 /* DIContainer.swift in Sources */,
+				F24B94D929327BF4003B12E9 /* DataBaseDataSource.swift in Sources */,
+				F24B94E32932BD34003B12E9 /* MainViewController.swift in Sources */,
+				F24B94DC29327C75003B12E9 /* Vector.swift in Sources */,
+				F24B94E829334B9F003B12E9 /* MainPresenter.swift in Sources */,
+				F24B94D529327B94003B12E9 /* VectorEntity+CoreDataProperties.swift in Sources */,
+				F23813B12933EA470007D79C /* VectorRepository.swift in Sources */,
+				F24B94EE29334CA9003B12E9 /* Constants.swift in Sources */,
+				F24B94C92932730E003B12E9 /* Extensions.swift in Sources */,
+				F24B94EC29334BC7003B12E9 /* Router.swift in Sources */,
+				F24B94A029325BDE003B12E9 /* VectorBuilder.xcdatamodeld in Sources */,
+				F24B94EA29334BAD003B12E9 /* AddVectorPresenter.swift in Sources */,
+				F24B94F129334D09003B12E9 /* UIVector.swift in Sources */,
+				F24B949629325BDE003B12E9 /* AppDelegate.swift in Sources */,
+				F24B94D729327BCE003B12E9 /* CoreDataManager.swift in Sources */,
+				F24B94E52932BE33003B12E9 /* AddVectorViewController.swift in Sources */,
+				F24B949829325BDE003B12E9 /* SceneDelegate.swift in Sources */,
+				F23813AE2933E97B0007D79C /* DeleteVectorUseCase.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F24B94A729325BE0003B12E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F24B94B029325BE0003B12E9 /* VectorBuilderTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F24B94B129325BE0003B12E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F24B94BA29325BE0003B12E9 /* VectorBuilderUITests.swift in Sources */,
+				F24B94BC29325BE0003B12E9 /* VectorBuilderUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F24B94AD29325BE0003B12E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F24B949129325BDE003B12E9 /* VectorBuilder */;
+			targetProxy = F24B94AC29325BE0003B12E9 /* PBXContainerItemProxy */;
+		};
+		F24B94B729325BE0003B12E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F24B949129325BDE003B12E9 /* VectorBuilder */;
+			targetProxy = F24B94B629325BE0003B12E9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F24B94A329325BDF003B12E9 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F24B94A429325BDF003B12E9 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F24B94BD29325BE0003B12E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F24B94BE29325BE0003B12E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F24B94C029325BE0003B12E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3DA276E10728002A48E5482C /* Pods-VectorBuilder.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VectorBuilder/App/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = illia.VectorBuilder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F24B94C129325BE0003B12E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0D8020836FC7C78CCA33E11D /* Pods-VectorBuilder.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VectorBuilder/App/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = illia.VectorBuilder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F24B94C329325BE0003B12E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = illia.VectorBuilderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VectorBuilder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VectorBuilder";
+			};
+			name = Debug;
+		};
+		F24B94C429325BE0003B12E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = illia.VectorBuilderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VectorBuilder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VectorBuilder";
+			};
+			name = Release;
+		};
+		F24B94C629325BE0003B12E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = illia.VectorBuilderUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VectorBuilder;
+			};
+			name = Debug;
+		};
+		F24B94C729325BE0003B12E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = illia.VectorBuilderUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VectorBuilder;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F24B948D29325BDE003B12E9 /* Build configuration list for PBXProject "VectorBuilder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F24B94BD29325BE0003B12E9 /* Debug */,
+				F24B94BE29325BE0003B12E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F24B94BF29325BE0003B12E9 /* Build configuration list for PBXNativeTarget "VectorBuilder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F24B94C029325BE0003B12E9 /* Debug */,
+				F24B94C129325BE0003B12E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F24B94C229325BE0003B12E9 /* Build configuration list for PBXNativeTarget "VectorBuilderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F24B94C329325BE0003B12E9 /* Debug */,
+				F24B94C429325BE0003B12E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F24B94C529325BE0003B12E9 /* Build configuration list for PBXNativeTarget "VectorBuilderUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F24B94C629325BE0003B12E9 /* Debug */,
+				F24B94C729325BE0003B12E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F24B949E29325BDE003B12E9 /* VectorBuilder.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F24B949F29325BDE003B12E9 /* VectorBuilder.xcdatamodel */,
+			);
+			currentVersion = F24B949F29325BDE003B12E9 /* VectorBuilder.xcdatamodel */;
+			path = VectorBuilder.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = F24B948A29325BDE003B12E9 /* Project object */;
+}
