@@ -13,6 +13,8 @@ final class UIVector: SKNode {
   var endPoint: CGPoint
   var color: UIColor
   
+  var id: UUID = UUID()
+  
   private lazy var vector: SKSpriteNode = {
     let vecSize = CGSize(width: 0.002,
                          height: startPoint.length(toPoint: endPoint) / CGFloat(SceneSize.x))
@@ -34,6 +36,7 @@ final class UIVector: SKNode {
   }
   
   func addToScene(_ scene: SKScene) {
+    
     self.zPosition = Layer.vector
     scene.addChild(self)
     
@@ -43,6 +46,7 @@ final class UIVector: SKNode {
     vector.position = CGPoint(x: startPoint.x / CGFloat(SceneSize.x),
                               y: startPoint.y / CGFloat(SceneSize.y))
     vector.zRotation = startPoint.angleWithPoint(endPoint)
+    vector.name = SpriteNodeName.vector
     
     addChild(vector)
     
@@ -52,6 +56,7 @@ final class UIVector: SKNode {
     vectorHolder.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     vectorHolder.position = CGPoint(x: 0, y: 0)
     vectorHolder.zPosition = Layer.vectorHolder
+    vectorHolder.name = SpriteNodeName.holder
 
     vector.addChild(vectorHolder)
     
@@ -64,6 +69,7 @@ final class UIVector: SKNode {
     vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
     vectorArrow.colorBlendFactor = 1
     vectorArrow.color = color
+    vectorArrow.name = SpriteNodeName.arrow
 
     vector.addChild(vectorArrow)
   }

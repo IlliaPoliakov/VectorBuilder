@@ -68,6 +68,7 @@ enum CollectionViewSection {
 enum SceneSize {
   static let x: Int = 2700
   static let y: Int = 1500
+  static let aspectRatio: Double = 1.8
 }
 
 enum ButtonData {
@@ -82,5 +83,11 @@ enum Colors {
   static let mainColorBackground: UIColor = UIColor(named: "mainColor")!.withAlphaComponent(0.2)
 }
 
+enum SpriteNodeName {
+  static let background = "background"
+  static let arrow = "arrow"
+  static let holder = "holder"
+  static let vector = "vector"
+}
 
 

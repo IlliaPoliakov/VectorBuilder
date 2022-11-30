@@ -42,6 +42,10 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
  
   private var subscriptions = Set<AnyCancellable>()
   
+  private lazy var activeVector: SKNode? = nil
+  private lazy var touchOffsetX: CGFloat = 0
+  private lazy var touchOffsetY: CGFloat = 0
+  
 
   // -MARK: - Funcs -
   
@@ -76,6 +80,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     background.position = CGPoint(x: 0, y: 0)
     background.zPosition = Layer.background
     background.size = self.size
+    background.name = SpriteNodeName.background
     
     addChild(background)
   }
@@ -133,6 +138,42 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     vector.addToScene(self)
     
     vector.highlight()
+  }
+  
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    for touch in touches {
+      let touchPoint = touch.location(in: self)
+      let touchedNode = atPoint(touchPoint)
+      
+      print(touchedNode.name)
+      switch touchedNode.name {
+      case SpriteNodeName.vector:
+        viewController?.scrollView.isScrollEnabled = false
+
+        activeVector = touchedNode
+        touchOffsetX = touchPoint.x - touchedNode.position.x
+        touchOffsetY = touchPoint.y - touchedNode.position.y
+        
+      default:
+        break
+      }
+      
+    }
+  }
+  
+  override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    if let activeVector, var touchPosition = touches.first?.location(in: self) {
+      activeVector.position = CGPoint(x: touchPosition.x - touchOffsetX,
+                                      y: touchPosition.y - touchOffsetY)
+    }
+  }
+  
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    if activeVector != nil {
+      
+      activeVector = nil
+      viewController?.scrollView.isScrollEnabled = true
+    }
   }
 }
 
