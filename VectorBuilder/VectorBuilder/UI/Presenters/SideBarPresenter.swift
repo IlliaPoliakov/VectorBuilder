@@ -80,35 +80,31 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
     mainPresenter?.moveScrollViewToPoint(point)
     vector.highlight()
   }
-}
-
-
-extension SideBarViewController: UIContextMenuInteractionDelegate {
-  func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
-                              configurationForMenuAtLocation location: CGPoint)
-  -> UIContextMenuConfiguration? {
+  
+  func collectionView(_ collectionView: UICollectionView,
+                      contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
+                      point: CGPoint) -> UIContextMenuConfiguration? {
+    let trashImage = UIImage(systemName: "trash")!
+      .withTintColor(.red, renderingMode: .alwaysOriginal)
+    
+    let vector = self.mainPresenter!.vectors[indexPaths.first!.row]
     
     return UIContextMenuConfiguration(
       identifier: nil,
-      previewProvider: nil,
-      actionProvider: { _ in
-        let deleteAction = self.deleteAction()
-        let children: [UIMenuElement] = [deleteAction]
-        return UIMenu(title: "", children: children)
-      })
-  }
-  
-  func deleteAction() -> UIAction {
-    let allAttributes = UIMenuElement.Attributes()
-    let trashImage = UIImage(systemName: "trash")!
-      .withTintColor(Colors.mainColorClear, renderingMode: .alwaysOriginal)
-    
-    return UIAction(
-      title: "Delete",
-      image: trashImage,
-      identifier: nil,
-      attributes: allAttributes) { _ in
-        presenter.
+      previewProvider: nil) { _ in
+        let deleteAction = UIAction(
+          title: "Delete Vector",
+          image: trashImage) { _ in
+            self.deleteVectorUseCase.execute(withDataFrom: vector)
+            self.mainPresenter!.vectors.remove(at: indexPaths.first!.row)
+            let presenter = self.mainPresenter as! MainPresenter
+            presenter.removeChildren(in: [vector])
+            
+            self.initialize()
+          }
+        
+        return UIMenu(title: "", image: nil, children: [deleteAction])
       }
   }
 }
+

@@ -71,6 +71,8 @@ final class AddVectorViewController: UIViewController {
   // -MARK: - Funcs -
   
   private func setupViews() {
+    self.hideKeyboardWhenTappedAround()
+    
     self.view.backgroundColor = .systemBackground
     
     createVectorLabel = UILabel().then { label in
