@@ -35,7 +35,7 @@ final class Router {
     presenter.assignViewController(viewController)
     
     let sideBarVc = sideBarViewController as! SideBarViewController
-    sideBarVc.presenter.mainPresenter = presenter
+    sideBarVc.presenter.assignManiPresenter(presenter)
     
     return viewController
   }()
