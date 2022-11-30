@@ -47,7 +47,8 @@ final class UIVector: SKNode {
     addChild(vector)
     
     let vectorHolder = SKSpriteNode(imageNamed: ImageName.vectorHolder)
-    vectorHolder.size = CGSize(width:  0.008, height: 0.008)
+    vectorHolder.size = CGSize(width:  10 / CGFloat(SceneSize.y),
+                               height: 10 / CGFloat(SceneSize.y))
     vectorHolder.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     vectorHolder.position = CGPoint(x: 0, y: 0)
     vectorHolder.zPosition = Layer.vectorHolder
@@ -68,13 +69,16 @@ final class UIVector: SKNode {
   }
   
   func highlight() {
-    if vector.size.width == 0.005 {
-      vector.size.width = 0.002
-      vector.color = color
-    }
-    else {
-      vector.size.width = 0.005
-      vector.color = .white
-    }
+    let fadeOut = SKAction.fadeOut(withDuration: 0.1)
+    let fadeIn = SKAction.fadeIn(withDuration: 1)
+    let fadeSequence = SKAction.sequence([fadeOut, fadeIn])
+ 
+    let increaseSize = SKAction.resize(toWidth: 0.0035, duration: 0.5)
+    let wait = SKAction.wait(forDuration: 1)
+    let decreaseSize = SKAction.resize(toWidth: 0.002, duration: 0.5)
+    let sequenceAction = SKAction.sequence([increaseSize, wait, decreaseSize])
+    
+    self.vector.run(sequenceAction)
+    self.run(fadeSequence)
   }
 }

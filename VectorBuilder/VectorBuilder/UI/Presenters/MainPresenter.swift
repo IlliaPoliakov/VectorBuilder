@@ -131,18 +131,11 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     vectors.append(vector)
     moveScrollViewToPoint(vector.endPoint)
     vector.addToScene(self)
-    vector.zPosition = Layer.actualVector
+    highlightVector(vector)
   }
   
   func highlightVector(_ vector: UIVector) {
-    UIView.animate(withDuration: 0.5, delay: 0, options: .autoreverse) {
-      vector.highlight()
-    } completion: { _ in }
-    
-    UIView.animate(withDuration: 0.5, delay: 1, options: .autoreverse) {
-      vector.highlight()
-    } completion: { _ in }
-
+    vector.highlight()
   }
   
   
