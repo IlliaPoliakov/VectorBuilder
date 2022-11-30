@@ -9,9 +9,9 @@ import UIKit
 
 protocol SideBarPresenterProtocol: UICollectionViewDelegate {
   var dataSource: UICollectionViewDiffableDataSource<CollectionViewSection, UIVector> { get }
-  var mainPresenter: MainPresenterProtocol? {get set}
   
   func assignViewController(_ viewController: UIViewController)
+  func assignManiPresenter(_ mainPresenter: MainPresenterProtocol)
   
   func initialize()
   
@@ -24,7 +24,7 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
   
   private weak var viewController: SideBarViewController?
   
-  var mainPresenter: MainPresenterProtocol?
+  private var mainPresenter: MainPresenterProtocol?
   
   private let deleteVectorUseCase: DeleteVectorUseCase =
   AppDelegate.DIContainer.resolve(DeleteVectorUseCase.self)!
@@ -61,15 +61,15 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
   func assignViewController(_ viewController: UIViewController) {
     self.viewController = (viewController as! SideBarViewController)
   }
-  
-  func assignViewController(_ mainPresenter: MainPresenterProtocol) {
+
+  func assignManiPresenter(_ mainPresenter: MainPresenterProtocol) {
     self.mainPresenter = mainPresenter
   }
   
-  
   func vectorTupped(_ vector: UIVector) {
-    mainPresenter?.moveScrollViewToPoint(vector.endPoint.centerPoint(withPoint: vector.startPoint))
-    mainPresenter?.highlightVector(vector)
+    mainPresenter?.moveScrollViewToPoint(
+      vector.endPoint.centerPoint(withPoint: vector.startPoint))
+    vector.highlight()
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
