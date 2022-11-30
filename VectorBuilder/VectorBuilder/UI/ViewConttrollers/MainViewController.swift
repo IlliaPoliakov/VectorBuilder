@@ -12,15 +12,6 @@ import Then
 
 final class MainViewController: UIViewController {
   
-  init(_ presenter: MainPresenterProtocol, _ sideBarViewController: SideBarViewController){
-    self.presenter = presenter
-    self.sideBarViewContrtoller = sideBarViewController
-    
-    super.init(nibName: nil, bundle: nil)
-    
-    view.insertSubview(sideBarViewController.view, at: 0)
-    addChild(sideBarViewController)
-  }
   init(_ presenter: MainPresenterProtocol){
     self.presenter = presenter
     
@@ -45,8 +36,6 @@ final class MainViewController: UIViewController {
   // -MARK: - Dependencies -
   
   var presenter: MainPresenterProtocol
-  
-  private weak var sideBarViewContrtoller: SideBarViewController?
   
   
   // -MARK: - Views -

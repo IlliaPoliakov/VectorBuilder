@@ -19,7 +19,7 @@ enum SideBarCellData {
   static let y = "y: "
 }
 
-enum AddVcLabel {
+enum AddVcLabelData {
   static let createNewVector = "Create New Vector:"
   static let startPoint = "Start Point:"
   static let endPoint = "End Point:"

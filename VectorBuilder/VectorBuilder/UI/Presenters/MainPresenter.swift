@@ -18,7 +18,6 @@ protocol MainPresenterProtocol {
   func sideBarButtonTupped()
   func unwindFromAddViewController(withNewVector vector: UIVector)
   func moveScrollViewToPoint(_ point: CGPoint)
-  func highlightVector(_ vector: UIVector)
 }
 
 protocol MainPresenterDelegete {
@@ -49,6 +48,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   override func didMove(to view: SKView) {
     setUpPhysics()
     setUpBackground()
+    
     initialize()
   }
   
@@ -131,51 +131,9 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     vectors.append(vector)
     moveScrollViewToPoint(vector.endPoint)
     vector.addToScene(self)
-    highlightVector(vector)
-  }
-  
-  func highlightVector(_ vector: UIVector) {
+    
     vector.highlight()
   }
-  
-  
-  var vectorTouchedBool = false
-  var touchedVector: UIVector? = nil
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    guard let touch = touches.first else {
-      return
-    }
-    let touchLocation = touch.location(in: self)
-    
-    let vectors = vectors.filter { $0.contains(touchLocation) }
-    guard !vectors.isEmpty
-    else {
-      return
-    }
-    vectorTouchedBool = true
-    touchedVector = vectors.first
-    
-  }
-  
-  override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    guard vectorTouchedBool,
-          let touchedVector
-    else {
-      return
-    }
-    guard let touch = touches.first else {
-      return
-    }
-    let touchLocation = touch.location(in: self)
-    touchedVector.position = touchLocation
-  }
-  
-  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-
-    vectorTouchedBool = false
-    touchedVector = nil
-  }
-  
 }
 
 extension MainPresenter: SKPhysicsContactDelegate {
