@@ -17,11 +17,6 @@ final class ContainerViewController: UIViewController, MainPresenterDelegete {
     self.sideBarViewController = sideBarViewController
     
     super.init(nibName: nil, bundle: nil)
-    
-    view.addSubview(mainViewController.view)
-    addChild(mainViewController)
-    view.insertSubview(sideBarViewController.view, at: 0)
-    addChild(sideBarViewController)
   }
   
   required init?(coder: NSCoder) {
@@ -33,6 +28,10 @@ final class ContainerViewController: UIViewController, MainPresenterDelegete {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    view.addSubview(mainViewController.view)
+    addChild(mainViewController)
+    view.insertSubview(sideBarViewController.view, at: 0)
+    addChild(sideBarViewController)
   }
   
   
@@ -62,8 +61,6 @@ final class ContainerViewController: UIViewController, MainPresenterDelegete {
         self.mainViewController.view.frame.origin.x =
         self.mainViewController.view.frame.width / 3
         self.sideBarViewController.collectionView.alpha = 1
-      } completion: { _ in
-        
       }
     }
     else {
@@ -74,10 +71,9 @@ final class ContainerViewController: UIViewController, MainPresenterDelegete {
                      options: .curveEaseInOut) {
         self.mainViewController.view.frame.origin.x = 0
         self.sideBarViewController.collectionView.alpha = 0
-      } completion: { _ in
-        
       }
     }
+    
     isSideBarOpened = !isSideBarOpened
   }
 }

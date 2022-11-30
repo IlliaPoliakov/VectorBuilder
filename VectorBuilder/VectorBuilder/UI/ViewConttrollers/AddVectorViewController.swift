@@ -77,7 +77,7 @@ final class AddVectorViewController: UIViewController {
     
     createVectorLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = AddVcLabel.createNewVector
+      label.text = AddVcLabelData.createNewVector
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .largeTitle)
       label.textAlignment = .center
@@ -86,7 +86,7 @@ final class AddVectorViewController: UIViewController {
     
     startPointLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = AddVcLabel.startPoint
+      label.text = AddVcLabelData.startPoint
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .title1)
       label.textAlignment = .center
@@ -131,7 +131,7 @@ final class AddVectorViewController: UIViewController {
     
     endPointLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = AddVcLabel.endPoint
+      label.text = AddVcLabelData.endPoint
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .title1)
       label.textAlignment = .center
@@ -178,7 +178,7 @@ final class AddVectorViewController: UIViewController {
     
     setLengthLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = AddVcLabel.setLength
+      label.text = AddVcLabelData.setLength
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .largeTitle)
       label.textAlignment = .center
@@ -194,7 +194,7 @@ final class AddVectorViewController: UIViewController {
     
     manualLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = AddVcLabel.manual
+      label.text = AddVcLabelData.manual
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .title2)
       label.textAlignment = .center
@@ -207,7 +207,7 @@ final class AddVectorViewController: UIViewController {
     
     addVectorButton = UIButton().then { button in
       button.translatesAutoresizingMaskIntoConstraints = false
-      button.setTitle(AddVcLabel.addVector, for: .normal)
+      button.setTitle(AddVcLabelData.addVector, for: .normal)
       button.setTitleColor(Colors.mainColorClear, for: .normal)
       button.setTitleColor(ButtonData.backgroundColor, for: .highlighted)
       button.tintColor = Colors.mainColorClear
