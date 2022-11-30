@@ -14,12 +14,38 @@ final class Router {
   
   // -MARK: - Properties -
   
+  lazy var containerViewController: UIViewController = {
+    let viewController: ContainerViewController =
+    ContainerViewController(mainViewController as! MainViewController,
+                            sideBarViewController as! SideBarViewController)
+    
+    let mainVC = self.mainViewController as! MainViewController
+    
+    mainVC.presenter.mainPresenterDelegete = viewController
+
+    return viewController
+  }()
+  
   lazy var mainViewController: UIViewController = {
     let presenter: MainPresenterProtocol =
     AppDelegate.DIContainer.resolve(MainPresenterProtocol.self)!
-    
+
     let viewController: MainViewController = MainViewController(presenter)
     
+    presenter.assignViewController(viewController)
+    
+    let sideBarVc = sideBarViewController as! SideBarViewController
+    sideBarVc.presenter.mainPresenter = presenter
+    
+    return viewController
+  }()
+  
+  lazy var sideBarViewController: UIViewController = {
+    let presenter: SideBarPresenterProtocol =
+    AppDelegate.DIContainer.resolve(SideBarPresenterProtocol.self)!
+
+    let viewController: UIViewController = SideBarViewController(presenter)
+
     presenter.assignViewController(viewController)
     
     return viewController

@@ -181,7 +181,7 @@
 		B311E11697A9B1BDEB1F985784C23914 /* ConstraintInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsets.swift; path = Sources/ConstraintInsets.swift; sourceTree = "<group>"; };
 		B4034AF99CC68B0804929CA446C0E69E /* Debugging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Debugging.swift; path = Sources/Debugging.swift; sourceTree = "<group>"; };
 		B416B12585507771B804B9BD9EC02936 /* SnapKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-prefix.pch"; sourceTree = "<group>"; };
-		B87BCC22036C266B9CCB664241B88E6C /* Pods-VectorBuilder */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-VectorBuilder"; path = Pods_VectorBuilder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B87BCC22036C266B9CCB664241B88E6C /* Pods_VectorBuilder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VectorBuilder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAF673E6F01D9C69FF47E3B3C79D175 /* SnapKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SnapKit.modulemap; sourceTree = "<group>"; };
 		BEFFA6EAA8D5A139B61BC79DE10CC67F /* SnapKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.release.xcconfig; sourceTree = "<group>"; };
 		C13B67E2F9E3DE4266DE723E18622761 /* GraphIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GraphIdentifier.swift; path = Sources/GraphIdentifier.swift; sourceTree = "<group>"; };
@@ -341,7 +341,7 @@
 		6B7C26D48C2A948A789C1D95D5B3417D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B87BCC22036C266B9CCB664241B88E6C /* Pods-VectorBuilder */,
+				B87BCC22036C266B9CCB664241B88E6C /* Pods_VectorBuilder.framework */,
 				979486118B3E90C08386079D57962701 /* SnapKit.framework */,
 				8ACA110EF3B35B3FCC08297B3799D9AD /* Swinject.framework */,
 				9317E4947CA2FE1B5D5999034C09CCA7 /* Then.framework */,
@@ -523,7 +523,7 @@
 			);
 			name = "Pods-VectorBuilder";
 			productName = Pods_VectorBuilder;
-			productReference = B87BCC22036C266B9CCB664241B88E6C /* Pods-VectorBuilder */;
+			productReference = B87BCC22036C266B9CCB664241B88E6C /* Pods_VectorBuilder.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		46065AF968A5A92D450BB21F7F24367D /* Swinject */ = {

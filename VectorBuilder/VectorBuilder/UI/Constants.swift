@@ -12,13 +12,20 @@ enum VectorBuildState {
   case withLength
 }
 
+enum SideBarCellData {
+  static let startPonint = "Start:"
+  static let endPonint = "End:"
+  static let x = "x: "
+  static let y = "y: "
+}
+
 enum AddVcLabel {
   static let createNewVector = "Create New Vector:"
   static let startPoint = "Start Point:"
   static let endPoint = "End Point:"
-  static let setLength = "Or Just Set The Length of The Vector and Position it Manually:"
+  static let setLength = "Or Just Set The Length of The Vector:"
   static let addVector = "Add Vector"
-  static let manual = " Just in case:\n Origin - left bottom angel of the screen.\n Length value belongs to (0, 2700)\n X and Y belongs to (0, 2700) and (0, 1500) accordingly."
+  static let manual = " Just in case:\n Origin - bottom left corner of the screen.\n Length value belongs to (0,2700).\n X and Y belongs to (0,2700) and (0,1500) accordingly."
 }
 
 enum AlertData {
@@ -74,4 +81,6 @@ enum Colors {
   static let mainColorClear: UIColor = UIColor(named: "mainColor")!
   static let mainColorBackground: UIColor = UIColor(named: "mainColor")!.withAlphaComponent(0.2)
 }
+
+
 

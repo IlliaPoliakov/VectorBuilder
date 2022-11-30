@@ -12,6 +12,15 @@ import Then
 
 final class MainViewController: UIViewController {
   
+  init(_ presenter: MainPresenterProtocol, _ sideBarViewController: SideBarViewController){
+    self.presenter = presenter
+    self.sideBarViewContrtoller = sideBarViewController
+    
+    super.init(nibName: nil, bundle: nil)
+    
+    view.insertSubview(sideBarViewController.view, at: 0)
+    addChild(sideBarViewController)
+  }
   init(_ presenter: MainPresenterProtocol){
     self.presenter = presenter
     
@@ -35,7 +44,9 @@ final class MainViewController: UIViewController {
   
   // -MARK: - Dependencies -
   
-  private(set) var presenter: MainPresenterProtocol
+  var presenter: MainPresenterProtocol
+  
+  private weak var sideBarViewContrtoller: SideBarViewController?
   
   
   // -MARK: - Views -
@@ -45,6 +56,8 @@ final class MainViewController: UIViewController {
   private(set) var spriteKitView: SKView!
   
   private var addVectorButton: UIButton!
+  
+  private var sideBarButton: UIButton!
   
   
   // -MARK: - Funcs -
@@ -76,11 +89,24 @@ final class MainViewController: UIViewController {
       button.addAction(UIAction(handler: {_ in self.presenter.addVectorButtonTupped()}),
                        for: .touchUpInside)
     }
+    
+    sideBarButton = UIButton().then { button in
+      button.translatesAutoresizingMaskIntoConstraints = false
+      button.setImage(UIImage(systemName: "line.3.horizontal"), for: .normal)
+      button.tintColor = Colors.mainColorClear
+      button.layer.borderWidth = ButtonData.borderWidth
+      button.layer.borderColor = ButtonData.borderColor.cgColor
+      button.layer.cornerRadius = ButtonData.cornerRadius
+      button.backgroundColor = ButtonData.backgroundColor
+      button.addAction(UIAction(handler: {_ in self.presenter.sideBarButtonTupped()}),
+                       for: .touchUpInside)
+    }
   }
   
   private func layoutViews() {
     self.view.addSubview(scrollView)
     self.view.addSubview(addVectorButton)
+    self.view.addSubview(sideBarButton)
     scrollView.addSubview(spriteKitView)
     
     scrollView.snp.makeConstraints { make in
@@ -95,7 +121,13 @@ final class MainViewController: UIViewController {
     
     addVectorButton.snp.makeConstraints { make in
       make.trailing.equalToSuperview().offset(-30)
-      make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-5)
+      make.bottom.equalToSuperview().offset(-40)
+      make.width.height.equalTo(self.view.bounds.width / 10)
+    }
+    
+    sideBarButton.snp.makeConstraints { make in
+      make.leading.equalToSuperview().offset(30)
+      make.top.equalToSuperview().offset(50)
       make.width.height.equalTo(self.view.bounds.width / 10)
     }
   }

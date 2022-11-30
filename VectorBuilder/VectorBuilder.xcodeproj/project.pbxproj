@@ -35,6 +35,10 @@
 		F24B94EC29334BC7003B12E9 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94EB29334BC7003B12E9 /* Router.swift */; };
 		F24B94EE29334CA9003B12E9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94ED29334CA9003B12E9 /* Constants.swift */; };
 		F24B94F129334D09003B12E9 /* UIVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94F029334D09003B12E9 /* UIVector.swift */; };
+		F266630E2936BB700080145E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F266630D2936BB700080145E /* ContainerViewController.swift */; };
+		F2AD710729368C820011D45C /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AD710629368C820011D45C /* SideBarViewController.swift */; };
+		F2AD710929368E630011D45C /* SideBarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AD710829368E630011D45C /* SideBarPresenter.swift */; };
+		F2AD710C293695930011D45C /* SideBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AD710B293695930011D45C /* SideBarCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +93,10 @@
 		F24B94EB29334BC7003B12E9 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		F24B94ED29334CA9003B12E9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F24B94F029334D09003B12E9 /* UIVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVector.swift; sourceTree = "<group>"; };
+		F266630D2936BB700080145E /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		F2AD710629368C820011D45C /* SideBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
+		F2AD710829368E630011D45C /* SideBarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarPresenter.swift; sourceTree = "<group>"; };
+		F2AD710B293695930011D45C /* SideBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,9 +145,9 @@
 		F23813A82933E93F0007D79C /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				F23813AD2933E97B0007D79C /* DeleteVectorUseCase.swift */,
 				F23813A92933E95B0007D79C /* GetVectorsUseCase.swift */,
 				F23813AB2933E96D0007D79C /* SaveVectorUseCase.swift */,
-				F23813AD2933E97B0007D79C /* DeleteVectorUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -222,7 +230,7 @@
 				F24B94E02932A6B7003B12E9 /* UIElements */,
 				F24B94EF29334CE6003B12E9 /* Model */,
 				F24B94E12932BC69003B12E9 /* ViewConttrollers */,
-				F24B94E629334B6B003B12E9 /* Presenter */,
+				F24B94E629334B6B003B12E9 /* Presenters */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -302,19 +310,23 @@
 		F24B94E12932BC69003B12E9 /* ViewConttrollers */ = {
 			isa = PBXGroup;
 			children = (
-				F24B94E22932BD34003B12E9 /* MainViewController.swift */,
 				F24B94E42932BE33003B12E9 /* AddVectorViewController.swift */,
+				F266630D2936BB700080145E /* ContainerViewController.swift */,
+				F24B94E22932BD34003B12E9 /* MainViewController.swift */,
+				F2AD710629368C820011D45C /* SideBarViewController.swift */,
+				F2AD710A293695660011D45C /* CustomCells */,
 			);
 			path = ViewConttrollers;
 			sourceTree = "<group>";
 		};
-		F24B94E629334B6B003B12E9 /* Presenter */ = {
+		F24B94E629334B6B003B12E9 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
-				F24B94E729334B9F003B12E9 /* MainPresenter.swift */,
 				F24B94E929334BAD003B12E9 /* AddVectorPresenter.swift */,
+				F24B94E729334B9F003B12E9 /* MainPresenter.swift */,
+				F2AD710829368E630011D45C /* SideBarPresenter.swift */,
 			);
-			path = Presenter;
+			path = Presenters;
 			sourceTree = "<group>";
 		};
 		F24B94EF29334CE6003B12E9 /* Model */ = {
@@ -323,6 +335,14 @@
 				F24B94F029334D09003B12E9 /* UIVector.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		F2AD710A293695660011D45C /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				F2AD710B293695930011D45C /* SideBarCell.swift */,
+			);
+			path = CustomCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -500,6 +520,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F23813B32933EB140007D79C /* VectorsRepositoryImpl.swift in Sources */,
+				F2AD710C293695930011D45C /* SideBarCell.swift in Sources */,
+				F266630E2936BB700080145E /* ContainerViewController.swift in Sources */,
 				F23813AC2933E96D0007D79C /* SaveVectorUseCase.swift in Sources */,
 				F24B94D429327B94003B12E9 /* VectorEntity+CoreDataClass.swift in Sources */,
 				F23813AA2933E95B0007D79C /* GetVectorsUseCase.swift in Sources */,
@@ -510,6 +532,7 @@
 				F24B94E829334B9F003B12E9 /* MainPresenter.swift in Sources */,
 				F24B94D529327B94003B12E9 /* VectorEntity+CoreDataProperties.swift in Sources */,
 				F23813B12933EA470007D79C /* VectorRepository.swift in Sources */,
+				F2AD710929368E630011D45C /* SideBarPresenter.swift in Sources */,
 				F24B94EE29334CA9003B12E9 /* Constants.swift in Sources */,
 				F24B94C92932730E003B12E9 /* Extensions.swift in Sources */,
 				F24B94EC29334BC7003B12E9 /* Router.swift in Sources */,
@@ -518,6 +541,7 @@
 				F24B94F129334D09003B12E9 /* UIVector.swift in Sources */,
 				F24B949629325BDE003B12E9 /* AppDelegate.swift in Sources */,
 				F24B94D729327BCE003B12E9 /* CoreDataManager.swift in Sources */,
+				F2AD710729368C820011D45C /* SideBarViewController.swift in Sources */,
 				F24B94E52932BE33003B12E9 /* AddVectorViewController.swift in Sources */,
 				F24B949829325BDE003B12E9 /* SceneDelegate.swift in Sources */,
 				F23813AE2933E97B0007D79C /* DeleteVectorUseCase.swift in Sources */,
