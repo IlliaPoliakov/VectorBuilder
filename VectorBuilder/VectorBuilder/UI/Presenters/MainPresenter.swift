@@ -115,7 +115,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   private func addGestureRecognizer() {
     let pressed:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
     pressed.delegate = self
-    pressed.minimumPressDuration = 1.5
+    pressed.minimumPressDuration = 1
     view?.addGestureRecognizer(pressed)
   }
   
@@ -151,28 +151,6 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     vector.addToScene(self, withName: String(vectors.count))
     
     vector.highlight()
-  }
-  
-  private func saveVectorPosition() {
-    guard let activeVector else { return }
-    
-    let vector = vectors.first(where: { $0.vector.name == activeVector.name })!
-    
-    let newStartPoint = CGPoint(x: activeVector.position.x * CGFloat(SceneSize.height),
-                                y: activeVector.position.y * CGFloat(SceneSize.height))
-    let newEndPoint = CGPoint(x: newStartPoint.x + vector.endPoint.x - vector.startPoint.x,
-                              y: newStartPoint.y + vector.endPoint.y - vector.startPoint.y)
-    
-    updateVectorPositionUseCase.execute(withVector: vector,
-                                        withStartPoint: newStartPoint,
-                                        withEndPoint: newEndPoint)
-    
-    vector.startPoint = newStartPoint
-    vector.endPoint = newEndPoint
-
-    self.activeVector = nil
-    
-    viewController?.scrollView.isScrollEnabled = true
   }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -229,7 +207,28 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   }
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    saveVectorPosition()
+    guard let activeVector else { return }
+    
+    let vector = vectors.first(where: { $0.vector.name == activeVector.name })!
+    
+    let newStartPoint = CGPoint(
+      x: activeVector.position.x * CGFloat(SceneSize.height),
+      y: activeVector.position.y * CGFloat(SceneSize.height))
+    let newEndPoint = CGPoint(
+      x: newStartPoint.x + vector.endPoint.x - vector.startPoint.x,
+      y: newStartPoint.y + vector.endPoint.y - vector.startPoint.y)
+    
+    updateVectorPositionUseCase.execute(
+      withVector: vector,
+      withStartPoint: newStartPoint,
+      withEndPoint: newEndPoint)
+    
+    vector.startPoint = newStartPoint
+    vector.endPoint = newEndPoint
+
+    self.activeVector = nil
+    
+    viewController?.scrollView.isScrollEnabled = true
   }
 }
 
@@ -276,8 +275,14 @@ extension MainPresenter: UIGestureRecognizerDelegate {
     case .ended:
       let vector = vectors.first(where: { $0.vector.name == activeVector!.name })!
       vector.changeWidthForState(changingState: false)
+      var endPoint = sender.location(in: viewController?.scrollView)
+      endPoint = CGPoint(x: endPoint.x - CGFloat(SceneSize.width / 2),
+                         y: CGFloat(SceneSize.height) / 2 - endPoint.y )
       
-      saveVectorPosition()
+      updateVectorPositionUseCase.execute(
+        withVector: vector,
+        withStartPoint: vector.startPoint,
+        withEndPoint: endPoint)
       
     default:
       break
