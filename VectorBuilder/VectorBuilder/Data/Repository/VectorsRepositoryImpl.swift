@@ -25,9 +25,7 @@ final class VectorRepositoryImpl: VectorRepository {
     let publisher = PassthroughSubject<[Vector], Never>()
     
     DispatchQueue.global(qos: .userInitiated).async {
-      let vectorEntities = self.localDataSource.loadVectors()
-      
-      if let vectorEntities {
+      if let vectorEntities = self.localDataSource.loadVectors() {
         let vectors = VectorEntity.convertToDomain(withEntities: vectorEntities)
         DispatchQueue.main.async {
           publisher.send(vectors)
@@ -48,5 +46,13 @@ final class VectorRepositoryImpl: VectorRepository {
   
   func deleteVector(withDataFrom modelVector: Vector) {
     localDataSource.deleteVector(withDataFrom: modelVector)
+  }
+  
+  func updateVectorPosition(withVector vector: Vector,
+                            withStartPoint startPoint: CGPoint,
+                            withEndPoint endPoint: CGPoint) {
+    localDataSource.updateVectorPosition(withVector: vector,
+                                         withStartPoint: startPoint,
+                                         withEndPoint: endPoint)
   }
 }
