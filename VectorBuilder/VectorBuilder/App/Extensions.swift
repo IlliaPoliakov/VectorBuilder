@@ -9,7 +9,7 @@ import UIKit
 
 extension UIColor {
   
-   convenience init(hex: String) {
+  convenience init(hex: String) {
     var hexNormalized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
     hexNormalized = hexNormalized.replacingOccurrences(of: "#", with: "")
     
@@ -35,9 +35,6 @@ extension UIColor {
       a = CGFloat(rgb & 0x000000FF) / 255.0
       
     }
-//    else {
-//      return nil
-//    }
     
     self.init(red: r, green: g, blue: b, alpha: a)
   }
@@ -82,9 +79,9 @@ func /(point: CGPoint, scalar: CGFloat) -> CGPoint {
 }
 
 #if !(arch(x86_64) || arch(arm64))
-  func sqrt(a: CGFloat) -> CGFloat {
-    return CGFloat(sqrtf(Float(a)))
-  }
+func sqrt(a: CGFloat) -> CGFloat {
+  return CGFloat(sqrtf(Float(a)))
+}
 #endif
 
 extension CGPoint {
@@ -106,12 +103,12 @@ extension CGPoint {
   
   func angleWithPoint(_ point: CGPoint) -> CGFloat {
     let offset = self - point
-
+    
     let distX = CGFloat(offset.x)
     let distY = CGFloat(offset.y)
     
     let vec = CGVector(dx: distX, dy: distY)
-
+    
     let angle = atan2(vec.dx, -vec.dy)
     
     return angle
@@ -119,20 +116,20 @@ extension CGPoint {
 }
 
 extension CGFloat {
-    static func random() -> CGFloat {
-        return CGFloat(arc4random()) / CGFloat(UInt32.max)
-    }
+  static func random() -> CGFloat {
+    return CGFloat(arc4random()) / CGFloat(UInt32.max)
+  }
 }
 
 extension UIColor {
-    static func random() -> UIColor {
-        return UIColor(
-           red:   .random(),
-           green: .random(),
-           blue:  .random(),
-           alpha: 1.0
-        )
-    }
+  static func random() -> UIColor {
+    return UIColor(
+      red:   .random(),
+      green: .random(),
+      blue:  .random(),
+      alpha: 1.0
+    )
+  }
 }
 
 

@@ -66,7 +66,7 @@ final class AddVectorViewController: UIViewController {
   private var manualLabel: UILabel!
   
   private var addVectorButton: UIButton!
-
+  
   
   // -MARK: - Funcs -
   
@@ -236,9 +236,9 @@ final class AddVectorViewController: UIViewController {
       self.view.addSubview(view)
     }
     [endYLabel, endYTextField, setLengthLabel,
-    lengthTextField, manualLabel, addVectorButton].forEach { view in
-     self.view.addSubview(view)
-   }
+     lengthTextField, manualLabel, addVectorButton].forEach { view in
+      self.view.addSubview(view)
+    }
     
     //grandad
     createVectorLabel.snp.makeConstraints { make in

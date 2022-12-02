@@ -51,44 +51,6 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   
   // -MARK: - Funcs -
   
-  override func didMove(to view: SKView) {
-    setUpPhysics()
-    setUpBackground()
-    getVectors()
-    addGestureRecognizer()
-  }
-  
-  
-  func assignViewController(_ viewController: UIViewController) {
-    self.viewController = (viewController as? MainViewController)
-  }
-  
-  func addVectorButtonTupped() {
-    AppDelegate.router.presentAddVectorViewController()
-  }
-  
-  func sideBarButtonTupped() {
-    mainPresenterDelegete?.toggleSideBar()
-  }
-  
-  private func setUpPhysics() {
-    physicsWorld.gravity = .zero
-    physicsWorld.contactDelegate = self
-    
-    self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-  }
-  
-  private func setUpBackground() {
-    let background = SKSpriteNode(imageNamed: ImageName.background)
-    background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-    background.position = CGPoint(x: 0, y: 0)
-    background.zPosition = Layer.background
-    background.size = self.size
-    background.name = SpriteNodeName.background
-    
-    addChild(background)
-  }
-  
   private func getVectors() {
     var subscription: AnyCancellable? = nil
     
@@ -119,6 +81,29 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     view?.addGestureRecognizer(pressed)
   }
   
+  
+  // -MARK: - Protocol Funcs -
+  
+  func assignViewController(_ viewController: UIViewController) {
+    self.viewController = (viewController as? MainViewController)
+  }
+  
+  func addVectorButtonTupped() {
+    AppDelegate.router.presentAddVectorViewController()
+  }
+  
+  func sideBarButtonTupped() {
+    mainPresenterDelegete?.toggleSideBar()
+  }
+  
+  func unwindFromAddViewController(withNewVector vector: UIVector) {
+    vectors.append(vector)
+    moveScrollViewToPoint(vector.endPoint)
+    vector.addToScene(self, withName: String(vectors.count))
+    
+    vector.highlight()
+  }
+  
   func moveScrollViewToPoint(_ point: CGPoint) {
     guard let frame = viewController?.view.frame else { return }
     var safePoint = point
@@ -145,12 +130,32 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
       animated: true)
   }
   
-  func unwindFromAddViewController(withNewVector vector: UIVector) {
-    vectors.append(vector)
-    moveScrollViewToPoint(vector.endPoint)
-    vector.addToScene(self, withName: String(vectors.count))
+
+  // -MARK: - SKScene Funcs -
+  
+  override func didMove(to view: SKView) {
+    setUpPhysics()
+    setUpBackground()
+    getVectors()
+    addGestureRecognizer()
+  }
+  
+  private func setUpPhysics() {
+    physicsWorld.gravity = .zero
+    physicsWorld.contactDelegate = self
     
-    vector.highlight()
+    self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+  }
+  
+  private func setUpBackground() {
+    let background = SKSpriteNode(imageNamed: ImageName.background)
+    background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+    background.position = CGPoint(x: 0, y: 0)
+    background.zPosition = Layer.background
+    background.size = self.size
+    background.name = SpriteNodeName.background
+    
+    addChild(background)
   }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -238,7 +243,6 @@ extension MainPresenter: SKPhysicsContactDelegate {
 
 
 extension MainPresenter: UIGestureRecognizerDelegate {
-  
   @objc func longPress(sender: UILongPressGestureRecognizer) {
     switch sender.state {
     case .began:

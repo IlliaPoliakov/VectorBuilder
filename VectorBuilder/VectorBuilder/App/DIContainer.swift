@@ -23,7 +23,7 @@ class DependencyInjectionContainer {
     
     
     // -MARK: - Repositories -
-
+    
     DependencyInjectionContainer.shared.register(VectorRepository.self) { resolver in
       VectorRepositoryImpl(localDataSource: resolver.resolve(DataBaseDataSource.self)!)
     }
