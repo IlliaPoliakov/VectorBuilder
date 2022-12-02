@@ -87,7 +87,7 @@ final class SideBarViewController: UIViewController {
     collectionView.snp.makeConstraints { make in
       make.top.equalToSuperview().offset(15)
       make.leading.equalToSuperview()
-      make.trailing.equalToSuperview().offset(-(self.view.frame.width * 2/3) )
+      make.trailing.equalToSuperview().offset(-(self.view.frame.width * 2/3))
       make.bottom.equalToSuperview().offset(15)
     }
   }

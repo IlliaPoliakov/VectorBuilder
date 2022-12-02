@@ -25,17 +25,23 @@ class DependencyInjectionContainer {
     // -MARK: - Repositories -
 
     DependencyInjectionContainer.shared.register(VectorRepository.self) { resolver in
-      VectorRepositoryImpl(localDataSource: resolver.resolve(DataBaseDataSource.self)!)}
-
+      VectorRepositoryImpl(localDataSource: resolver.resolve(DataBaseDataSource.self)!)
+    }
     
     // -MARK: - UseCases -
     
     DependencyInjectionContainer.shared.register(GetVectorsUseCase.self) { resolver in
-      GetVectorsUseCase(repo: resolver.resolve(VectorRepository.self)!)}
+      GetVectorsUseCase(repo: resolver.resolve(VectorRepository.self)!)
+    }
     DependencyInjectionContainer.shared.register(SaveNewVectorUseCase.self) { resolver in
-      SaveNewVectorUseCase(repo: resolver.resolve(VectorRepository.self)!)}
+      SaveNewVectorUseCase(repo: resolver.resolve(VectorRepository.self)!)
+    }
     DependencyInjectionContainer.shared.register(DeleteVectorUseCase.self) { resolver in
-      DeleteVectorUseCase(repo: resolver.resolve(VectorRepository.self)!)}
+      DeleteVectorUseCase(repo: resolver.resolve(VectorRepository.self)!)
+    }
+    DependencyInjectionContainer.shared.register(UpdateVectorPositionUseCase.self) { resolver in
+      UpdateVectorPositionUseCase(repo: resolver.resolve(VectorRepository.self)!)
+    }
     
     
     // -MARK: - Presenters -

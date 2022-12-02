@@ -35,6 +35,7 @@
 		F24B94EC29334BC7003B12E9 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94EB29334BC7003B12E9 /* Router.swift */; };
 		F24B94EE29334CA9003B12E9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94ED29334CA9003B12E9 /* Constants.swift */; };
 		F24B94F129334D09003B12E9 /* UIVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B94F029334D09003B12E9 /* UIVector.swift */; };
+		F2637F4C2938117100D2D9C7 /* UpdateVectorPositionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2637F4B2938117100D2D9C7 /* UpdateVectorPositionUseCase.swift */; };
 		F266630E2936BB700080145E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F266630D2936BB700080145E /* ContainerViewController.swift */; };
 		F2AD710729368C820011D45C /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AD710629368C820011D45C /* SideBarViewController.swift */; };
 		F2AD710929368E630011D45C /* SideBarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AD710829368E630011D45C /* SideBarPresenter.swift */; };
@@ -93,6 +94,7 @@
 		F24B94EB29334BC7003B12E9 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		F24B94ED29334CA9003B12E9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F24B94F029334D09003B12E9 /* UIVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVector.swift; sourceTree = "<group>"; };
+		F2637F4B2938117100D2D9C7 /* UpdateVectorPositionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateVectorPositionUseCase.swift; sourceTree = "<group>"; };
 		F266630D2936BB700080145E /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		F2AD710629368C820011D45C /* SideBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
 		F2AD710829368E630011D45C /* SideBarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarPresenter.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				F23813AD2933E97B0007D79C /* DeleteVectorUseCase.swift */,
 				F23813A92933E95B0007D79C /* GetVectorsUseCase.swift */,
 				F23813AB2933E96D0007D79C /* SaveVectorUseCase.swift */,
+				F2637F4B2938117100D2D9C7 /* UpdateVectorPositionUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				F24B94E32932BD34003B12E9 /* MainViewController.swift in Sources */,
 				F24B94DC29327C75003B12E9 /* Vector.swift in Sources */,
 				F24B94E829334B9F003B12E9 /* MainPresenter.swift in Sources */,
+				F2637F4C2938117100D2D9C7 /* UpdateVectorPositionUseCase.swift in Sources */,
 				F24B94D529327B94003B12E9 /* VectorEntity+CoreDataProperties.swift in Sources */,
 				F23813B12933EA470007D79C /* VectorRepository.swift in Sources */,
 				F2AD710929368E630011D45C /* SideBarPresenter.swift in Sources */,

@@ -13,10 +13,8 @@ final class UIVector: SKNode {
   var endPoint: CGPoint
   var color: UIColor
   
-  var id: UUID = UUID()
-  
-  private lazy var vector: SKSpriteNode = {
-    let vecSize = CGSize(width: 0.002,
+  private(set) lazy var vector: SKSpriteNode = {
+    let vecSize = CGSize(width: 0.0025,
                          height: startPoint.length(toPoint: endPoint) / CGFloat(SceneSize.x))
     let vector = SKSpriteNode(color: color, size: vecSize)
     
@@ -35,8 +33,7 @@ final class UIVector: SKNode {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func addToScene(_ scene: SKScene) {
-    
+  func addToScene(_ scene: SKScene, withName name: String) {
     self.zPosition = Layer.vector
     scene.addChild(self)
     
@@ -46,17 +43,17 @@ final class UIVector: SKNode {
     vector.position = CGPoint(x: startPoint.x / CGFloat(SceneSize.x),
                               y: startPoint.y / CGFloat(SceneSize.y))
     vector.zRotation = startPoint.angleWithPoint(endPoint)
-    vector.name = SpriteNodeName.vector
+    vector.name = SpriteNodeName.vector + name
     
     addChild(vector)
     
     let vectorHolder = SKSpriteNode(imageNamed: ImageName.vectorHolder)
-    vectorHolder.size = CGSize(width:  10 / CGFloat(SceneSize.y),
-                               height: 10 / CGFloat(SceneSize.y))
+    vectorHolder.size = CGSize(width:  13 / CGFloat(SceneSize.y),
+                               height: 13 / CGFloat(SceneSize.x))
     vectorHolder.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     vectorHolder.position = CGPoint(x: 0, y: 0)
     vectorHolder.zPosition = Layer.vectorHolder
-    vectorHolder.name = SpriteNodeName.holder
+    vectorHolder.name = SpriteNodeName.holder + name
 
     vector.addChild(vectorHolder)
     
@@ -69,7 +66,7 @@ final class UIVector: SKNode {
     vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
     vectorArrow.colorBlendFactor = 1
     vectorArrow.color = color
-    vectorArrow.name = SpriteNodeName.arrow
+    vectorArrow.name = SpriteNodeName.arrow + name
 
     vector.addChild(vectorArrow)
   }
@@ -81,7 +78,7 @@ final class UIVector: SKNode {
  
     let increaseSize = SKAction.resize(toWidth: 0.0035, duration: 0.5)
     let wait = SKAction.wait(forDuration: 1)
-    let decreaseSize = SKAction.resize(toWidth: 0.002, duration: 0.5)
+    let decreaseSize = SKAction.resize(toWidth: 0.0025, duration: 0.5)
     let sequenceAction = SKAction.sequence([increaseSize, wait, decreaseSize])
     
     self.vector.run(sequenceAction)

@@ -35,6 +35,9 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   private let getVectorsUseCase: GetVectorsUseCase =
   AppDelegate.DIContainer.resolve(GetVectorsUseCase.self)!
   
+  private let updateVectorPositionUseCase: UpdateVectorPositionUseCase =
+  AppDelegate.DIContainer.resolve(UpdateVectorPositionUseCase.self)!
+  
   
   // -MARK: - Properties -
  
@@ -97,10 +100,11 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
         self.vectors = vectors
         var lastVector: UIVector?
         
-        for vector in vectors {
-          vector.addToScene(self)
+        vectors.enumerated().forEach { index, vector in
+          vector.addToScene(self, withName: String(index))
           lastVector = vector
         }
+      
         if let lastVector {
           self.moveScrollViewToPoint(lastVector.endPoint)
         }
@@ -135,7 +139,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   func unwindFromAddViewController(withNewVector vector: UIVector) {
     vectors.append(vector)
     moveScrollViewToPoint(vector.endPoint)
-    vector.addToScene(self)
+    vector.addToScene(self, withName: String(vectors.count))
     
     vector.highlight()
   }
@@ -145,33 +149,52 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
       let touchPoint = touch.location(in: self)
       let touchedNode = atPoint(touchPoint)
       
-      print(touchedNode.name)
-      switch touchedNode.name {
-      case SpriteNodeName.vector:
+      switch touchedNode.name! {
+      case let name where name.hasPrefix(SpriteNodeName.vector):
         viewController?.scrollView.isScrollEnabled = false
-
+        
         activeVector = touchedNode
-        touchOffsetX = touchPoint.x - touchedNode.position.x
-        touchOffsetY = touchPoint.y - touchedNode.position.y
+        
+      case let name where name.hasPrefix(SpriteNodeName.holder) || name.hasPrefix(SpriteNodeName.arrow):
+        viewController?.scrollView.isScrollEnabled = false
+        
+        activeVector = touchedNode.parent
         
       default:
         break
       }
       
+      touchOffsetX = touchPoint.x - touchedNode.position.x
+      touchOffsetY = touchPoint.y - touchedNode.position.y
     }
   }
   
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    if let activeVector, var touchPosition = touches.first?.location(in: self) {
+    if let activeVector,
+       let touchPosition = touches.first?.location(in: self) {
       activeVector.position = CGPoint(x: touchPosition.x - touchOffsetX,
                                       y: touchPosition.y - touchOffsetY)
     }
   }
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    if activeVector != nil {
+    if let activeVector {
+      let vector = vectors.first(where: { $0.vector.name == activeVector.name })!
       
-      activeVector = nil
+      let newStartPoint = CGPoint(x: activeVector.position.x * CGFloat(SceneSize.x),
+                                  y: activeVector.position.y * CGFloat(SceneSize.y))
+      let newEndPoint = CGPoint(x: newStartPoint.x + vector.endPoint.x - vector.startPoint.x,
+                                y: newStartPoint.y + vector.endPoint.y - vector.startPoint.y)
+      
+      updateVectorPositionUseCase.execute(withVector: vector,
+                                          withStartPoint: newStartPoint,
+                                          withEndPoint: newEndPoint)
+      
+      vector.startPoint = newStartPoint
+      vector.endPoint = newEndPoint
+ 
+      self.activeVector = nil
+      
       viewController?.scrollView.isScrollEnabled = true
     }
   }

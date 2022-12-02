@@ -80,8 +80,8 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
             }
             
             let newVector = UIVector(
-              startPoint: CGPoint(x: 0, y: SceneSize.y / 2),
-              endPoint: CGPoint(x: length, y: SceneSize.y / 2),
+              startPoint: CGPoint(x: 5, y: SceneSize.y / 2),
+              endPoint: CGPoint(x: 5 + length, y: SceneSize.y / 2),
               color: .random())
             
             self.acceptWithVector(newVector)
@@ -113,8 +113,8 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
           return
         }
         let newVector = UIVector(
-          startPoint: CGPoint(x: 0, y: SceneSize.y / 2),
-          endPoint: CGPoint(x: length, y: SceneSize.y / 2),
+          startPoint: CGPoint(x: 5, y: SceneSize.y / 2),
+          endPoint: CGPoint(x: 5 + length, y: SceneSize.y / 2),
           color: .random())
         
         acceptWithVector(newVector)
