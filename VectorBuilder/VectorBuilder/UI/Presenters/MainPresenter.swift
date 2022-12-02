@@ -42,8 +42,6 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   // -MARK: - Properties -
  
   var vectors = [UIVector]()
- 
-  private var subscriptions = Set<AnyCancellable>()
   
   private lazy var activeVector: SKNode? = nil
   private lazy var touchOffsetX: CGFloat = 0
@@ -75,11 +73,13 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   private func setUpPhysics() {
     physicsWorld.gravity = .zero
     physicsWorld.contactDelegate = self
+    
+    self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
   }
   
   private func setUpBackground() {
     let background = SKSpriteNode(imageNamed: ImageName.background)
-    background.anchorPoint = CGPoint(x: 0, y: 0)
+    background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     background.position = CGPoint(x: 0, y: 0)
     background.zPosition = Layer.background
     background.size = self.size
@@ -112,23 +112,27 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   }
   
   func moveScrollViewToPoint(_ point: CGPoint) {
-    let frame = viewController!.scrollView.frame
+    guard let frame = viewController?.view.frame
+    else {
+      return
+    }
     var safePoint = point
     
-    safePoint.y = CGFloat(SceneSize.y) - safePoint.y - frame.height / 2
-    safePoint.x -= frame.width / 2
+    safePoint.x = safePoint.x + CGFloat(SceneSize.width / 2) - frame.width / 2
+    safePoint.y = CGFloat(SceneSize.height / 2) - safePoint.y - frame.height / 2
     
     if safePoint.x < 0 {
       safePoint.x = 0
     }
-    if safePoint.x > CGFloat(SceneSize.x) - frame.width {
-      safePoint.x = CGFloat(SceneSize.x) - frame.width
+    
+    if safePoint.x > CGFloat(SceneSize.height) - frame.width {
+      safePoint.x = CGFloat(SceneSize.height) - frame.width
     }
     if safePoint.y < 0 {
       safePoint.y = 0
     }
-    if safePoint.y > CGFloat(SceneSize.y) - frame.height {
-      safePoint.x = CGFloat(SceneSize.y) - frame.height
+    if safePoint.y > CGFloat(SceneSize.height) - frame.height {
+      safePoint.x = CGFloat(SceneSize.height) - frame.height
     }
     
     viewController?.scrollView.setContentOffset(
@@ -155,17 +159,31 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
         
         activeVector = touchedNode
         
-      case let name where name.hasPrefix(SpriteNodeName.holder) || name.hasPrefix(SpriteNodeName.arrow):
+        touchOffsetX = touchPoint.x - touchedNode.position.x
+        touchOffsetY = touchPoint.y - touchedNode.position.y
+        
+      case let name where name.hasPrefix(SpriteNodeName.holder):
         viewController?.scrollView.isScrollEnabled = false
         
         activeVector = touchedNode.parent
         
+        touchOffsetX = 0
+        touchOffsetY = 0
+        
+      case let name where name.hasPrefix(SpriteNodeName.arrow):
+        viewController?.scrollView.isScrollEnabled = false
+        
+        activeVector = touchedNode.parent
+        
+        touchOffsetX = cos(touchedNode.zRotation) *
+        touchedNode.frame.size.height
+        touchOffsetY = sin(touchedNode.zRotation) *
+        touchedNode.frame.size.height
+
       default:
         break
       }
       
-      touchOffsetX = touchPoint.x - touchedNode.position.x
-      touchOffsetY = touchPoint.y - touchedNode.position.y
     }
   }
   
@@ -181,8 +199,8 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     if let activeVector {
       let vector = vectors.first(where: { $0.vector.name == activeVector.name })!
       
-      let newStartPoint = CGPoint(x: activeVector.position.x * CGFloat(SceneSize.x),
-                                  y: activeVector.position.y * CGFloat(SceneSize.y))
+      let newStartPoint = CGPoint(x: activeVector.position.x * CGFloat(SceneSize.height),
+                                  y: activeVector.position.y * CGFloat(SceneSize.height))
       let newEndPoint = CGPoint(x: newStartPoint.x + vector.endPoint.x - vector.startPoint.x,
                                 y: newStartPoint.y + vector.endPoint.y - vector.startPoint.y)
       

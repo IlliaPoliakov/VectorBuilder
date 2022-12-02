@@ -13,13 +13,7 @@ final class UIVector: SKNode {
   var endPoint: CGPoint
   var color: UIColor
   
-  private(set) lazy var vector: SKSpriteNode = {
-    let vecSize = CGSize(width: 0.0025,
-                         height: startPoint.length(toPoint: endPoint) / CGFloat(SceneSize.x))
-    let vector = SKSpriteNode(color: color, size: vecSize)
-    
-    return vector
-  }()
+  private(set) var vector: SKSpriteNode!
   
   init(startPoint: CGPoint, endPoint: CGPoint, color: UIColor) {
     self.startPoint = startPoint
@@ -37,19 +31,28 @@ final class UIVector: SKNode {
     self.zPosition = Layer.vector
     scene.addChild(self)
     
+    let vectorSize = CGSize(
+      width: 0.0035,
+      height: startPoint.length(toPoint: endPoint) / CGFloat(SceneSize.height))
+    
+    let vector = SKSpriteNode(color: color, size: vectorSize)
+    self.vector = vector
+    
     vector.anchorPoint = CGPoint(x: 0.5, y: 0)
     vector.zPosition = Layer.vector
-    
-    vector.position = CGPoint(x: startPoint.x / CGFloat(SceneSize.x),
-                              y: startPoint.y / CGFloat(SceneSize.y))
+    vector.position = CGPoint(
+      x: startPoint.x / CGFloat(SceneSize.height),
+      y: startPoint.y / CGFloat(SceneSize.width))
     vector.zRotation = startPoint.angleWithPoint(endPoint)
     vector.name = SpriteNodeName.vector + name
-    
+
     addChild(vector)
     
+    
     let vectorHolder = SKSpriteNode(imageNamed: ImageName.vectorHolder)
-    vectorHolder.size = CGSize(width:  13 / CGFloat(SceneSize.y),
-                               height: 13 / CGFloat(SceneSize.x))
+    vectorHolder.size = CGSize(
+      width:  13 / CGFloat(SceneSize.height),
+      height: 13 / CGFloat(SceneSize.width))
     vectorHolder.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     vectorHolder.position = CGPoint(x: 0, y: 0)
     vectorHolder.zPosition = Layer.vectorHolder
@@ -57,10 +60,10 @@ final class UIVector: SKNode {
 
     vector.addChild(vectorHolder)
     
-    let vectorArrow = SKSpriteNode(imageNamed: ImageName.vectorArrow)
     
-    vectorArrow.size = CGSize(width: 7 * 0.001,
-                              height: 10 * 0.001)
+    let vectorArrow = SKSpriteNode(imageNamed: ImageName.vectorArrow)
+    vectorArrow.size = CGSize(width: 11 / CGFloat(SceneSize.height),
+                              height: 14 / CGFloat(SceneSize.height))
     vectorArrow.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     vectorArrow.zPosition = Layer.vectorArrow
     vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
@@ -72,13 +75,13 @@ final class UIVector: SKNode {
   }
   
   func highlight() {
-    let fadeOut = SKAction.fadeOut(withDuration: 0.1)
+    let fadeOut = SKAction.fadeOut(withDuration: 0)
     let fadeIn = SKAction.fadeIn(withDuration: 1)
     let fadeSequence = SKAction.sequence([fadeOut, fadeIn])
  
-    let increaseSize = SKAction.resize(toWidth: 0.0035, duration: 0.5)
-    let wait = SKAction.wait(forDuration: 1)
-    let decreaseSize = SKAction.resize(toWidth: 0.0025, duration: 0.5)
+    let increaseSize = SKAction.resize(toWidth: 0.0055, duration: 0.5)
+    let wait = SKAction.wait(forDuration: 0.5)
+    let decreaseSize = SKAction.resize(toWidth: 0.0035, duration: 0.5)
     let sequenceAction = SKAction.sequence([increaseSize, wait, decreaseSize])
     
     self.vector.run(sequenceAction)
