@@ -20,21 +20,20 @@ final class Router {
                             sideBarViewController as! SideBarViewController)
     
     let mainVC = self.mainViewController as! MainViewController
-    
     mainVC.presenter.mainPresenterDelegete = viewController
-
+    
     return viewController
   }()
   
   lazy var mainViewController: UIViewController = {
     let presenter: MainPresenterProtocol =
     AppDelegate.DIContainer.resolve(MainPresenterProtocol.self)!
-
+    
     let viewController: MainViewController = MainViewController(presenter)
     
     presenter.assignViewController(viewController)
     
-    let sideBarVc = sideBarViewController as! SideBarViewController
+    let sideBarVc = sideBarViewController as! SideBarViewController // additionaly set for sideBar
     sideBarVc.presenter.assignManiPresenter(presenter)
     
     return viewController
@@ -43,9 +42,9 @@ final class Router {
   lazy var sideBarViewController: UIViewController = {
     let presenter: SideBarPresenterProtocol =
     AppDelegate.DIContainer.resolve(SideBarPresenterProtocol.self)!
-
+    
     let viewController: UIViewController = SideBarViewController(presenter)
-
+    
     presenter.assignViewController(viewController)
     
     return viewController
@@ -77,7 +76,7 @@ final class Router {
     else {
       return
     }
-
+    
     viewController.presenter.unwindFromAddViewController(withNewVector: vector)
   }
   
@@ -91,12 +90,12 @@ final class Router {
     alert.addAction(okAction)
     
     let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-
+    
     if var topController = keyWindow?.rootViewController {
-        while let presentedViewController = topController.presentedViewController {
-            topController = presentedViewController
-        }
-
+      while let presentedViewController = topController.presentedViewController {
+        topController = presentedViewController
+      }
+      
       topController.present(alert, animated: true)
     }
     
@@ -123,5 +122,4 @@ final class Router {
     
     self.addVectorViewController.present(alert, animated: true, completion: nil)
   }
-  
 }

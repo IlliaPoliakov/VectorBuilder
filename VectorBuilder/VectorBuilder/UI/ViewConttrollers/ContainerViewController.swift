@@ -45,7 +45,7 @@ final class ContainerViewController: UIViewController, MainPresenterDelegete {
   
   private var sideBarViewController: SideBarViewController
   
-
+  
   // -MARK: - Funcs
   
   func toggleSideBar() {
