@@ -95,11 +95,11 @@ final class UIVector: SKNode {
   
   func changeWidthForState(changingState state: Bool) {
     if state {
-      let increaseSize = SKAction.resize(toWidth: 0.0055, duration: 0.5)
+      let increaseSize = SKAction.resize(toWidth: 0.0055, duration: 0.2)
       self.vector.run(increaseSize)
     }
     else {
-      let decreaseSize = SKAction.resize(toWidth: 0.0035, duration: 0.5)
+      let decreaseSize = SKAction.resize(toWidth: 0.0035, duration: 0.2)
       self.vector.run(decreaseSize)
     }
   }
@@ -107,21 +107,33 @@ final class UIVector: SKNode {
   func updateDataForNewPoint(_ point: CGPoint, withVectorEnd endNode: VectorEndNode) {
     var rotateAction: SKAction? = nil
     var lengthAction: SKAction? = nil
+    var moveAction: SKAction? = nil
 
     switch endNode {
     case .arrow:
-      rotateAction = SKAction.rotate(toAngle: startPoint.angleWithPoint(point), duration: 0, shortestUnitArc: false)
+      rotateAction = SKAction.rotate(toAngle: startPoint.angleWithPoint(point), duration: 0)
       lengthAction = SKAction.resize(
         toHeight: startPoint.length(toPoint: point) / CGFloat(SceneSize.height), duration: 0)
-      vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
       
     case .holder:
-      print("POKAJOPA")
+      rotateAction = SKAction.rotate(toAngle: 3.14 + endPoint.angleWithPoint(point), duration: 0)
+      lengthAction = SKAction.resize(
+        toHeight: point.length(toPoint: endPoint) / CGFloat(SceneSize.height), duration: 0)
+      moveAction = SKAction.move(
+        to: CGPoint(x: point.x / CGFloat(SceneSize.height),
+                    y: point.y / CGFloat(SceneSize.width)),
+        duration: 0)
       
     }
-    guard let rotateAction, let lengthAction else { return }
+    if let rotateAction, let lengthAction {
+      self.vector.run(rotateAction)
+      self.vector.run(lengthAction)
+    }
     
-    self.vector.run(rotateAction)
-    self.vector.run(lengthAction)
+    if let moveAction {
+      self.vector.run(moveAction)
+    }
+    
+    vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
   }
 }

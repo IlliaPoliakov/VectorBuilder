@@ -31,7 +31,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   private weak var viewController: MainViewController?
   
   var mainPresenterDelegete: MainPresenterDelegete?
- 
+  
   private let getVectorsUseCase: GetVectorsUseCase =
   AppDelegate.DIContainer.resolve(GetVectorsUseCase.self)!
   
@@ -40,7 +40,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   
   
   // -MARK: - Properties -
- 
+  
   var vectors = [UIVector]()
   
   private lazy var activeVector: SKNode? = nil
@@ -48,7 +48,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   private lazy var touchOffsetX: CGFloat = 0
   private lazy var touchOffsetY: CGFloat = 0
   
-
+  
   // -MARK: - Funcs -
   
   override func didMove(to view: SKView) {
@@ -189,7 +189,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
         
         touchOffsetX = (vector.endPoint.x - vector.startPoint.x) / CGFloat(SceneSize.width)
         touchOffsetY = (vector.endPoint.y - vector.startPoint.y) / CGFloat( SceneSize.height)
-
+        
       default:
         break
       }
@@ -225,7 +225,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     
     vector.startPoint = newStartPoint
     vector.endPoint = newEndPoint
-
+    
     self.activeVector = nil
     
     viewController?.scrollView.isScrollEnabled = true
@@ -252,10 +252,6 @@ extension MainPresenter: UIGestureRecognizerDelegate {
       guard let activeEndNode else { return }
       
       switch activeEndNode.name! {
-      case let name where name.hasPrefix(SpriteNodeName.holder):
-        let newPoint = sender.location(in: viewController?.scrollView)
-        
-        
       case let name where name.hasPrefix(SpriteNodeName.arrow):
         var newPoint = sender.location(in: viewController?.scrollView)
         newPoint = CGPoint(x: newPoint.x - CGFloat(SceneSize.width / 2),
@@ -268,25 +264,62 @@ extension MainPresenter: UIGestureRecognizerDelegate {
         
         vector.updateDataForNewPoint(newPoint, withVectorEnd: .arrow)
         
+        
+      case let name where name.hasPrefix(SpriteNodeName.holder):
+        var newPoint = sender.location(in: viewController?.scrollView)
+        newPoint = CGPoint(x: newPoint.x - CGFloat(SceneSize.width / 2),
+                           y: CGFloat(SceneSize.height) / 2 - newPoint.y )
+        
+        guard let vector = vectors.first(where: { $0.vector.name == activeVector?.name })
+        else {
+          return
+        }
+        
+        vector.updateDataForNewPoint(newPoint, withVectorEnd: .holder)
+        
+        
       default:
         break
       }
       
     case .ended:
-      let vector = vectors.first(where: { $0.vector.name == activeVector!.name })!
-      vector.changeWidthForState(changingState: false)
-      var endPoint = sender.location(in: viewController?.scrollView)
-      endPoint = CGPoint(x: endPoint.x - CGFloat(SceneSize.width / 2),
-                         y: CGFloat(SceneSize.height) / 2 - endPoint.y )
+      guard let vector = vectors.first(where: { $0.vector.name == activeVector?.name })
+      else {
+        return
+      }
       
-      updateVectorPositionUseCase.execute(
-        withVector: vector,
-        withStartPoint: vector.startPoint,
-        withEndPoint: endPoint)
+      vector.changeWidthForState(changingState: false)
+      var point = sender.location(in: viewController?.scrollView)
+      point = CGPoint(x: point.x - CGFloat(SceneSize.width / 2),
+                      y: CGFloat(SceneSize.height) / 2 - point.y )
+      
+      guard let activeEndNode else { return }
+      
+      switch activeEndNode.name! {
+      case let name where name.hasPrefix(SpriteNodeName.arrow):
+        updateVectorPositionUseCase.execute(
+          withVector: vector,
+          withStartPoint: vector.startPoint,
+          withEndPoint: point)
+        vector.endPoint = point
+        
+      case let name where name.hasPrefix(SpriteNodeName.holder):
+        updateVectorPositionUseCase.execute(
+          withVector: vector,
+          withStartPoint: point,
+          withEndPoint: vector.endPoint)
+        vector.startPoint = point
+        
+      default:
+        break
+      }
+      
+      self.activeVector = nil
+      viewController?.scrollView.isScrollEnabled = true
       
     default:
       break
     }
-
+    
   }
 }
