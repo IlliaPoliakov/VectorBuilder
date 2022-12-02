@@ -66,7 +66,7 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
   func assignViewController(_ viewController: UIViewController) {
     self.viewController = (viewController as! SideBarViewController)
   }
-
+  
   func assignManiPresenter(_ mainPresenter: MainPresenterProtocol) {
     self.mainPresenter = mainPresenter
   }

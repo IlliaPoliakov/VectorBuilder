@@ -47,7 +47,7 @@ final class UIVector: SKNode {
       y: startPoint.y / CGFloat(SceneSize.width))
     vector.zRotation = startPoint.angleWithPoint(endPoint)
     vector.name = SpriteNodeName.vector + name
-
+    
     addChild(vector)
     
     let vectorHolder = SKSpriteNode(imageNamed: ImageName.vectorHolder)
@@ -60,7 +60,7 @@ final class UIVector: SKNode {
     vectorHolder.position = CGPoint(x: 0, y: 0)
     vectorHolder.zPosition = Layer.vectorHolder
     vectorHolder.name = SpriteNodeName.holder + name
-  
+    
     vector.addChild(vectorHolder)
     
     
@@ -75,7 +75,7 @@ final class UIVector: SKNode {
     vectorArrow.colorBlendFactor = 1
     vectorArrow.color = color
     vectorArrow.name = SpriteNodeName.arrow + name
-
+    
     vector.addChild(vectorArrow)
   }
   
@@ -83,7 +83,7 @@ final class UIVector: SKNode {
     let fadeOut = SKAction.fadeOut(withDuration: 0)
     let fadeIn = SKAction.fadeIn(withDuration: 1)
     let fadeSequence = SKAction.sequence([fadeOut, fadeIn])
- 
+    
     let increaseSize = SKAction.resize(toWidth: 0.0055, duration: 0.5)
     let wait = SKAction.wait(forDuration: 0.5)
     let decreaseSize = SKAction.resize(toWidth: 0.0035, duration: 0.5)
@@ -108,7 +108,7 @@ final class UIVector: SKNode {
     var rotateAction: SKAction? = nil
     var lengthAction: SKAction? = nil
     var moveAction: SKAction? = nil
-
+    
     switch endNode {
     case .arrow:
       rotateAction = SKAction.rotate(toAngle: startPoint.angleWithPoint(point), duration: 0)
@@ -125,6 +125,7 @@ final class UIVector: SKNode {
         duration: 0)
       
     }
+    
     if let rotateAction, let lengthAction {
       self.vector.run(rotateAction)
       self.vector.run(lengthAction)
