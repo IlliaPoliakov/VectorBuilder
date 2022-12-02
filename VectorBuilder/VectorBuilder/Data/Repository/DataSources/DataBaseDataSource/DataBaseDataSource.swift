@@ -18,8 +18,7 @@ final class DataBaseDataSource {
   // -MARK: - Functions -
   
   func loadVectors() -> [VectorEntity]? {
-    guard let vectors = try? coreDataManager.managedObjectContext.fetch(VectorEntity.fetchRequest()),
-          !vectors.isEmpty
+    guard let vectors = try? coreDataManager.managedObjectContext.fetch(VectorEntity.fetchRequest())
     else {
       print("CoreData vector-fetch is failed")
       return nil
@@ -47,6 +46,34 @@ final class DataBaseDataSource {
   }
   
   func deleteVector(withDataFrom modelVector: Vector) {
+    guard let vector = findVector(forModelVector: modelVector)
+    else {
+      return
+    }
+    
+    coreDataManager.managedObjectContext.delete(vector)
+    
+    try? coreDataManager.managedObjectContext.save()
+  }
+  
+  func updateVectorPosition(withVector vector: Vector,
+                            withStartPoint startPoint: CGPoint,
+                            withEndPoint endPoint: CGPoint) {
+    
+    guard let vector = findVector(forModelVector: vector)
+    else {
+      return
+    }
+    
+    vector.startX = startPoint.x
+    vector.startY = startPoint.y
+    vector.endX = endPoint.x
+    vector.endY = endPoint.y
+    
+    try? coreDataManager.managedObjectContext.save()
+  }
+  
+  private func findVector(forModelVector modelVector: Vector) -> VectorEntity? {
     let vectorsFetchRequest = NSFetchRequest<VectorEntity>(entityName: "VectorEntity")
     
     let vectorsPredicate = NSPredicate(
@@ -61,7 +88,7 @@ final class DataBaseDataSource {
           !vectors.isEmpty
     else {
       print("CoreData vector-fetch is failed")
-      return
+      return nil
     }
     
     let filteredVectors = vectors.filter { vector in
@@ -73,11 +100,9 @@ final class DataBaseDataSource {
     
     guard let vector = filteredVectors.first
     else {
-      return
+      return nil
     }
     
-    coreDataManager.managedObjectContext.delete(vector)
-    
-    try? coreDataManager.managedObjectContext.save()
+    return vector
   }
 }

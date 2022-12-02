@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DeleteVectorUseCase {
+final class DeleteVectorUseCase {
   private let repo: VectorRepository
 
   init(repo: VectorRepository) {

@@ -56,7 +56,8 @@ final class MainViewController: UIViewController {
     scrollView = UIScrollView().then { scrollView in
       scrollView.translatesAutoresizingMaskIntoConstraints = false
       scrollView.bounces = false
-      scrollView.maximumZoomScale = 2
+      scrollView.showsVerticalScrollIndicator = false
+      scrollView.showsHorizontalScrollIndicator = false
     }
     
     spriteKitView = SKView().then { skView in
@@ -93,9 +94,9 @@ final class MainViewController: UIViewController {
   }
   
   private func layoutViews() {
-    self.view.addSubview(scrollView)
-    self.view.addSubview(addVectorButton)
-    self.view.addSubview(sideBarButton)
+    [scrollView, addVectorButton, sideBarButton].forEach { view in
+      self.view.addSubview(view)
+    }
     scrollView.addSubview(spriteKitView)
     
     scrollView.snp.makeConstraints { make in
@@ -104,8 +105,8 @@ final class MainViewController: UIViewController {
     
     spriteKitView.snp.makeConstraints { make in
       make.top.trailing.bottom.leading.equalToSuperview()
-      make.width.equalTo(2700)
-      make.height.equalTo(1500)
+      make.width.equalTo(SceneSize.width)
+      make.height.equalTo(SceneSize.height)
     }
     
     addVectorButton.snp.makeConstraints { make in

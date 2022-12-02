@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 
 
 final class ContainerViewController: UIViewController, MainPresenterDelegete {
@@ -46,7 +45,7 @@ final class ContainerViewController: UIViewController, MainPresenterDelegete {
   
   private var sideBarViewController: SideBarViewController
   
-
+  
   // -MARK: - Funcs
   
   func toggleSideBar() {
@@ -59,7 +58,7 @@ final class ContainerViewController: UIViewController, MainPresenterDelegete {
                      initialSpringVelocity: 0,
                      options: .curveEaseInOut) {
         self.mainViewController.view.frame.origin.x =
-        self.mainViewController.view.frame.width / 3
+        self.mainViewController.view.frame.width / 3 + 5
         self.sideBarViewController.collectionView.alpha = 1
       }
     }

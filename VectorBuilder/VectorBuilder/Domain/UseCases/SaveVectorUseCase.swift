@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SaveNewVectorUseCase {
+final class SaveNewVectorUseCase {
   private let repo: VectorRepository
 
   init(repo: VectorRepository) {

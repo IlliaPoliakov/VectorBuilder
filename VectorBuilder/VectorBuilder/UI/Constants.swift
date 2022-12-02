@@ -25,7 +25,11 @@ enum AddVcLabelData {
   static let endPoint = "End Point:"
   static let setLength = "Or Just Set The Length of The Vector:"
   static let addVector = "Add Vector"
-  static let manual = " Just in case:\n Origin - bottom left corner of the screen.\n Length value belongs to (0,2700).\n X and Y belongs to (0,2700) and (0,1500) accordingly."
+  static let manual = """
+Just in case:\n Origin - center of the screen.
+ Length value belongs to (0,1000).
+ X and Y belong to (-500,500).
+"""
 }
 
 enum AlertData {
@@ -36,14 +40,14 @@ enum AlertData {
   static let wrongDataBody = "Please, check entered data and try again."
   
   static let wrongLength = "Oops... Wrang length."
-  static let wrongLengthBody = "Please, make sure that the length value belongs to (0, 2700)."
+  static let wrongLengthBody = "Please, make sure that the length value belongs to (0, 1000)."
   
   static let wrongPoints = "Oops... Wrang points."
-  static let wrongPointsBody = "Please, make sure that points values belong to: X(0, 2700), Y(0, 1500)."
+  static let wrongPointsBody = "Please, make sure that points values belong to (-500,500)."
 }
 
 enum ImageName {
-  static let background = "mainSceneBackground2"
+  static let background = "background"
   static let vectorHolder = "vectorHolder"
   static let vectorArrow = "arrow"
 }
@@ -66,21 +70,33 @@ enum CollectionViewSection {
 }
 
 enum SceneSize {
-  static let x: Int = 2700
-  static let y: Int = 1500
+  static let width: Int = 1000
+  static let height: Int = 1000
 }
 
 enum ButtonData {
   static let borderWidth: CGFloat = 2.5
   static let borderColor: UIColor = Colors.mainColorClear
   static let cornerRadius: CGFloat = 10
-  static let backgroundColor: UIColor = UIColor(named: "mainColor")!.withAlphaComponent(0.4)
+  static let backgroundColor: UIColor = UIColor(named: "mainColor")!
+    .withAlphaComponent(0.4)
 }
 
 enum Colors {
   static let mainColorClear: UIColor = UIColor(named: "mainColor")!
-  static let mainColorBackground: UIColor = UIColor(named: "mainColor")!.withAlphaComponent(0.2)
+  static let mainColorBackground: UIColor = UIColor(named: "mainColor")!
+    .withAlphaComponent(0.2)
 }
 
+enum SpriteNodeName {
+  static let background = "background"
+  static let arrow = "arrow"
+  static let holder = "holder"
+  static let vector = "vector"
+}
 
+enum VectorEndNode {
+  case arrow
+  case holder
+}
 

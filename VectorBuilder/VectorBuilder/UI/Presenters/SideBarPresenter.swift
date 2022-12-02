@@ -53,15 +53,20 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
   func initialize() {
     var snapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, UIVector>()
     snapshot.appendSections([.main])
-    snapshot.appendItems(mainPresenter!.vectors, toSection: .main)
     
-    dataSource.apply(snapshot, animatingDifferences: true)
+    guard let vectors = mainPresenter?.vectors
+    else {
+      return
+    }
+    snapshot.appendItems(vectors, toSection: .main)
+    
+    dataSource.applySnapshotUsingReloadData(snapshot)
   }
   
   func assignViewController(_ viewController: UIViewController) {
     self.viewController = (viewController as! SideBarViewController)
   }
-
+  
   func assignManiPresenter(_ mainPresenter: MainPresenterProtocol) {
     self.mainPresenter = mainPresenter
   }
@@ -87,7 +92,11 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
     let trashImage = UIImage(systemName: "trash")!
       .withTintColor(.red, renderingMode: .alwaysOriginal)
     
-    let vector = self.mainPresenter!.vectors[indexPaths.first!.row]
+    guard let index = indexPaths.first?.row,
+          let vector = self.mainPresenter?.vectors[index]
+    else {
+      return nil
+    }
     
     return UIContextMenuConfiguration(
       identifier: nil,

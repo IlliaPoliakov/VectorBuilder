@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class GetVectorsUseCase {
+final class GetVectorsUseCase {
   private let repo: VectorRepository
 
   init(repo: VectorRepository) {

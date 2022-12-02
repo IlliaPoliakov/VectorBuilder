@@ -13,13 +13,9 @@ final class UIVector: SKNode {
   var endPoint: CGPoint
   var color: UIColor
   
-  private lazy var vector: SKSpriteNode = {
-    let vecSize = CGSize(width: 0.002,
-                         height: startPoint.length(toPoint: endPoint) / CGFloat(SceneSize.x))
-    let vector = SKSpriteNode(color: color, size: vecSize)
-    
-    return vector
-  }()
+  private(set) var vector: SKSpriteNode!
+  private(set) var vectorArrow: SKSpriteNode!
+  private(set) var vectorHolder: SKSpriteNode!
   
   init(startPoint: CGPoint, endPoint: CGPoint, color: UIColor) {
     self.startPoint = startPoint
@@ -33,52 +29,112 @@ final class UIVector: SKNode {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func addToScene(_ scene: SKScene) {
+  func addToScene(_ scene: SKScene, withName name: String) {
     self.zPosition = Layer.vector
     scene.addChild(self)
     
+    let vectorSize = CGSize(
+      width: 0.0035,
+      height: startPoint.length(toPoint: endPoint) / CGFloat(SceneSize.height))
+    
+    let vector = SKSpriteNode(color: color, size: vectorSize)
+    self.vector = vector
+    
     vector.anchorPoint = CGPoint(x: 0.5, y: 0)
     vector.zPosition = Layer.vector
-    
-    vector.position = CGPoint(x: startPoint.x / CGFloat(SceneSize.x),
-                              y: startPoint.y / CGFloat(SceneSize.y))
+    vector.position = CGPoint(
+      x: startPoint.x / CGFloat(SceneSize.height),
+      y: startPoint.y / CGFloat(SceneSize.width))
     vector.zRotation = startPoint.angleWithPoint(endPoint)
+    vector.name = SpriteNodeName.vector + name
     
     addChild(vector)
     
     let vectorHolder = SKSpriteNode(imageNamed: ImageName.vectorHolder)
-    vectorHolder.size = CGSize(width:  10 / CGFloat(SceneSize.y),
-                               height: 10 / CGFloat(SceneSize.y))
+    self.vectorHolder = vectorHolder
+    
+    vectorHolder.size = CGSize(
+      width:  13 / CGFloat(SceneSize.height),
+      height: 13 / CGFloat(SceneSize.width))
     vectorHolder.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     vectorHolder.position = CGPoint(x: 0, y: 0)
     vectorHolder.zPosition = Layer.vectorHolder
-
+    vectorHolder.name = SpriteNodeName.holder + name
+    
     vector.addChild(vectorHolder)
     
-    let vectorArrow = SKSpriteNode(imageNamed: ImageName.vectorArrow)
     
-    vectorArrow.size = CGSize(width: 7 * 0.001,
-                              height: 10 * 0.001)
+    let vectorArrow = SKSpriteNode(imageNamed: ImageName.vectorArrow)
+    self.vectorArrow = vectorArrow
+    
+    vectorArrow.size = CGSize(width: 11 / CGFloat(SceneSize.height),
+                              height: 14 / CGFloat(SceneSize.height))
     vectorArrow.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     vectorArrow.zPosition = Layer.vectorArrow
     vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
     vectorArrow.colorBlendFactor = 1
     vectorArrow.color = color
-
+    vectorArrow.name = SpriteNodeName.arrow + name
+    
     vector.addChild(vectorArrow)
   }
   
   func highlight() {
-    let fadeOut = SKAction.fadeOut(withDuration: 0.1)
+    let fadeOut = SKAction.fadeOut(withDuration: 0)
     let fadeIn = SKAction.fadeIn(withDuration: 1)
     let fadeSequence = SKAction.sequence([fadeOut, fadeIn])
- 
-    let increaseSize = SKAction.resize(toWidth: 0.0035, duration: 0.5)
-    let wait = SKAction.wait(forDuration: 1)
-    let decreaseSize = SKAction.resize(toWidth: 0.002, duration: 0.5)
+    
+    let increaseSize = SKAction.resize(toWidth: 0.0055, duration: 0.5)
+    let wait = SKAction.wait(forDuration: 0.5)
+    let decreaseSize = SKAction.resize(toWidth: 0.0035, duration: 0.5)
     let sequenceAction = SKAction.sequence([increaseSize, wait, decreaseSize])
     
     self.vector.run(sequenceAction)
     self.run(fadeSequence)
+  }
+  
+  func changeWidthForState(changingState state: Bool) {
+    if state {
+      let increaseSize = SKAction.resize(toWidth: 0.0055, duration: 0.2)
+      self.vector.run(increaseSize)
+    }
+    else {
+      let decreaseSize = SKAction.resize(toWidth: 0.0035, duration: 0.2)
+      self.vector.run(decreaseSize)
+    }
+  }
+  
+  func updateDataForNewPoint(_ point: CGPoint, withVectorEnd endNode: VectorEndNode) {
+    var rotateAction: SKAction? = nil
+    var lengthAction: SKAction? = nil
+    var moveAction: SKAction? = nil
+    
+    switch endNode {
+    case .arrow:
+      rotateAction = SKAction.rotate(toAngle: startPoint.angleWithPoint(point), duration: 0)
+      lengthAction = SKAction.resize(
+        toHeight: startPoint.length(toPoint: point) / CGFloat(SceneSize.height), duration: 0)
+      
+    case .holder:
+      rotateAction = SKAction.rotate(toAngle: 3.14 + endPoint.angleWithPoint(point), duration: 0)
+      lengthAction = SKAction.resize(
+        toHeight: point.length(toPoint: endPoint) / CGFloat(SceneSize.height), duration: 0)
+      moveAction = SKAction.move(
+        to: CGPoint(x: point.x / CGFloat(SceneSize.height),
+                    y: point.y / CGFloat(SceneSize.width)),
+        duration: 0)
+      
+    }
+    
+    if let rotateAction, let lengthAction {
+      self.vector.run(rotateAction)
+      self.vector.run(lengthAction)
+    }
+    
+    if let moveAction {
+      self.vector.run(moveAction)
+    }
+    
+    vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
   }
 }
