@@ -95,4 +95,8 @@ enum SpriteNodeName {
   static let vector = "vector"
 }
 
+enum VectorEndNode {
+  case arrow
+  case holder
+}
 

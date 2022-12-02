@@ -14,6 +14,8 @@ final class UIVector: SKNode {
   var color: UIColor
   
   private(set) var vector: SKSpriteNode!
+  private(set) var vectorArrow: SKSpriteNode!
+  private(set) var vectorHolder: SKSpriteNode!
   
   init(startPoint: CGPoint, endPoint: CGPoint, color: UIColor) {
     self.startPoint = startPoint
@@ -48,8 +50,9 @@ final class UIVector: SKNode {
 
     addChild(vector)
     
-    
     let vectorHolder = SKSpriteNode(imageNamed: ImageName.vectorHolder)
+    self.vectorHolder = vectorHolder
+    
     vectorHolder.size = CGSize(
       width:  13 / CGFloat(SceneSize.height),
       height: 13 / CGFloat(SceneSize.width))
@@ -57,11 +60,13 @@ final class UIVector: SKNode {
     vectorHolder.position = CGPoint(x: 0, y: 0)
     vectorHolder.zPosition = Layer.vectorHolder
     vectorHolder.name = SpriteNodeName.holder + name
-
+  
     vector.addChild(vectorHolder)
     
     
     let vectorArrow = SKSpriteNode(imageNamed: ImageName.vectorArrow)
+    self.vectorArrow = vectorArrow
+    
     vectorArrow.size = CGSize(width: 11 / CGFloat(SceneSize.height),
                               height: 14 / CGFloat(SceneSize.height))
     vectorArrow.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -86,5 +91,37 @@ final class UIVector: SKNode {
     
     self.vector.run(sequenceAction)
     self.run(fadeSequence)
+  }
+  
+  func changeWidthForState(changingState state: Bool) {
+    if state {
+      let increaseSize = SKAction.resize(toWidth: 0.0055, duration: 0.5)
+      self.vector.run(increaseSize)
+    }
+    else {
+      let decreaseSize = SKAction.resize(toWidth: 0.0035, duration: 0.5)
+      self.vector.run(decreaseSize)
+    }
+  }
+  
+  func updateDataForNewPoint(_ point: CGPoint, withVectorEnd endNode: VectorEndNode) {
+    var rotateAction: SKAction? = nil
+    var lengthAction: SKAction? = nil
+
+    switch endNode {
+    case .arrow:
+      rotateAction = SKAction.rotate(toAngle: startPoint.angleWithPoint(point), duration: 0, shortestUnitArc: false)
+      lengthAction = SKAction.resize(
+        toHeight: startPoint.length(toPoint: point) / CGFloat(SceneSize.height), duration: 0)
+      vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
+      
+    case .holder:
+      print("POKAJOPA")
+      
+    }
+    guard let rotateAction, let lengthAction else { return }
+    
+    self.vector.run(rotateAction)
+    self.vector.run(lengthAction)
   }
 }

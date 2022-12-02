@@ -44,6 +44,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   var vectors = [UIVector]()
   
   private lazy var activeVector: SKNode? = nil
+  private lazy var activeEndNode: SKNode? = nil
   private lazy var touchOffsetX: CGFloat = 0
   private lazy var touchOffsetY: CGFloat = 0
   
@@ -53,8 +54,8 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   override func didMove(to view: SKView) {
     setUpPhysics()
     setUpBackground()
-    
-    initialize()
+    getVectors()
+    addGestureRecognizer()
   }
   
   
@@ -88,7 +89,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     addChild(background)
   }
   
-  private func initialize() {
+  private func getVectors() {
     var subscription: AnyCancellable? = nil
     
     subscription = getVectorsUseCase.execute()
@@ -104,18 +105,22 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
           vector.addToScene(self, withName: String(index))
           lastVector = vector
         }
-      
+        
         if let lastVector {
           self.moveScrollViewToPoint(lastVector.endPoint)
         }
       }
   }
   
+  private func addGestureRecognizer() {
+    let pressed:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
+    pressed.delegate = self
+    pressed.minimumPressDuration = 1.5
+    view?.addGestureRecognizer(pressed)
+  }
+  
   func moveScrollViewToPoint(_ point: CGPoint) {
-    guard let frame = viewController?.view.frame
-    else {
-      return
-    }
+    guard let frame = viewController?.view.frame else { return }
     var safePoint = point
     
     safePoint.x = safePoint.x + CGFloat(SceneSize.width / 2) - frame.width / 2
@@ -148,12 +153,36 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     vector.highlight()
   }
   
+  private func saveVectorPosition() {
+    guard let activeVector else { return }
+    
+    let vector = vectors.first(where: { $0.vector.name == activeVector.name })!
+    
+    let newStartPoint = CGPoint(x: activeVector.position.x * CGFloat(SceneSize.height),
+                                y: activeVector.position.y * CGFloat(SceneSize.height))
+    let newEndPoint = CGPoint(x: newStartPoint.x + vector.endPoint.x - vector.startPoint.x,
+                              y: newStartPoint.y + vector.endPoint.y - vector.startPoint.y)
+    
+    updateVectorPositionUseCase.execute(withVector: vector,
+                                        withStartPoint: newStartPoint,
+                                        withEndPoint: newEndPoint)
+    
+    vector.startPoint = newStartPoint
+    vector.endPoint = newEndPoint
+
+    self.activeVector = nil
+    
+    viewController?.scrollView.isScrollEnabled = true
+  }
+  
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     for touch in touches {
       let touchPoint = touch.location(in: self)
       let touchedNode = atPoint(touchPoint)
       
-      switch touchedNode.name! {
+      guard let touchedNodeName = touchedNode.name else { return }
+      
+      switch touchedNodeName {
       case let name where name.hasPrefix(SpriteNodeName.vector):
         viewController?.scrollView.isScrollEnabled = false
         
@@ -175,15 +204,19 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
         
         activeVector = touchedNode.parent
         
-        touchOffsetX = cos(touchedNode.zRotation) *
-        touchedNode.frame.size.height
-        touchOffsetY = sin(touchedNode.zRotation) *
-        touchedNode.frame.size.height
+        guard let vector = vectors.first(where: { $0.vector.name == activeVector?.name })
+        else {
+          return
+        }
+        
+        touchOffsetX = (vector.endPoint.x - vector.startPoint.x) / CGFloat(SceneSize.width)
+        touchOffsetY = (vector.endPoint.y - vector.startPoint.y) / CGFloat( SceneSize.height)
 
       default:
         break
       }
       
+      activeEndNode = touchedNode
     }
   }
   
@@ -196,28 +229,59 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   }
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    if let activeVector {
-      let vector = vectors.first(where: { $0.vector.name == activeVector.name })!
-      
-      let newStartPoint = CGPoint(x: activeVector.position.x * CGFloat(SceneSize.height),
-                                  y: activeVector.position.y * CGFloat(SceneSize.height))
-      let newEndPoint = CGPoint(x: newStartPoint.x + vector.endPoint.x - vector.startPoint.x,
-                                y: newStartPoint.y + vector.endPoint.y - vector.startPoint.y)
-      
-      updateVectorPositionUseCase.execute(withVector: vector,
-                                          withStartPoint: newStartPoint,
-                                          withEndPoint: newEndPoint)
-      
-      vector.startPoint = newStartPoint
-      vector.endPoint = newEndPoint
- 
-      self.activeVector = nil
-      
-      viewController?.scrollView.isScrollEnabled = true
-    }
+    saveVectorPosition()
   }
 }
 
 extension MainPresenter: SKPhysicsContactDelegate {
   
+}
+
+
+extension MainPresenter: UIGestureRecognizerDelegate {
+  
+  @objc func longPress(sender: UILongPressGestureRecognizer) {
+    switch sender.state {
+    case .began:
+      guard let vector = vectors.first(where: { $0.vector.name == activeVector?.name })
+      else {
+        return
+      }
+      vector.changeWidthForState(changingState: true)
+      
+    case .changed:
+      guard let activeEndNode else { return }
+      
+      switch activeEndNode.name! {
+      case let name where name.hasPrefix(SpriteNodeName.holder):
+        let newPoint = sender.location(in: viewController?.scrollView)
+        
+        
+      case let name where name.hasPrefix(SpriteNodeName.arrow):
+        var newPoint = sender.location(in: viewController?.scrollView)
+        newPoint = CGPoint(x: newPoint.x - CGFloat(SceneSize.width / 2),
+                           y: CGFloat(SceneSize.height) / 2 - newPoint.y )
+        
+        guard let vector = vectors.first(where: { $0.vector.name == activeVector?.name })
+        else {
+          return
+        }
+        
+        vector.updateDataForNewPoint(newPoint, withVectorEnd: .arrow)
+        
+      default:
+        break
+      }
+      
+    case .ended:
+      let vector = vectors.first(where: { $0.vector.name == activeVector!.name })!
+      vector.changeWidthForState(changingState: false)
+      
+      saveVectorPosition()
+      
+    default:
+      break
+    }
+
+  }
 }
