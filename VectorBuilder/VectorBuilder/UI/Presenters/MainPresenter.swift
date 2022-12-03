@@ -130,7 +130,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
       animated: true)
   }
   
-
+  
   // -MARK: - SKScene Funcs -
   
   override func didMove(to view: SKView) {
@@ -157,6 +157,9 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     
     addChild(background)
   }
+  
+  
+  // -MARK: - Touch/Move Handaling -
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     for touch in touches {
@@ -237,10 +240,19 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   }
 }
 
+
+// -MARK: - Collision Handaling -
+
 extension MainPresenter: SKPhysicsContactDelegate {
-  
+  func didBegin(_ contact: SKPhysicsContact) {
+    if let position = contact.bodyA.node?.position {
+      contact.bodyB.node?.position = position
+    }
+  }
 }
 
+
+// -MARK: - Long Press Handaling
 
 extension MainPresenter: UIGestureRecognizerDelegate {
   @objc func longPress(sender: UILongPressGestureRecognizer) {

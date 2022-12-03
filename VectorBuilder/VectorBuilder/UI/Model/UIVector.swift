@@ -36,7 +36,6 @@ final class UIVector: SKNode {
     let vectorSize = CGSize(
       width: 0.0035,
       height: startPoint.length(toPoint: endPoint) / CGFloat(SceneSize.height))
-    
     let vector = SKSpriteNode(color: color, size: vectorSize)
     self.vector = vector
     
@@ -75,7 +74,7 @@ final class UIVector: SKNode {
     vectorArrow.colorBlendFactor = 1
     vectorArrow.color = color
     vectorArrow.name = SpriteNodeName.arrow + name
-    
+
     vector.addChild(vectorArrow)
   }
   
