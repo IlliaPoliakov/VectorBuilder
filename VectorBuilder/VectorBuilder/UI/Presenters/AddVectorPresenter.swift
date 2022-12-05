@@ -38,7 +38,7 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
                              withEndPointX endX: String?,
                              withEndPointY endY: String?,
                              withLength length: String?) {
-    //simply cast, ugly but normal I thhink
+    //simply cast, ugly but normal I think
     let length: Int? = {
       if let str = length, let int = Int(str) { return int }
       return nil
@@ -75,6 +75,9 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
               AppDelegate.router.presentWarningAlert(
                 withTitle: AlertData.wrongLength,
                 withBody: AlertData.wrongLengthBody)
+              
+              self.erraseAllTextFields()
+              
               return
             }
             
@@ -93,6 +96,9 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
               AppDelegate.router.presentWarningAlert(
                 withTitle: AlertData.wrongPoints,
                 withBody: AlertData.wrongPointsBody)
+              
+              self.erraseAllTextFields()
+              
               return
             }
             
@@ -111,6 +117,9 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
           AppDelegate.router.presentWarningAlert(
             withTitle: AlertData.wrongLength,
             withBody: AlertData.wrongLengthBody)
+          
+          self.erraseAllTextFields()
+          
           return
         }
         let newVector = UIVector(
@@ -127,6 +136,9 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
         AppDelegate.router.presentWarningAlert(
           withTitle: AlertData.wrongData,
           withBody: AlertData.wrongDataBody)
+        
+        self.erraseAllTextFields()
+        
         return
       }
       guard startX >= -500, startY >= -500, endX >= -500, endY >= -500,
@@ -136,6 +148,9 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
         AppDelegate.router.presentWarningAlert(
           withTitle: AlertData.wrongPoints,
           withBody: AlertData.wrongPointsBody)
+        
+        self.erraseAllTextFields()
+        
         return
       }
       
@@ -151,7 +166,16 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
   private func acceptWithVector(_ vector: UIVector) {
     self.saveNewVectorUseCase.execute(withDataFrom: vector)
     
-    viewController?.erraseAllTextFields()
+    self.erraseAllTextFields()
+    
     AppDelegate.router.dismissAddVectorViewController(withNewVector: vector)
+  }
+  
+  private func erraseAllTextFields() {
+    viewController?.startXTextField.text = ""
+    viewController?.endXTextField.text = ""
+    viewController?.startYTextField.text = ""
+    viewController?.endYTextField.text = ""
+    viewController?.lengthTextField.text = ""
   }
 }

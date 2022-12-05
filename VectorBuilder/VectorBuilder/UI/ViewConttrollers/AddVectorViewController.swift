@@ -45,23 +45,23 @@ final class AddVectorViewController: UIViewController {
   private var startPointLabel: UILabel!
   
   private var startXLabel: UILabel!
-  private var startXTextField: UITextField!
+  var startXTextField: UITextField!
   
   private var startYLabel: UILabel!
-  private var startYTextField: UITextField!
+  var startYTextField: UITextField!
   
   
   private var endPointLabel: UILabel!
   
   private var endXLabel: UILabel!
-  private var endXTextField: UITextField!
+  var endXTextField: UITextField!
   
   private var endYLabel: UILabel!
-  private var endYTextField: UITextField!
+  var endYTextField: UITextField!
   
   
   private var setLengthLabel: UILabel!
-  private var lengthTextField: UITextField!
+  var lengthTextField: UITextField!
   
   private var manualLabel: UILabel!
   
@@ -326,15 +326,6 @@ final class AddVectorViewController: UIViewController {
       make.leading.trailing.equalToSuperview().inset(15)
       make.bottom.equalToSuperview().offset(-20)
     }
-  }
-  
-  
-  func erraseAllTextFields() {
-    startXTextField.text = ""
-    endXTextField.text = ""
-    startYTextField.text = ""
-    endYTextField.text = ""
-    lengthTextField.text = ""
   }
 }
 

@@ -18,6 +18,10 @@ protocol MainPresenterProtocol {
   func sideBarButtonTupped()
   func unwindFromAddViewController(withNewVector vector: UIVector)
   func moveScrollViewToPoint(_ point: CGPoint)
+  
+  func longTapBegan()
+  func longTapMoved(withSender sender: UILongPressGestureRecognizer)
+  func longTapEnded(withSender sender: UILongPressGestureRecognizer)
 }
 
 protocol MainPresenterDelegete {
@@ -43,8 +47,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   
   var vectors = [UIVector]()
   
-  private lazy var activeVector: SKNode? = nil
-  private lazy var activeEndNode: SKNode? = nil
+  private lazy var activeVector: UIVector? = nil
   private lazy var touchOffsetX: CGFloat = 0
   private lazy var touchOffsetY: CGFloat = 0
   
@@ -73,14 +76,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
         }
       }
   }
-  
-  private func addGestureRecognizer() {
-    let pressed:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
-    pressed.delegate = self
-    pressed.minimumPressDuration = 1
-    view?.addGestureRecognizer(pressed)
-  }
-  
+
   
   // -MARK: - Protocol Funcs -
   
@@ -137,7 +133,6 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     setUpPhysics()
     setUpBackground()
     getVectors()
-    addGestureRecognizer()
   }
   
   private func setUpPhysics() {
@@ -172,7 +167,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
       case let name where name.hasPrefix(SpriteNodeName.vector):
         viewController?.scrollView.isScrollEnabled = false
         
-        activeVector = touchedNode
+        activeVector = touchedNode.parent as? UIVector
         
         touchOffsetX = touchPoint.x - touchedNode.position.x
         touchOffsetY = touchPoint.y - touchedNode.position.y
@@ -180,59 +175,136 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
       case let name where name.hasPrefix(SpriteNodeName.holder):
         viewController?.scrollView.isScrollEnabled = false
         
-        activeVector = touchedNode.parent
-        
+        activeVector = touchedNode.parent?.parent as? UIVector
         touchOffsetX = 0
         touchOffsetY = 0
         
       case let name where name.hasPrefix(SpriteNodeName.arrow):
         viewController?.scrollView.isScrollEnabled = false
         
-        activeVector = touchedNode.parent
+        activeVector = touchedNode.parent?.parent as? UIVector
         
-        guard let vector = vectors.first(where: { $0.vector.name == activeVector?.name })
-        else {
-          return
-        }
+        guard let activeVector
+        else { return }
         
-        touchOffsetX = (vector.endPoint.x - vector.startPoint.x) / CGFloat(SceneSize.width)
-        touchOffsetY = (vector.endPoint.y - vector.startPoint.y) / CGFloat( SceneSize.height)
+        touchOffsetX = (activeVector.endPoint.x - activeVector.startPoint.x) /
+        CGFloat(SceneSize.width)
+        touchOffsetY = (activeVector.endPoint.y - activeVector.startPoint.y) /
+        CGFloat( SceneSize.height)
         
       default:
         break
       }
       
-      activeEndNode = touchedNode
+      activeVector?.activeNode = touchedNode as? SKSpriteNode
     }
   }
   
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     if let activeVector,
        let touchPosition = touches.first?.location(in: self) {
-      activeVector.position = CGPoint(x: touchPosition.x - touchOffsetX,
-                                      y: touchPosition.y - touchOffsetY)
+      activeVector.vector.position = CGPoint(x: touchPosition.x - touchOffsetX,
+                                             y: touchPosition.y - touchOffsetY)
     }
   }
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     guard let activeVector else { return }
     
-    let vector = vectors.first(where: { $0.vector.name == activeVector.name })!
-    
     let newStartPoint = CGPoint(
-      x: activeVector.position.x * CGFloat(SceneSize.height),
-      y: activeVector.position.y * CGFloat(SceneSize.height))
+      x: activeVector.vector.position.x * CGFloat(SceneSize.height),
+      y: activeVector.vector.position.y * CGFloat(SceneSize.height))
     let newEndPoint = CGPoint(
-      x: newStartPoint.x + vector.endPoint.x - vector.startPoint.x,
-      y: newStartPoint.y + vector.endPoint.y - vector.startPoint.y)
+      x: newStartPoint.x + activeVector.endPoint.x - activeVector.startPoint.x,
+      y: newStartPoint.y + activeVector.endPoint.y - activeVector.startPoint.y)
     
     updateVectorPositionUseCase.execute(
-      withVector: vector,
+      withVector: activeVector,
       withStartPoint: newStartPoint,
       withEndPoint: newEndPoint)
     
-    vector.startPoint = newStartPoint
-    vector.endPoint = newEndPoint
+    activeVector.startPoint = newStartPoint
+    activeVector.endPoint = newEndPoint
+    activeVector.activeNode = nil
+    
+    self.activeVector = nil
+    
+    viewController?.scrollView.isScrollEnabled = true
+  }
+  
+  func longTapBegan() {
+    guard let isVector = activeVector?.activeNode?.name?.hasPrefix(SpriteNodeName.vector),
+          !isVector
+    else { return }
+    
+    activeVector?.isInEditingMode = true
+    
+    activeVector?.changeWidthForState(changingState: true)
+  }
+  
+  func longTapMoved(withSender sender: UILongPressGestureRecognizer) {
+    guard let name = activeVector?.activeNode?.name,
+          let activeVector
+    else { return }
+    
+    switch name {
+    case let name where name.hasPrefix(SpriteNodeName.arrow):
+      var newPoint = sender.location(in: viewController?.scrollView)
+      newPoint = CGPoint(x: newPoint.x - CGFloat(SceneSize.width / 2),
+                         y: CGFloat(SceneSize.height) / 2 - newPoint.y)
+      
+      activeVector.updateDataForNewPoint(
+        newPoint,
+        withVectorEnd: .arrow,
+        withDuration: 0)
+      
+      
+    case let name where name.hasPrefix(SpriteNodeName.holder):
+      var newPoint = sender.location(in: viewController?.scrollView)
+      newPoint = CGPoint(x: newPoint.x - CGFloat(SceneSize.width / 2),
+                         y: CGFloat(SceneSize.height) / 2 - newPoint.y )
+      
+      activeVector.updateDataForNewPoint(
+        newPoint,
+        withVectorEnd: .holder,
+        withDuration: 0)
+      
+    default:
+      break
+    }
+  }
+  
+  func longTapEnded(withSender sender: UILongPressGestureRecognizer) {
+    
+    activeVector?.changeWidthForState(changingState: false)
+    
+    var point = sender.location(in: viewController?.scrollView)
+    point = CGPoint(x: point.x - CGFloat(SceneSize.width / 2),
+                    y: CGFloat(SceneSize.height) / 2 - point.y )
+    
+    guard let activeVector,
+          let name = activeVector.activeNode?.name
+    else { return }
+    
+    switch name {
+    case let name where name.hasPrefix(SpriteNodeName.arrow):
+      updateVectorPositionUseCase.execute(
+        withVector: activeVector,
+        withStartPoint: activeVector.startPoint,
+        withEndPoint: point)
+      
+    case let name where name.hasPrefix(SpriteNodeName.holder):
+      updateVectorPositionUseCase.execute(
+        withVector: activeVector,
+        withStartPoint: point,
+        withEndPoint: activeVector.endPoint)
+      
+    default:
+      break
+    }
+    
+    activeVector.activeNode = nil
+    activeVector.isInEditingMode = false
     
     self.activeVector = nil
     
@@ -245,97 +317,68 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
 
 extension MainPresenter: SKPhysicsContactDelegate {
   func didBegin(_ contact: SKPhysicsContact) {
-    if let position = contact.bodyA.node?.position {
-      contact.bodyB.node?.position = position
+    guard let firstNode: UIVector = contact.bodyA.node?.parent?.parent as? UIVector,
+          let secondNode: UIVector = contact.bodyB.node?.parent?.parent as? UIVector
+    else { return }
+
+    guard let firstEndName = contact.bodyA.node?.name,
+          let secondEndName = contact.bodyB.node?.name
+    else { return }
+    
+    if firstNode.activeNode != nil {
+      if firstEndName.hasPrefix(SpriteNodeName.arrow) {
+        if secondEndName.hasPrefix(SpriteNodeName.arrow) {
+          firstNode.pinToVector(
+            secondNode,
+            withEndToEndType: .arrowToArrow)
+        }
+        else {
+          firstNode.pinToVector(
+            secondNode,
+            withEndToEndType: .arrowToHolder)
+        }
+      }
+      else {
+        if secondEndName.hasPrefix(SpriteNodeName.arrow) {
+          firstNode.pinToVector(
+            secondNode,
+            withEndToEndType:  .holderToArrow)
+        }
+        else {
+          firstNode.pinToVector(
+            secondNode,
+            withEndToEndType: .holderToHolder)
+        }
+      }
     }
-  }
-}
-
-
-// -MARK: - Long Press Handaling
-
-extension MainPresenter: UIGestureRecognizerDelegate {
-  @objc func longPress(sender: UILongPressGestureRecognizer) {
-    switch sender.state {
-    case .began:
-      guard let vector = vectors.first(where: { $0.vector.name == activeVector?.name })
-      else {
-        return
-      }
-      vector.changeWidthForState(changingState: true)
-      
-    case .changed:
-      guard let activeEndNode else { return }
-      
-      switch activeEndNode.name! {
-      case let name where name.hasPrefix(SpriteNodeName.arrow):
-        var newPoint = sender.location(in: viewController?.scrollView)
-        newPoint = CGPoint(x: newPoint.x - CGFloat(SceneSize.width / 2),
-                           y: CGFloat(SceneSize.height) / 2 - newPoint.y )
-        
-        guard let vector = vectors.first(where: { $0.vector.name == activeVector?.name })
-        else {
-          return
+    else {
+      if secondEndName.hasPrefix(SpriteNodeName.arrow) {
+        if firstEndName.hasPrefix(SpriteNodeName.arrow) {
+          secondNode.pinToVector(
+            firstNode,
+            withEndToEndType: .arrowToArrow)
         }
-        
-        vector.updateDataForNewPoint(newPoint, withVectorEnd: .arrow)
-        
-        
-      case let name where name.hasPrefix(SpriteNodeName.holder):
-        var newPoint = sender.location(in: viewController?.scrollView)
-        newPoint = CGPoint(x: newPoint.x - CGFloat(SceneSize.width / 2),
-                           y: CGFloat(SceneSize.height) / 2 - newPoint.y )
-        
-        guard let vector = vectors.first(where: { $0.vector.name == activeVector?.name })
         else {
-          return
+          secondNode.pinToVector(
+            firstNode,
+            withEndToEndType: .arrowToHolder)
         }
-        
-        vector.updateDataForNewPoint(newPoint, withVectorEnd: .holder)
-        
-        
-      default:
-        break
       }
-      
-    case .ended:
-      guard let vector = vectors.first(where: { $0.vector.name == activeVector?.name })
       else {
-        return
+        if firstEndName.hasPrefix(SpriteNodeName.arrow) {
+          secondNode.pinToVector(
+            firstNode,
+            withEndToEndType: .holderToArrow)
+        }
+        else {
+          secondNode.pinToVector(
+            firstNode,
+            withEndToEndType: .holderToHolder)
+        }
       }
-      
-      vector.changeWidthForState(changingState: false)
-      var point = sender.location(in: viewController?.scrollView)
-      point = CGPoint(x: point.x - CGFloat(SceneSize.width / 2),
-                      y: CGFloat(SceneSize.height) / 2 - point.y )
-      
-      guard let activeEndNode else { return }
-      
-      switch activeEndNode.name! {
-      case let name where name.hasPrefix(SpriteNodeName.arrow):
-        updateVectorPositionUseCase.execute(
-          withVector: vector,
-          withStartPoint: vector.startPoint,
-          withEndPoint: point)
-        vector.endPoint = point
-        
-      case let name where name.hasPrefix(SpriteNodeName.holder):
-        updateVectorPositionUseCase.execute(
-          withVector: vector,
-          withStartPoint: point,
-          withEndPoint: vector.endPoint)
-        vector.startPoint = point
-        
-      default:
-        break
-      }
-      
-      self.activeVector = nil
-      viewController?.scrollView.isScrollEnabled = true
-      
-    default:
-      break
     }
     
+    activeVector?.activeNode = nil
+    activeVector = nil
   }
 }

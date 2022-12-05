@@ -30,6 +30,8 @@ final class MainViewController: UIViewController {
     
     setupViews()
     layoutViews()
+    
+    setUpGestureRecognizer()
   }
   
   
@@ -56,8 +58,10 @@ final class MainViewController: UIViewController {
     scrollView = UIScrollView().then { scrollView in
       scrollView.translatesAutoresizingMaskIntoConstraints = false
       scrollView.bounces = false
+      scrollView.maximumZoomScale = 2
       scrollView.showsVerticalScrollIndicator = false
       scrollView.showsHorizontalScrollIndicator = false
+      scrollView.contentInsetAdjustmentBehavior = .never
     }
     
     spriteKitView = SKView().then { skView in
@@ -103,11 +107,6 @@ final class MainViewController: UIViewController {
     scrollView.snp.makeConstraints { make in
       make.leading.top.trailing.bottom.equalToSuperview()
     }
-    if let top = UIApplication.shared.windows.first?.safeAreaInsets.top,
-       let bottom = UIApplication.shared.windows.first?.safeAreaInsets.bottom{
-      scrollView.contentInset.top = -top
-      scrollView.contentInset.bottom = -bottom
-    }
     
     spriteKitView.snp.makeConstraints { make in
       make.width.equalTo(SceneSize.width)
@@ -128,4 +127,33 @@ final class MainViewController: UIViewController {
     }
   }
   
+  private func setUpGestureRecognizer() {
+    let pressed:UILongPressGestureRecognizer =
+    UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
+    pressed.delegate = self
+    pressed.minimumPressDuration = 1
+    self.view.addGestureRecognizer(pressed)
+  }
 }
+
+
+// -MARK: - Long Press Handaling
+
+extension MainViewController: UIGestureRecognizerDelegate {
+  @objc func longPress(sender: UILongPressGestureRecognizer) {
+    switch sender.state {
+    case .began:
+      presenter.longTapBegan()
+      
+    case .changed:
+      presenter.longTapMoved(withSender: sender)
+      
+    case .ended:
+      presenter.longTapEnded(withSender: sender)
+    
+    default:
+      break
+    }
+  }
+}
+

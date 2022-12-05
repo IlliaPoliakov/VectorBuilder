@@ -100,3 +100,9 @@ enum VectorEndNode {
   case holder
 }
 
+enum PinEndToEndType {
+  case arrowToArrow
+  case arrowToHolder
+  case holderToHolder
+  case holderToArrow
+}
