@@ -131,13 +131,13 @@ final class UIVector: SKNode {
         
       case .holderToArrow:
         updateDataForNewPoint(
-          vector.startPoint,
+          vector.endPoint,
           withVectorEnd: .holder,
           withDuration: 0.2)
         
       case .holderToHolder:
         updateDataForNewPoint(
-          vector.endPoint,
+          vector.startPoint,
           withVectorEnd: .holder,
           withDuration: 0.2)
       }
@@ -225,13 +225,14 @@ final class UIVector: SKNode {
     
     if let rotateAction, let lengthAction {
       self.vector.run(rotateAction)
-      self.vector.run(lengthAction)
+      self.vector.run(lengthAction) {
+        self.arrow.position = CGPoint(x: 0, y: self.vector.size.height)
+      }
+
     }
     
     if let moveAction {
       self.vector.run(moveAction)
     }
-    
-    arrow.position = CGPoint(x: 0, y: vector.size.height)
   }
 }

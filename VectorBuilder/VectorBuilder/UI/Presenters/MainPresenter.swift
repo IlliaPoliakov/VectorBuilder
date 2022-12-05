@@ -317,8 +317,10 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
 
 extension MainPresenter: SKPhysicsContactDelegate {
   func didBegin(_ contact: SKPhysicsContact) {
+    
     guard let firstNode: UIVector = contact.bodyA.node?.parent?.parent as? UIVector,
-          let secondNode: UIVector = contact.bodyB.node?.parent?.parent as? UIVector
+          let secondNode: UIVector = contact.bodyB.node?.parent?.parent as? UIVector,
+          firstNode != secondNode
     else { return }
 
     guard let firstEndName = contact.bodyA.node?.name,
