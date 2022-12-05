@@ -203,6 +203,13 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     if let activeVector,
        let touchPosition = touches.first?.location(in: self) {
+//      if !activeVector.conjugateVectors.isEmpty {
+//        guard activeVector.position
+//          .length(toPoint: CGPoint(x: touchPosition.x - touchOffsetX,
+//                                   y: touchPosition.y - touchOffsetY)) > 0.2
+//        else { return }
+//      }
+      
       activeVector.vector.position = CGPoint(x: touchPosition.x - touchOffsetX,
                                              y: touchPosition.y - touchOffsetY)
       activeVector.conjugateVectors.forEach { vector in

@@ -247,7 +247,7 @@ final class UIVector: SKNode {
       self.endPoint = point
       
     case .holder:
-      let (angle, point) = determineAngleandPointForArrow(
+      let (angle, point) = determineAngleandPointForHolder(
         withInitialAngle: 3.14 + endPoint.angleWithPoint(point),
         withPoint: point)
       
@@ -284,56 +284,56 @@ final class UIVector: SKNode {
       var resultAngle: Double = angle
       var resultPoint: CGPoint = point
       
-//      switch angle {
-//      case let angle where angle >= -0.07 && angle <= 0.07:
-//        resultAngle = 0
-//        resultPoint.x = endPoint.x
-//        
-//      case let angle where angle >= 3.07 || angle <= -3.07:
-//        resultAngle = 3.14
-//        resultPoint.x = endPoint.x
-//        
-//      case let angle where angle >= 1.5 && angle <= 1.65:
-//        resultAngle = 1.57
-//        resultPoint.y = endPoint.y
-//        
-//      case let angle where angle >= -1.65 && angle <= -1.5:
-//        resultAngle = -1.57
-//        resultPoint.y = endPoint.y
-//        
-//      default:
-//        break
-//      }
-      
-//      conjugateVectors.forEach { vector in
-//        let angleWithVector = self.vector.zRotation - vector.vector.zRotation
-//
-//        switch angleWithVector {
-//        case let angle where angle >= -0.07 && angle <= 0.07:
-//          resultAngle = vector.vector.zRotation
-//
-//        case let angle where angle >= 1.5 && angle <= 1.64:
-//          resultAngle = vector.vector.zRotation + 1.57
-//          presentAngleSquare(forAngle: 1.57 + resultAngle)
-//
-//        case let angle where angle >= -1.64 && angle <= -1.5:
-//          resultAngle = vector.vector.zRotation - 1.57
-//          presentAngleSquare(forAngle: resultAngle)
-//
-//        default:
-//          squareAngle.isHidden = true
-//          break
-//        }
-//      }
-      
-      if angle > resultAngle + 0.07 {
-        resultAngle += 0.08
+      switch angle {
+      case let angle where angle >= 3.07 && angle <= 3.21:
+        resultAngle = 3.14
+        resultPoint.x = endPoint.x
+
+      case let angle where angle >= 1.50 && angle <= 1.64:
+        resultAngle = 1.57
+        resultPoint.y = endPoint.y
+
+      case let angle where angle >= 6.21 || angle <= 0.07:
+        resultAngle = 0
+        resultPoint.x = endPoint.x
+
+      case let angle where angle >= 4.64 && angle <= 4.78:
+        resultAngle = 4.71
+        resultPoint.y = endPoint.y
+
+      default:
+        break
       }
-      if angle < resultAngle - 0.07 {
-        if angle > -3.07 {
-          resultAngle -= 0.08
+      
+      conjugateVectors.forEach { vector in
+        let angleWithVector = self.vector.zRotation - vector.vector.zRotation
+
+        switch angleWithVector {
+        case let angle where angle >= -0.07 && angle <= 0.07:
+          resultAngle = vector.vector.zRotation
+
+        case let angle where angle >= 1.5 && angle <= 1.64:
+          resultAngle = vector.vector.zRotation + 1.57
+          presentAngleSquare(forAngle: 1.57 + resultAngle)
+
+        case let angle where angle >= -1.64 && angle <= -1.5:
+          resultAngle = vector.vector.zRotation - 1.57
+          presentAngleSquare(forAngle: resultAngle)
+
+        default:
+          squareAngle.isHidden = true
+          break
         }
       }
+      
+//      if angle > resultAngle + 0.07 {
+//        resultAngle += 0.08
+//      }
+//      if angle < resultAngle - 0.07 {
+//        if angle > -3.07 {
+//          resultAngle -= 0.08
+//        }
+//      }
       
       return (resultAngle, resultPoint)
     }
@@ -353,11 +353,11 @@ final class UIVector: SKNode {
         resultAngle = 3.14
         resultPoint.x = startPoint.x
         
-      case let angle where angle >= 1.5 && angle <= 1.65:
+      case let angle where angle >= 1.5 && angle <= 1.64:
         resultAngle = 1.57
         resultPoint.y = startPoint.y
         
-      case let angle where angle >= -1.65 && angle <= -1.5:
+      case let angle where angle >= -1.64 && angle <= -1.5:
         resultAngle = -1.57
         resultPoint.y = startPoint.y
         
@@ -374,11 +374,26 @@ final class UIVector: SKNode {
           
         case let angle where angle >= 1.5 && angle <= 1.64:
           resultAngle = vector.vector.zRotation + 1.57
-          presentAngleSquare(forAngle: 1.57 + resultAngle)
+          if self.vector.position == vector.vector.position {
+            presentAngleSquare(forAngle: resultAngle)
+          }
+          else {
+            presentAngleSquare(forAngle: 1.57 + resultAngle)
+          }
           
         case let angle where angle >= -1.64 && angle <= -1.5:
           resultAngle = vector.vector.zRotation - 1.57
-          presentAngleSquare(forAngle: resultAngle)
+          
+          if self.vector.position == vector.vector.position {
+            presentAngleSquare(forAngle: 1.57 + resultAngle)
+          }
+          else {
+            presentAngleSquare(forAngle: resultAngle)
+          }
+          
+        case let angle where (angle >= 3.07 && angle <= 3.21) ||
+          (angle >= -3.21 && angle <= -3.07):
+          resultAngle = 3.14 + vector.vector.zRotation
           
         default:
           squareAngle.isHidden = true
@@ -389,10 +404,8 @@ final class UIVector: SKNode {
       if angle > resultAngle + 0.07 {
         resultAngle += 0.08
       }
-      if angle < resultAngle - 0.07 {
-        if angle > -3.07 {
-          resultAngle -= 0.08
-        }
+      if angle < resultAngle - 0.07 && angle > -3.07 {
+        resultAngle -= 0.08
       }
       
       return (resultAngle, resultPoint)
