@@ -50,15 +50,18 @@ enum ImageName {
   static let background = "background"
   static let vectorHolder = "vectorHolder"
   static let vectorArrow = "arrow"
+  static let square = "square"
+  static let dollarSquare = "dollarSquare"
 }
 
 enum Layer {
   static let background: CGFloat = 0
-  static let vector: CGFloat = 1
-  static let vectorHolder:CGFloat = 2
-  static let vectorArrow: CGFloat = 3
-  static let actualVector: CGFloat = 4
-  static let foreground: CGFloat = 5
+  static let angleSquare: CGFloat = 1
+  static let vector: CGFloat = 2
+  static let vectorHolder:CGFloat = 3
+  static let vectorArrow: CGFloat = 4
+  static let actualVector: CGFloat = 5
+  static let foreground: CGFloat = 6
 }
 
 enum PhysicsCategory {

@@ -205,6 +205,11 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
        let touchPosition = touches.first?.location(in: self) {
       activeVector.vector.position = CGPoint(x: touchPosition.x - touchOffsetX,
                                              y: touchPosition.y - touchOffsetY)
+      activeVector.conjugateVectors.forEach { vector in
+        vector.conjugateVectors.removeAll(where: { $0 == self })
+      }
+      activeVector.conjugateVectors.removeAll()
+      activeVector.squareAngle.isHidden = true
     }
   }
   
@@ -320,8 +325,12 @@ extension MainPresenter: SKPhysicsContactDelegate {
     
     guard let firstNode: UIVector = contact.bodyA.node?.parent?.parent as? UIVector,
           let secondNode: UIVector = contact.bodyB.node?.parent?.parent as? UIVector,
-          firstNode != secondNode
+          firstNode != secondNode,
+          !firstNode.conjugateVectors.contains(secondNode)
     else { return }
+    
+    firstNode.conjugateVectors.append(secondNode)
+    secondNode.conjugateVectors.append(firstNode)
 
     guard let firstEndName = contact.bodyA.node?.name,
           let secondEndName = contact.bodyB.node?.name

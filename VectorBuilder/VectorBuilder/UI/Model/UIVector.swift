@@ -16,9 +16,29 @@ final class UIVector: SKNode {
   private(set) var vector: SKSpriteNode!
   private var arrow: SKSpriteNode!
   private var holder: SKSpriteNode!
-
+  
+  var conjugateVectors: [UIVector] = []
+  
   var activeNode: SKSpriteNode? = nil
   var isInEditingMode: Bool = false
+  
+  lazy var squareAngle: SKSpriteNode = {
+    let square = SKSpriteNode(imageNamed: ImageName.square)
+    square.size = CGSize(
+      width:  17 / CGFloat(SceneSize.height),
+      height: 17 / CGFloat(SceneSize.width))
+    square.color = .gray
+    square.colorBlendFactor = 1
+    square.anchorPoint = CGPoint(x: 0, y: 0)
+    square.zPosition = Layer.angleSquare
+    square.position = self.vector.position
+    square.zRotation = self.vector.zRotation
+    square.isHidden = true
+    
+    addChild(square)
+    
+    return square
+  }()
   
   init(startPoint: CGPoint, endPoint: CGPoint, color: UIColor) {
     self.startPoint = startPoint
@@ -36,6 +56,37 @@ final class UIVector: SKNode {
     self.zPosition = Layer.vector
     scene.addChild(self)
     
+    let vector = setUpVector(withName: name)
+    addChild(vector)
+    
+    let vectorHolder = setUpVectorHolder(withName: name)
+    vector.addChild(vectorHolder)
+    
+    let vectorArrow = setUpVectorArrow(withName: name)
+    vector.addChild(vectorArrow)
+  }
+  
+  private func setUpVectorArrow(withName name: String) -> SKSpriteNode {
+    let vectorArrow = SKSpriteNode(imageNamed: ImageName.vectorArrow)
+    self.arrow = vectorArrow
+    
+    vectorArrow.size = CGSize(width: 11 / CGFloat(SceneSize.height),
+                              height: 14 / CGFloat(SceneSize.height))
+    vectorArrow.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+    vectorArrow.zPosition = Layer.vectorArrow
+    vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
+    vectorArrow.colorBlendFactor = 1
+    vectorArrow.color = color
+    vectorArrow.name = SpriteNodeName.arrow + name
+    
+    vectorArrow.physicsBody = SKPhysicsBody(circleOfRadius: holder.size.width * 4)
+    vectorArrow.physicsBody?.categoryBitMask = PhysicsCategory.vectorEnds
+    vectorArrow.physicsBody?.contactTestBitMask = PhysicsCategory.vectorEnds
+    
+    return vectorArrow
+  }
+  
+  private func setUpVector(withName name: String) -> SKSpriteNode {
     let vectorSize = CGSize(
       width: 0.0035,
       height: startPoint.length(toPoint: endPoint) / CGFloat(SceneSize.height))
@@ -50,8 +101,10 @@ final class UIVector: SKNode {
     vector.zRotation = startPoint.angleWithPoint(endPoint)
     vector.name = SpriteNodeName.vector + name
     
-    addChild(vector)
-    
+    return vector
+  }
+  
+  private func setUpVectorHolder(withName name: String) -> SKSpriteNode {
     let vectorHolder = SKSpriteNode(imageNamed: ImageName.vectorHolder)
     self.holder = vectorHolder
     
@@ -63,30 +116,11 @@ final class UIVector: SKNode {
     vectorHolder.zPosition = Layer.vectorHolder
     vectorHolder.name = SpriteNodeName.holder + name
     
-    vector.addChild(vectorHolder)
-    
     vectorHolder.physicsBody = SKPhysicsBody(circleOfRadius: vectorHolder.size.width * 4)
     vectorHolder.physicsBody?.categoryBitMask = PhysicsCategory.vectorEnds
     vectorHolder.physicsBody?.contactTestBitMask = PhysicsCategory.vectorEnds
     
-    
-    let vectorArrow = SKSpriteNode(imageNamed: ImageName.vectorArrow)
-    self.arrow = vectorArrow
-    
-    vectorArrow.size = CGSize(width: 11 / CGFloat(SceneSize.height),
-                              height: 14 / CGFloat(SceneSize.height))
-    vectorArrow.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-    vectorArrow.zPosition = Layer.vectorArrow
-    vectorArrow.position = CGPoint(x: 0, y: vector.size.height)
-    vectorArrow.colorBlendFactor = 1
-    vectorArrow.color = color
-    vectorArrow.name = SpriteNodeName.arrow + name
-
-    vector.addChild(vectorArrow)
-    
-    vectorArrow.physicsBody = SKPhysicsBody(circleOfRadius: vectorHolder.size.width * 4)
-    vectorArrow.physicsBody?.categoryBitMask = PhysicsCategory.vectorEnds
-    vectorArrow.physicsBody?.contactTestBitMask = PhysicsCategory.vectorEnds
+    return vectorHolder
   }
   
   func highlight() {
@@ -141,6 +175,8 @@ final class UIVector: SKNode {
           withVectorEnd: .holder,
           withDuration: 0.2)
       }
+      
+      changeWidthForState(changingState: false)
     }
     else {
       var point: CGPoint? = nil
@@ -196,8 +232,12 @@ final class UIVector: SKNode {
     
     switch endNode {
     case .arrow:
+      let (angle, point) = determineAngleandPointForArrow(
+        withInitialAngle: startPoint.angleWithPoint(point),
+        withPoint: point)
+      
       rotateAction = SKAction.rotate(
-        toAngle: startPoint.angleWithPoint(point),
+        toAngle: angle,
         duration: duration)
       lengthAction = SKAction.resize(
         toHeight: startPoint.length(toPoint: point) /
@@ -207,8 +247,12 @@ final class UIVector: SKNode {
       self.endPoint = point
       
     case .holder:
+      let (angle, point) = determineAngleandPointForArrow(
+        withInitialAngle: 3.14 + endPoint.angleWithPoint(point),
+        withPoint: point)
+      
       rotateAction = SKAction.rotate(
-        toAngle: 3.14 + endPoint.angleWithPoint(point),
+        toAngle: angle,
         duration: duration)
       lengthAction = SKAction.resize(
         toHeight: point.length(toPoint: endPoint) /
@@ -220,7 +264,6 @@ final class UIVector: SKNode {
         duration: duration)
       
       self.startPoint = point
-      
     }
     
     if let rotateAction, let lengthAction {
@@ -228,11 +271,136 @@ final class UIVector: SKNode {
       self.vector.run(lengthAction) {
         self.arrow.position = CGPoint(x: 0, y: self.vector.size.height)
       }
-
     }
     
     if let moveAction {
       self.vector.run(moveAction)
     }
+  }
+  
+  private func determineAngleandPointForHolder(
+    withInitialAngle angle: Double,
+    withPoint point: CGPoint) -> (Double, CGPoint) {
+      var resultAngle: Double = angle
+      var resultPoint: CGPoint = point
+      
+//      switch angle {
+//      case let angle where angle >= -0.07 && angle <= 0.07:
+//        resultAngle = 0
+//        resultPoint.x = endPoint.x
+//        
+//      case let angle where angle >= 3.07 || angle <= -3.07:
+//        resultAngle = 3.14
+//        resultPoint.x = endPoint.x
+//        
+//      case let angle where angle >= 1.5 && angle <= 1.65:
+//        resultAngle = 1.57
+//        resultPoint.y = endPoint.y
+//        
+//      case let angle where angle >= -1.65 && angle <= -1.5:
+//        resultAngle = -1.57
+//        resultPoint.y = endPoint.y
+//        
+//      default:
+//        break
+//      }
+      
+//      conjugateVectors.forEach { vector in
+//        let angleWithVector = self.vector.zRotation - vector.vector.zRotation
+//
+//        switch angleWithVector {
+//        case let angle where angle >= -0.07 && angle <= 0.07:
+//          resultAngle = vector.vector.zRotation
+//
+//        case let angle where angle >= 1.5 && angle <= 1.64:
+//          resultAngle = vector.vector.zRotation + 1.57
+//          presentAngleSquare(forAngle: 1.57 + resultAngle)
+//
+//        case let angle where angle >= -1.64 && angle <= -1.5:
+//          resultAngle = vector.vector.zRotation - 1.57
+//          presentAngleSquare(forAngle: resultAngle)
+//
+//        default:
+//          squareAngle.isHidden = true
+//          break
+//        }
+//      }
+      
+      if angle > resultAngle + 0.07 {
+        resultAngle += 0.08
+      }
+      if angle < resultAngle - 0.07 {
+        if angle > -3.07 {
+          resultAngle -= 0.08
+        }
+      }
+      
+      return (resultAngle, resultPoint)
+    }
+  
+  private func determineAngleandPointForArrow(
+    withInitialAngle angle: Double,
+    withPoint point: CGPoint) -> (Double, CGPoint) {
+      var resultAngle: Double = angle
+      var resultPoint: CGPoint = point
+      
+      switch angle {
+      case let angle where angle >= -0.07 && angle <= 0.07:
+        resultAngle = 0
+        resultPoint.x = startPoint.x
+        
+      case let angle where angle >= 3.07 || angle <= -3.07:
+        resultAngle = 3.14
+        resultPoint.x = startPoint.x
+        
+      case let angle where angle >= 1.5 && angle <= 1.65:
+        resultAngle = 1.57
+        resultPoint.y = startPoint.y
+        
+      case let angle where angle >= -1.65 && angle <= -1.5:
+        resultAngle = -1.57
+        resultPoint.y = startPoint.y
+        
+      default:
+        break
+      }
+      
+      conjugateVectors.forEach { vector in
+        let angleWithVector = self.vector.zRotation - vector.vector.zRotation
+        
+        switch angleWithVector {
+        case let angle where angle >= -0.07 && angle <= 0.07:
+          resultAngle = vector.vector.zRotation
+          
+        case let angle where angle >= 1.5 && angle <= 1.64:
+          resultAngle = vector.vector.zRotation + 1.57
+          presentAngleSquare(forAngle: 1.57 + resultAngle)
+          
+        case let angle where angle >= -1.64 && angle <= -1.5:
+          resultAngle = vector.vector.zRotation - 1.57
+          presentAngleSquare(forAngle: resultAngle)
+          
+        default:
+          squareAngle.isHidden = true
+          break
+        }
+      }
+      
+      if angle > resultAngle + 0.07 {
+        resultAngle += 0.08
+      }
+      if angle < resultAngle - 0.07 {
+        if angle > -3.07 {
+          resultAngle -= 0.08
+        }
+      }
+      
+      return (resultAngle, resultPoint)
+    }
+  
+  private func presentAngleSquare(forAngle angle: Double) {
+    squareAngle.zRotation = angle
+    squareAngle.position = self.vector.position
+    squareAngle.isHidden = false
   }
 }
