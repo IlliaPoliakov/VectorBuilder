@@ -50,15 +50,18 @@ enum ImageName {
   static let background = "background"
   static let vectorHolder = "vectorHolder"
   static let vectorArrow = "arrow"
+  static let square = "square"
+  static let dollarSquare = "dollarSquare"
 }
 
 enum Layer {
   static let background: CGFloat = 0
-  static let vector: CGFloat = 1
-  static let vectorHolder:CGFloat = 2
-  static let vectorArrow: CGFloat = 3
-  static let actualVector: CGFloat = 4
-  static let foreground: CGFloat = 5
+  static let angleSquare: CGFloat = 1
+  static let vector: CGFloat = 2
+  static let vectorHolder:CGFloat = 3
+  static let vectorArrow: CGFloat = 4
+  static let actualVector: CGFloat = 5
+  static let foreground: CGFloat = 6
 }
 
 enum PhysicsCategory {
@@ -74,18 +77,18 @@ enum SceneSize {
   static let height: Int = 1000
 }
 
-enum ButtonData {
+enum ViewData {
   static let borderWidth: CGFloat = 2.5
   static let borderColor: UIColor = Colors.mainColorClear
   static let cornerRadius: CGFloat = 10
-  static let backgroundColor: UIColor = UIColor(named: "mainColor")!
-    .withAlphaComponent(0.4)
 }
 
 enum Colors {
   static let mainColorClear: UIColor = UIColor(named: "mainColor")!
   static let mainColorBackground: UIColor = UIColor(named: "mainColor")!
     .withAlphaComponent(0.2)
+  static let viewBackgroundColor: UIColor = UIColor(named: "mainColor")!
+    .withAlphaComponent(0.4)
 }
 
 enum SpriteNodeName {
@@ -100,3 +103,9 @@ enum VectorEndNode {
   case holder
 }
 
+enum PinEndToEndType {
+  case arrowToArrow
+  case arrowToHolder
+  case holderToHolder
+  case holderToArrow
+}

@@ -12,43 +12,13 @@ final class Router {
   
   static var shared: Router = Router()
   
-  // -MARK: - view controllers -
-  
-  lazy var containerViewController: UIViewController = {
-    let viewController: ContainerViewController =
-    ContainerViewController(mainViewController as! MainViewController,
-                            sideBarViewController as! SideBarViewController)
-    
-    let mainVC = self.mainViewController as! MainViewController
-    mainVC.presenter.mainPresenterDelegete = viewController
-    
-    return viewController
-  }()
+  // -MARK: - Properties -
   
   lazy var mainViewController: UIViewController = {
     let presenter: MainPresenterProtocol =
     AppDelegate.DIContainer.resolve(MainPresenterProtocol.self)!
     
     let viewController: MainViewController = MainViewController(presenter)
-    
-    presenter.assignViewController(viewController)
-    
-<<<<<<< HEAD
-    let sideBarVc = sideBarViewController as! SideBarViewController // additionaly set for sideBar
-    sideBarVc.presenter.assignManiPresenter(presenter)
-=======
-    let sideBarVc = sideBarViewController as! SideBarViewController // additionaly set presenter for sideBar
-    sideBarVc.presenter.assignMainPresenter(presenter)
->>>>>>> release/4.0
-    
-    return viewController
-  }()
-  
-  lazy var sideBarViewController: UIViewController = {
-    let presenter: SideBarPresenterProtocol =
-    AppDelegate.DIContainer.resolve(SideBarPresenterProtocol.self)!
-    
-    let viewController: UIViewController = SideBarViewController(presenter)
     
     presenter.assignViewController(viewController)
     
@@ -68,7 +38,7 @@ final class Router {
   }()
   
   
-  // -MARK: - Functions -
+  // -MARK: - Funcs -
   
   func presentAddVectorViewController() {
     mainViewController.present(addVectorViewController, animated: true)
@@ -81,12 +51,9 @@ final class Router {
     else {
       return
     }
-    
+
     viewController.presenter.unwindFromAddViewController(withNewVector: vector)
   }
-  
-  
-  // -MARK: - Alerts -
   
   func presentWarningAlert(withTitle title: String, withBody body: String) {
     let alert = UIAlertController(title: title,
@@ -98,17 +65,18 @@ final class Router {
     alert.addAction(okAction)
     
     let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-    
+
     if var topController = keyWindow?.rootViewController {
-      while let presentedViewController = topController.presentedViewController {
-        topController = presentedViewController
-      }
-      
+        while let presentedViewController = topController.presentedViewController {
+            topController = presentedViewController
+        }
+
       topController.present(alert, animated: true)
     }
+    
   }
   
-  func presentVectorDataCollisionAlert(_ completion: @escaping (VectorBuildState?) -> Void) {
+  func presentVectorDataColisionAlert(_ completion: @escaping (VectorBuildState?) -> Void) {
     let alert = UIAlertController(title: AlertData.tooMuch,
                                   message: AlertData.bothCases,
                                   preferredStyle: .alert)
@@ -129,4 +97,5 @@ final class Router {
     
     self.addVectorViewController.present(alert, animated: true, completion: nil)
   }
+  
 }

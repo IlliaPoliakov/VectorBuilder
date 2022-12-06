@@ -11,7 +11,7 @@ protocol SideBarPresenterProtocol: UICollectionViewDelegate {
   var dataSource: UICollectionViewDiffableDataSource<CollectionViewSection, UIVector> { get }
   
   func assignViewController(_ viewController: UIViewController)
-  func assignManiPresenter(_ mainPresenter: MainPresenterProtocol)
+  func assignMainPresenter(_ mainPresenter: MainPresenterProtocol)
   
   func initialize()
   
@@ -41,9 +41,10 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
       return UICollectionViewCell()
     }
     
-    cell.vector = self.mainPresenter?.vectors[indexPath.row]
+    let vector = self.mainPresenter?.vectors[indexPath.row]
+    cell.vector = vector
     cell.backgroundColor = Colors.mainColorBackground
-    cell.layer.cornerRadius = 10
+    cell.layer.cornerRadius = ViewData.cornerRadius
     return cell
   }
   
@@ -67,13 +68,16 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
     self.viewController = (viewController as! SideBarViewController)
   }
   
+<<<<<<< HEAD
   func assignManiPresenter(_ mainPresenter: MainPresenterProtocol) {
+=======
+  func assignMainPresenter(_ mainPresenter: MainPresenterProtocol) {
+>>>>>>> release/4.0
     self.mainPresenter = mainPresenter
   }
   
   func vectorTupped(_ vector: UIVector) {
-    mainPresenter?.moveScrollViewToPoint(
-      vector.endPoint.centerPoint(withPoint: vector.startPoint))
+    mainPresenter?.moveScrollViewToPoint(vector.endPoint)
     vector.highlight()
   }
   

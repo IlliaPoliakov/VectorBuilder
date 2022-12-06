@@ -43,12 +43,14 @@ final class SideBarViewController: UIViewController {
   private(set) var collectionView: UICollectionView!
   
   
-  // -MARK: - Funcs -
+  // -MARK: - Functions -
   
   func setupViews() {
     self.view.backgroundColor = .systemBackground
     
     collectionView = {
+      let spacing: CGFloat = 10
+      
       let layout = UICollectionViewCompositionalLayout {
         sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
         
@@ -60,10 +62,12 @@ final class SideBarViewController: UIViewController {
                                                heightDimension: .estimated(10))
         let group = NSCollectionLayoutGroup.horizontal(
           layoutSize: groupSize,
-          repeatingSubitem: item,
-          count: 1)
+          subitems: [item])
+        group.interItemSpacing = .fixed(spacing)
         
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: spacing, leading: 0, bottom: spacing, trailing: 0)
+        section.interGroupSpacing = spacing
         
         return section
       }
@@ -77,6 +81,7 @@ final class SideBarViewController: UIViewController {
       
       return collectionView
     }()
+    
     collectionView.dataSource = presenter.dataSource
     collectionView.delegate = presenter
   }
