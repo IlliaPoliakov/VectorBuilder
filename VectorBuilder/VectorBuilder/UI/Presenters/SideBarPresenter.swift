@@ -41,9 +41,10 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
       return UICollectionViewCell()
     }
     
-    cell.vector = self.mainPresenter?.vectors[indexPath.row]
+    let vector = self.mainPresenter?.vectors[indexPath.row]
+    cell.vector = vector
     cell.backgroundColor = Colors.mainColorBackground
-    cell.layer.cornerRadius = 10
+    cell.layer.cornerRadius = ViewData.cornerRadius
     return cell
   }
   

@@ -87,6 +87,7 @@ final class CoreDataManager {
     let notificationCenter = NotificationCenter.default
     notificationCenter.addObserver(self, selector: #selector(CoreDataManager.saveChanges(_:)), name: UIApplication.willTerminateNotification, object: nil)
     notificationCenter.addObserver(self, selector: #selector(CoreDataManager.saveChanges(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    notificationCenter.addObserver(self, selector: #selector(CoreDataManager.saveChanges(_:)), name: UIApplication.significantTimeChangeNotification, object: nil)
   }
   
   @objc private func saveChanges(_ notification: NSNotification) {

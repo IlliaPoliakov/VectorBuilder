@@ -52,7 +52,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   private lazy var touchOffsetY: CGFloat = 0
   
   
-  // -MARK: - Funcs -
+  // -MARK: - Self Methods -
   
   private func getVectors() {
     var subscription: AnyCancellable? = nil
@@ -78,7 +78,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   }
 
   
-  // -MARK: - Protocol Funcs -
+  // -MARK: - Protocol Methods -
   
   func assignViewController(_ viewController: UIViewController) {
     self.viewController = (viewController as? MainViewController)
@@ -127,7 +127,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   }
   
   
-  // -MARK: - SKScene Funcs -
+  // -MARK: - SKScene Methods -
   
   override func didMove(to view: SKView) {
     setUpPhysics()
@@ -154,7 +154,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   }
   
   
-  // -MARK: - Touch/Move Handaling -
+  // -MARK: - Short tap Handalling -
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     for touch in touches {
@@ -207,7 +207,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
       activeVector.vector.position = CGPoint(x: touchPosition.x - touchOffsetX,
                                              y: touchPosition.y - touchOffsetY)
       activeVector.conjugateVectors.forEach { vector in
-        vector.conjugateVectors.removeAll(where: { $0 == self })
+        vector.conjugateVectors.removeAll(where: { $0 == activeVector })
       }
       activeVector.conjugateVectors.removeAll()
       activeVector.angleSquare.isHidden = true
@@ -239,7 +239,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   }
   
   
-  // -MARK: - Long Tap Handaling -
+  // -MARK: - Long tap Handalling -
   
   func longTapBegan() {
     guard let isVector = activeVector?.activeNode?.name?.hasPrefix(SpriteNodeName.vector),
@@ -322,7 +322,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
 }
 
 
-// -MARK: - Collision Handaling -
+// -MARK: - Collision Handalling -
 
 extension MainPresenter: SKPhysicsContactDelegate {
   func didBegin(_ contact: SKPhysicsContact) {
