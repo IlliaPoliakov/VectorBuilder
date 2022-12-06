@@ -40,7 +40,6 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
     withEndPointX endX: String?,
     withEndPointY endY: String?,
     withLength length: String?) {
-      //simply cast, ugly but normal I think
       let length: Int? = {
         if let str = length, let int = Int(str) { return int }
         return nil
@@ -67,7 +66,7 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
       }()
       
       // check for LENGTH, if OK - check for POINTS,
-      // if OK - colision Alert(cause both types entered)
+      // if OK - colision Alert(cause both types entered), else...
       if let length {
         if let startX, let startY, let endX, let endY { // alert
           AppDelegate.router.presentVectorDataCollisionAlert { state in

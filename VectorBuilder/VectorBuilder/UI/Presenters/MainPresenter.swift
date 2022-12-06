@@ -110,7 +110,6 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     if safePoint.x < 0 {
       safePoint.x = 0
     }
-    let fsd  = CGFloat(SceneSize.height) - frame.width
     if safePoint.x > CGFloat(SceneSize.height) - frame.width {
       safePoint.x = CGFloat(SceneSize.height) - frame.width
     }
@@ -266,7 +265,6 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
         forNewPoint: newPoint,
         withVectorEnd: .arrow,
         withDuration: 0)
-      
       
     case let name where name.hasPrefix(SpriteNodeName.holder):
       var newPoint = sender.location(in: viewController?.scrollView)
