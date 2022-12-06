@@ -109,3 +109,5 @@ enum PinEndToEndType {
   case holderToHolder
   case holderToArrow
 }
+
+let angleDelta: Double = 0.07

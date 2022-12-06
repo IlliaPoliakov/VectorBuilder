@@ -231,12 +231,15 @@ final class AddVectorViewController: UIViewController {
   
   private func layoutViews() { 
     [createVectorLabel, startPointLabel, startXLabel,
-     startXTextField, startYLabel, startYTextField,
-     endPointLabel, endXLabel, endXTextField].forEach { view in
+     startXTextField, startYLabel].forEach { view in
       self.view.addSubview(view)
     }
-    [endYLabel, endYTextField, setLengthLabel,
-     lengthTextField, manualLabel, addVectorButton].forEach { view in
+    [startYTextField, endPointLabel, endXLabel,
+     endXTextField, endYLabel].forEach { view in
+      self.view.addSubview(view)
+    }
+    [endYTextField, setLengthLabel, lengthTextField,
+     manualLabel, addVectorButton].forEach { view in
       self.view.addSubview(view)
     }
     

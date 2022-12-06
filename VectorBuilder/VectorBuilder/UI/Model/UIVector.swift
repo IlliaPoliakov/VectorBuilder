@@ -294,20 +294,20 @@ final class UIVector: SKNode {
       var resultPoint: CGPoint = point
       
       switch angle {  // setUp angle and point relative to origin
-      case let angle where angle >= -0.07 && angle <= 0.07:
+      case let angle where angle >= -angleDelta && angle <= angleDelta:
         resultAngle = 0
         resultPoint.x = startPoint.x
         
-      case let angle where angle >= 3.07 || angle <= -3.07:
-        resultAngle = 3.14
+      case let angle where angle >= .pi - angleDelta || angle <= -.pi + angleDelta:
+        resultAngle = .pi
         resultPoint.x = startPoint.x
         
-      case let angle where angle >= 1.5 && angle <= 1.64:
-        resultAngle = 1.57
+      case let angle where angle >= .pi/2 - angleDelta && angle <= .pi/2 + angleDelta:
+        resultAngle = .pi/2
         resultPoint.y = startPoint.y
         
-      case let angle where angle >= -1.64 && angle <= -1.5:
-        resultAngle = -1.57
+      case let angle where angle >= -.pi/2 - angleDelta && angle <= -.pi/2 + angleDelta:
+        resultAngle = -.pi/2
         resultPoint.y = startPoint.y
         
       default:
@@ -318,31 +318,31 @@ final class UIVector: SKNode {
         let angleWithVector = self.vector.zRotation - vector.vector.zRotation
         
         switch angleWithVector {
-        case let angle where angle >= -0.07 && angle <= 0.07:
+        case let angle where angle >= -angleDelta && angle <= angleDelta:
           resultAngle = vector.vector.zRotation
           
-        case let angle where angle >= 1.5 && angle <= 1.64:
-          resultAngle = vector.vector.zRotation + 1.57
+        case let angle where angle >= .pi/2 - angleDelta && angle <= .pi/2 + angleDelta:
+          resultAngle = vector.vector.zRotation + .pi/2
           if self.vector.position == vector.vector.position {
             presentAngleSquare(forAngle: resultAngle)
           }
           else {
-            presentAngleSquare(forAngle: 1.57 + resultAngle)
+            presentAngleSquare(forAngle: .pi/2 + resultAngle)
           }
           
-        case let angle where angle >= -1.64 && angle <= -1.5:
-          resultAngle = vector.vector.zRotation - 1.57
+        case let angle where angle >= -.pi/2 - angleDelta && angle <= -.pi/2 + angleDelta:
+          resultAngle = vector.vector.zRotation - .pi/2
           
           if self.vector.position == vector.vector.position {
-            presentAngleSquare(forAngle: 1.57 + resultAngle)
+            presentAngleSquare(forAngle: .pi/2 + resultAngle)
           }
           else {
             presentAngleSquare(forAngle: resultAngle)
           }
           
-        case let angle where (angle >= 3.07 && angle <= 3.21) ||
-          (angle >= -3.21 && angle <= -3.07):
-          resultAngle = 3.14 + vector.vector.zRotation
+        case let angle where (angle >= .pi - angleDelta && angle <= .pi = angleDelta) ||
+          (angle >= -.pi - angleDelta && angle <= -.pi + angleDelta):
+          resultAngle = .pi + vector.vector.zRotation
           
         default:
           angleSquare.isHidden = true
@@ -350,11 +350,11 @@ final class UIVector: SKNode {
         }
       }
       
-      if angle > resultAngle + 0.07 {
-        resultAngle += 0.08
+      if angle > resultAngle + angleDelta {
+        resultAngle = resultAngle + angleDelta + 0.01
       }
-      if angle < resultAngle - 0.07 && angle > -3.07 {
-        resultAngle -= 0.08
+      if angle < resultAngle - angleDelta && angle > -.pi + angleDelta {
+        resultAngle = resultAngle - angleDelta - 0.01
       }
       
       return (resultAngle, resultPoint)
@@ -367,20 +367,20 @@ final class UIVector: SKNode {
       var resultPoint: CGPoint = point
       
       switch angle {
-      case let angle where angle >= 3.07 && angle <= 3.21:
-        resultAngle = 3.14
+      case let angle where angle >= .pi - angleDelta && angle <= .pi + angleDelta:
+        resultAngle = .pi
         resultPoint.x = endPoint.x
         
-      case let angle where angle >= 1.50 && angle <= 1.64:
-        resultAngle = 1.57
+      case let angle where angle >= .pi/2 - angleDelta && angle <= .pi/2 + angleDelta:
+        resultAngle = .pi/2
         resultPoint.y = endPoint.y
         
-      case let angle where angle >= 6.21 || angle <= 0.07:
+      case let angle where angle >= .pi * 2 - angleDelta || angle <= angleDelta:
         resultAngle = 0
         resultPoint.x = endPoint.x
         
-      case let angle where angle >= 4.64 && angle <= 4.78:
-        resultAngle = 4.71
+      case let angle where angle >= .pi * 3/2 - angleDelta && angle <= .pi * 3/2 + angleDelta:
+        resultAngle = .pi * 3/2
         resultPoint.y = endPoint.y
         
       default:
