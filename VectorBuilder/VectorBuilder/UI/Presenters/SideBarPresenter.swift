@@ -72,8 +72,7 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
   }
   
   func vectorTupped(_ vector: UIVector) {
-    mainPresenter?.moveScrollViewToPoint(
-      vector.endPoint.centerPoint(withPoint: vector.startPoint))
+    mainPresenter?.moveScrollViewToPoint(vector.endPoint)
     vector.highlight()
   }
   

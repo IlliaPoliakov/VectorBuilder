@@ -102,15 +102,15 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   
   func moveScrollViewToPoint(_ point: CGPoint) {
     guard let frame = viewController?.view.frame else { return }
-    var safePoint = point
+    var safePoint: CGPoint = point
     
-    safePoint.x = safePoint.x + CGFloat(SceneSize.width / 2) - frame.width / 2
-    safePoint.y = CGFloat(SceneSize.height / 2) - safePoint.y - frame.height / 2
+    safePoint.x = CGFloat(SceneSize.width / 2) + point.x - frame.width / 2
+    safePoint.y = CGFloat(SceneSize.height / 2) - point.y - frame.height / 2
     
     if safePoint.x < 0 {
       safePoint.x = 0
     }
-    
+    let fsd  = CGFloat(SceneSize.height) - frame.width
     if safePoint.x > CGFloat(SceneSize.height) - frame.width {
       safePoint.x = CGFloat(SceneSize.height) - frame.width
     }
@@ -118,7 +118,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
       safePoint.y = 0
     }
     if safePoint.y > CGFloat(SceneSize.height) - frame.height {
-      safePoint.x = CGFloat(SceneSize.height) - frame.height
+      safePoint.y = CGFloat(SceneSize.height) - frame.height
     }
     
     viewController?.scrollView.setContentOffset(
