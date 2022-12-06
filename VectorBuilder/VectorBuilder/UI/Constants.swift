@@ -77,18 +77,18 @@ enum SceneSize {
   static let height: Int = 1000
 }
 
-enum ButtonData {
+enum ViewData {
   static let borderWidth: CGFloat = 2.5
   static let borderColor: UIColor = Colors.mainColorClear
   static let cornerRadius: CGFloat = 10
-  static let backgroundColor: UIColor = UIColor(named: "mainColor")!
-    .withAlphaComponent(0.4)
 }
 
 enum Colors {
   static let mainColorClear: UIColor = UIColor(named: "mainColor")!
   static let mainColorBackground: UIColor = UIColor(named: "mainColor")!
     .withAlphaComponent(0.2)
+  static let viewBackgroundColor: UIColor = UIColor(named: "mainColor")!
+    .withAlphaComponent(0.4)
 }
 
 enum SpriteNodeName {

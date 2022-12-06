@@ -11,7 +11,7 @@ protocol SideBarPresenterProtocol: UICollectionViewDelegate {
   var dataSource: UICollectionViewDiffableDataSource<CollectionViewSection, UIVector> { get }
   
   func assignViewController(_ viewController: UIViewController)
-  func assignManiPresenter(_ mainPresenter: MainPresenterProtocol)
+  func assignMainPresenter(_ mainPresenter: MainPresenterProtocol)
   
   func initialize()
   
@@ -67,7 +67,7 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
     self.viewController = (viewController as! SideBarViewController)
   }
   
-  func assignManiPresenter(_ mainPresenter: MainPresenterProtocol) {
+  func assignMainPresenter(_ mainPresenter: MainPresenterProtocol) {
     self.mainPresenter = mainPresenter
   }
   

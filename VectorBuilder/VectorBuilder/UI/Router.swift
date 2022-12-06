@@ -12,7 +12,7 @@ final class Router {
   
   static var shared: Router = Router()
   
-  // -MARK: - Properties -
+  // -MARK: - view controllers -
   
   lazy var containerViewController: UIViewController = {
     let viewController: ContainerViewController =
@@ -33,8 +33,8 @@ final class Router {
     
     presenter.assignViewController(viewController)
     
-    let sideBarVc = sideBarViewController as! SideBarViewController // additionaly set for sideBar
-    sideBarVc.presenter.assignManiPresenter(presenter)
+    let sideBarVc = sideBarViewController as! SideBarViewController // additionaly set presenter for sideBar
+    sideBarVc.presenter.assignMainPresenter(presenter)
     
     return viewController
   }()
@@ -63,7 +63,7 @@ final class Router {
   }()
   
   
-  // -MARK: - Funcs -
+  // -MARK: - Functions -
   
   func presentAddVectorViewController() {
     mainViewController.present(addVectorViewController, animated: true)
@@ -79,6 +79,9 @@ final class Router {
     
     viewController.presenter.unwindFromAddViewController(withNewVector: vector)
   }
+  
+  
+  // -MARK: - Alerts -
   
   func presentWarningAlert(withTitle title: String, withBody body: String) {
     let alert = UIAlertController(title: title,
@@ -98,10 +101,9 @@ final class Router {
       
       topController.present(alert, animated: true)
     }
-    
   }
   
-  func presentVectorDataColisionAlert(_ completion: @escaping (VectorBuildState?) -> Void) {
+  func presentVectorDataCollisionAlert(_ completion: @escaping (VectorBuildState?) -> Void) {
     let alert = UIAlertController(title: AlertData.tooMuch,
                                   message: AlertData.bothCases,
                                   preferredStyle: .alert)

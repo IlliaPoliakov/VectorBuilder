@@ -203,12 +203,6 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     if let activeVector,
        let touchPosition = touches.first?.location(in: self) {
-//      if !activeVector.conjugateVectors.isEmpty {
-//        guard activeVector.position
-//          .length(toPoint: CGPoint(x: touchPosition.x - touchOffsetX,
-//                                   y: touchPosition.y - touchOffsetY)) > 0.2
-//        else { return }
-//      }
       
       activeVector.vector.position = CGPoint(x: touchPosition.x - touchOffsetX,
                                              y: touchPosition.y - touchOffsetY)
@@ -216,7 +210,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
         vector.conjugateVectors.removeAll(where: { $0 == self })
       }
       activeVector.conjugateVectors.removeAll()
-      activeVector.squareAngle.isHidden = true
+      activeVector.angleSquare.isHidden = true
     }
   }
   
@@ -244,6 +238,9 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     viewController?.scrollView.isScrollEnabled = true
   }
   
+  
+  // -MARK: - Long Tap Handaling -
+  
   func longTapBegan() {
     guard let isVector = activeVector?.activeNode?.name?.hasPrefix(SpriteNodeName.vector),
           !isVector
@@ -251,7 +248,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     
     activeVector?.isInEditingMode = true
     
-    activeVector?.changeWidthForState(changingState: true)
+    activeVector?.changeWidth(forState: true)
   }
   
   func longTapMoved(withSender sender: UILongPressGestureRecognizer) {
@@ -265,8 +262,8 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
       newPoint = CGPoint(x: newPoint.x - CGFloat(SceneSize.width / 2),
                          y: CGFloat(SceneSize.height) / 2 - newPoint.y)
       
-      activeVector.updateDataForNewPoint(
-        newPoint,
+      activeVector.handleLongTapEditing(
+        forNewPoint: newPoint,
         withVectorEnd: .arrow,
         withDuration: 0)
       
@@ -276,8 +273,8 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
       newPoint = CGPoint(x: newPoint.x - CGFloat(SceneSize.width / 2),
                          y: CGFloat(SceneSize.height) / 2 - newPoint.y )
       
-      activeVector.updateDataForNewPoint(
-        newPoint,
+      activeVector.handleLongTapEditing(
+        forNewPoint: newPoint,
         withVectorEnd: .holder,
         withDuration: 0)
       
@@ -288,7 +285,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   
   func longTapEnded(withSender sender: UILongPressGestureRecognizer) {
     
-    activeVector?.changeWidthForState(changingState: false)
+    activeVector?.changeWidth(forState: false)
     
     var point = sender.location(in: viewController?.scrollView)
     point = CGPoint(x: point.x - CGFloat(SceneSize.width / 2),

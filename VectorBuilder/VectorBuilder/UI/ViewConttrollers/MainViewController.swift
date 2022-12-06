@@ -77,11 +77,11 @@ final class MainViewController: UIViewController {
       button.translatesAutoresizingMaskIntoConstraints = false
       button.setImage(UIImage(systemName: "plus"), for: .normal)
       button.tintColor = Colors.mainColorClear
-      button.layer.borderWidth = ButtonData.borderWidth
-      button.layer.borderColor = ButtonData.borderColor.cgColor
-      button.layer.cornerRadius = ButtonData.cornerRadius
-      button.backgroundColor = ButtonData.backgroundColor
-      button.addAction(UIAction(handler: {_ in self.presenter.addVectorButtonTupped()}),
+      button.layer.borderWidth = ViewData.borderWidth
+      button.layer.borderColor = ViewData.borderColor.cgColor
+      button.layer.cornerRadius = ViewData.cornerRadius
+      button.backgroundColor = Colors.viewBackgroundColor
+      button.addAction(UIAction(handler: { _ in self.presenter.addVectorButtonTupped() } ),
                        for: .touchUpInside)
     }
     
@@ -89,11 +89,11 @@ final class MainViewController: UIViewController {
       button.translatesAutoresizingMaskIntoConstraints = false
       button.setImage(UIImage(systemName: "line.3.horizontal"), for: .normal)
       button.tintColor = Colors.mainColorClear
-      button.layer.borderWidth = ButtonData.borderWidth
-      button.layer.borderColor = ButtonData.borderColor.cgColor
-      button.layer.cornerRadius = ButtonData.cornerRadius
-      button.backgroundColor = ButtonData.backgroundColor
-      button.addAction(UIAction(handler: {_ in self.presenter.sideBarButtonTupped()}),
+      button.layer.borderWidth = ViewData.borderWidth
+      button.layer.borderColor = ViewData.borderColor.cgColor
+      button.layer.cornerRadius = ViewData.cornerRadius
+      button.backgroundColor = Colors.viewBackgroundColor
+      button.addAction(UIAction(handler: { _ in self.presenter.sideBarButtonTupped() } ),
                        for: .touchUpInside)
     }
   }

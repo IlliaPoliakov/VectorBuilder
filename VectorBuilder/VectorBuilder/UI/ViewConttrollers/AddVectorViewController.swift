@@ -105,7 +105,7 @@ final class AddVectorViewController: UIViewController {
     startXTextField = UITextField().then { textField in
       textField.translatesAutoresizingMaskIntoConstraints = false
       textField.backgroundColor = Colors.mainColorBackground
-      textField.layer.cornerRadius = ButtonData.cornerRadius
+      textField.layer.cornerRadius = ViewData.cornerRadius
       textField.font = .preferredFont(forTextStyle: .title3)
       textField.textAlignment = .center
       textField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -123,7 +123,7 @@ final class AddVectorViewController: UIViewController {
     startYTextField = UITextField().then { textField in
       textField.translatesAutoresizingMaskIntoConstraints = false
       textField.backgroundColor = Colors.mainColorBackground
-      textField.layer.cornerRadius = ButtonData.cornerRadius
+      textField.layer.cornerRadius = ViewData.cornerRadius
       textField.font = .preferredFont(forTextStyle: .title3)
       textField.textAlignment = .center
       textField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -151,7 +151,7 @@ final class AddVectorViewController: UIViewController {
     endXTextField = UITextField().then { textField in
       textField.translatesAutoresizingMaskIntoConstraints = false
       textField.backgroundColor = Colors.mainColorBackground
-      textField.layer.cornerRadius = ButtonData.cornerRadius
+      textField.layer.cornerRadius = ViewData.cornerRadius
       textField.font = .preferredFont(forTextStyle: .title3)
       textField.textAlignment = .center
       textField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -169,7 +169,7 @@ final class AddVectorViewController: UIViewController {
     endYTextField = UITextField().then { textField in
       textField.translatesAutoresizingMaskIntoConstraints = false
       textField.backgroundColor = Colors.mainColorBackground
-      textField.layer.cornerRadius = ButtonData.cornerRadius
+      textField.layer.cornerRadius = ViewData.cornerRadius
       textField.font = .preferredFont(forTextStyle: .title3)
       textField.textAlignment = .center
       textField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -187,7 +187,7 @@ final class AddVectorViewController: UIViewController {
     lengthTextField = UITextField().then { textField in
       textField.translatesAutoresizingMaskIntoConstraints = false
       textField.backgroundColor = Colors.mainColorBackground
-      textField.layer.cornerRadius = ButtonData.cornerRadius
+      textField.layer.cornerRadius = ViewData.cornerRadius
       textField.font = .preferredFont(forTextStyle: .title3)
       textField.textAlignment = .center
     }
@@ -209,13 +209,13 @@ final class AddVectorViewController: UIViewController {
       button.translatesAutoresizingMaskIntoConstraints = false
       button.setTitle(AddVcLabelData.addVector, for: .normal)
       button.setTitleColor(Colors.mainColorClear, for: .normal)
-      button.setTitleColor(ButtonData.backgroundColor, for: .highlighted)
+      button.setTitleColor(Colors.viewBackgroundColor, for: .highlighted)
       button.tintColor = Colors.mainColorClear
       button.titleLabel?.font = .preferredFont(forTextStyle: .largeTitle)
       button.backgroundColor = Colors.mainColorBackground
-      button.layer.cornerRadius = ButtonData.cornerRadius
-      button.layer.borderWidth = ButtonData.borderWidth
-      button.layer.borderColor = ButtonData.borderColor.cgColor
+      button.layer.cornerRadius = ViewData.cornerRadius
+      button.layer.borderWidth = ViewData.borderWidth
+      button.layer.borderColor = ViewData.borderColor.cgColor
       
       button.addAction(
         UIAction(handler: { _ in
