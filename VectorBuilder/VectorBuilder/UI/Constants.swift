@@ -111,3 +111,4 @@ enum PinEndToEndType {
 }
 
 let angleDelta: Double = 0.07
+let pi: Double = 3.14 // I'm aware about .pi, but with .pi it's not compile
