@@ -10,7 +10,7 @@ import Foundation
 
 final class UpdateVectorPositionUseCase {
   private let repo: VectorRepository
-
+  
   init(repo: VectorRepository) {
     self.repo = repo
   }
@@ -18,8 +18,9 @@ final class UpdateVectorPositionUseCase {
   func execute(withVector vector: UIVector,
                withStartPoint startPoint: CGPoint,
                withEndPoint endPoint: CGPoint) {
-    repo.updateVectorPosition(withVector: Vector.convertToModel(withUIVectors: [vector]).first!,
-                              withStartPoint: startPoint,
-                              withEndPoint: endPoint)
+    repo.updateVectorPosition(
+      withVector: Vector.convertToModel(withUIVectors: [vector]).first!,
+      withStartPoint: startPoint,
+      withEndPoint: endPoint)
   }
 }

@@ -14,8 +14,8 @@ protocol MainPresenterProtocol {
   var mainPresenterDelegete: MainPresenterDelegete? { get set }
   
   func assignViewController(_ viewController: UIViewController)
-  func addVectorButtonTupped()
-  func sideBarButtonTupped()
+  func onAddVectorButtonTap()
+  func onSideBarButtonTap()
   func unwindFromAddViewController(withNewVector vector: UIVector)
   func moveScrollViewToPoint(_ point: CGPoint)
   
@@ -84,11 +84,11 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     self.viewController = (viewController as? MainViewController)
   }
   
-  func addVectorButtonTupped() {
+  func onAddVectorButtonTap() {
     AppDelegate.router.presentAddVectorViewController()
   }
   
-  func sideBarButtonTupped() {
+  func onSideBarButtonTap() {
     mainPresenterDelegete?.toggleSideBar()
   }
   
@@ -155,6 +155,8 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
   
   // -MARK: - Short tap Handalling -
   
+  // all sprites have names like "name3", it means that all names are unique, but
+  // also I can check for prefix and determine type of touched sprite
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     for touch in touches {
       let touchPoint = touch.location(in: self)
@@ -205,6 +207,8 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
       
       activeVector.vector.position = CGPoint(x: touchPosition.x - touchOffsetX,
                                              y: touchPosition.y - touchOffsetY)
+      
+      // if vector was pinned, clean relation ships after drag
       activeVector.conjugateVectors.forEach { vector in
         vector.conjugateVectors.removeAll(where: { $0 == activeVector })
       }
@@ -213,6 +217,7 @@ final class MainPresenter: SKScene, MainPresenterProtocol {
     }
   }
   
+  // save new vec start/end points
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     guard let activeVector else { return }
     
@@ -331,6 +336,11 @@ extension MainPresenter: SKPhysicsContactDelegate {
           !firstNode.conjugateVectors.contains(secondNode)
     else { return }
     
+    let firstNodeStartPointForSave = firstNode.startPoint
+    let firstNodeEndPointForSave = firstNode.endPoint
+    let secondNodeStartPointForSave = secondNode.startPoint
+    let secondNodeEndPointForSave = secondNode.endPoint
+    
     firstNode.conjugateVectors.append(secondNode)
     secondNode.conjugateVectors.append(firstNode)
 
@@ -390,6 +400,20 @@ extension MainPresenter: SKPhysicsContactDelegate {
         }
       }
     }
+    
+    updateVectorPositionUseCase.execute(
+      withVector: UIVector(startPoint: firstNodeStartPointForSave,
+                           endPoint: firstNodeEndPointForSave,
+                           color: firstNode.color),
+      withStartPoint: firstNode.startPoint,
+      withEndPoint: firstNode.endPoint)
+    
+    updateVectorPositionUseCase.execute(
+      withVector: UIVector(startPoint: secondNodeStartPointForSave,
+                           endPoint: secondNodeEndPointForSave,
+                           color: secondNode.color),
+      withStartPoint: secondNode.startPoint,
+      withEndPoint: secondNode.endPoint)
     
     activeVector?.activeNode = nil
     activeVector = nil

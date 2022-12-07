@@ -5,6 +5,8 @@
 //  Created by Illia Poliakov on 27.11.22.
 //
 
+// all VC's are simply implement UI, no logic, exept container VC
+
 import UIKit
 import SnapKit
 import SpriteKit
@@ -219,7 +221,7 @@ final class AddVectorViewController: UIViewController {
       
       button.addAction(
         UIAction(handler: { _ in
-          self.presenter.addVectorButtonTupped(
+          self.presenter.onAddVectorButtonTap(
             withStartPointX: self.startXTextField.text,
             withStartPointY: self.startYTextField.text,
             withEndPointX: self.endXTextField.text,

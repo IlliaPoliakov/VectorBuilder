@@ -15,7 +15,7 @@ protocol SideBarPresenterProtocol: UICollectionViewDelegate {
   
   func initialize()
   
-  func vectorTupped(_ vector: UIVector)
+  func onVectorTap(_ vector: UIVector)
 }
 
 final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
@@ -72,7 +72,7 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
     self.mainPresenter = mainPresenter
   }
   
-  func vectorTupped(_ vector: UIVector) {
+  func onVectorTap(_ vector: UIVector) {
     mainPresenter?.moveScrollViewToPoint(vector.endPoint)
     vector.highlight()
   }

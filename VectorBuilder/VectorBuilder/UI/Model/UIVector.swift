@@ -41,6 +41,8 @@ final class UIVector: SKNode {
   var isInEditingMode: Bool = false
   
   
+  // Model should be as simple and stupid as it can, so I'll fix it soon, but now this methods live her
+  
   // -MARK: - SetUp Nodes -
   
   func addToScene(_ scene: SKScene, withName name: String) {
@@ -147,36 +149,10 @@ final class UIVector: SKNode {
   }
   
   func pinToVector(_ vector: UIVector, withEndToEndType endToEndType: PinEndToEndType) {
-    if isInEditingMode {
-      switch endToEndType {
-      case .arrowToArrow:
-        handleLongTapEditing(
-          forNewPoint: vector.endPoint,
-          withVectorEnd: .arrow,
-          withDuration: 0.2)
-        
-      case .arrowToHolder:
-        handleLongTapEditing(
-          forNewPoint: vector.startPoint,
-          withVectorEnd: .arrow,
-          withDuration: 0.2)
-        
-      case .holderToArrow:
-        handleLongTapEditing(
-          forNewPoint: vector.endPoint,
-          withVectorEnd: .holder,
-          withDuration: 0.2)
-        
-      case .holderToHolder:
-        handleLongTapEditing(
-          forNewPoint: vector.startPoint,
-          withVectorEnd: .holder,
-          withDuration: 0.2)
-      }
-      
-      changeWidth(forState: false)
+    if isInEditingMode { // not just replace vec, but position its ends relative to another vec ends
+      pinToVectorWhenEditingModeOn(vector, withEndToEndType: endToEndType)
     }
-    else {
+    else { // just replace to appropriate point
       var point: CGPoint? = nil
       
       switch endToEndType {
@@ -240,7 +216,7 @@ final class UIVector: SKNode {
         
       case .holder:
         let (angle, point) = determineVectorDataForLongTapEditingWithHolder(
-          withInitialAngle: 3.14 + endPoint.angleWithPoint(point),
+          withInitialAngle: pi + endPoint.angleWithPoint(point),
           withNewPoint: point)
         
         rotateAction = SKAction.rotate(
@@ -273,6 +249,7 @@ final class UIVector: SKNode {
   
   // -MARK: - Helpers -
   
+  // magic numbers, but it whould be really messy in another way, I have some questions here
   func highlight() {
     let fadeOut = SKAction.fadeOut(withDuration: 0)
     let fadeIn = SKAction.fadeIn(withDuration: 1)
@@ -285,6 +262,37 @@ final class UIVector: SKNode {
     
     self.vector.run(sequenceAction)
     self.run(fadeSequence)
+  }
+  
+  private func pinToVectorWhenEditingModeOn(_ vector: UIVector,
+                                            withEndToEndType endToEndType: PinEndToEndType) {
+    switch endToEndType {
+    case .arrowToArrow:
+      handleLongTapEditing(
+        forNewPoint: vector.endPoint,
+        withVectorEnd: .arrow,
+        withDuration: 0.2)
+      
+    case .arrowToHolder:
+      handleLongTapEditing(
+        forNewPoint: vector.startPoint,
+        withVectorEnd: .arrow,
+        withDuration: 0.2)
+      
+    case .holderToArrow:
+      handleLongTapEditing(
+        forNewPoint: vector.endPoint,
+        withVectorEnd: .holder,
+        withDuration: 0.2)
+      
+    case .holderToHolder:
+      handleLongTapEditing(
+        forNewPoint: vector.startPoint,
+        withVectorEnd: .holder,
+        withDuration: 0.2)
+    }
+    
+    changeWidth(forState: false)
   }
   
   private func determineVectorDataForLongTapEditingWithArrow(
@@ -360,7 +368,7 @@ final class UIVector: SKNode {
       return (resultAngle, resultPoint)
     }
   
-  private func determineVectorDataForLongTapEditingWithHolder(
+  private func determineVectorDataForLongTapEditingWithHolder( // same as previous
     withInitialAngle angle: Double,
     withNewPoint point: CGPoint) -> (Double, CGPoint) {
       var resultAngle: Double = angle
