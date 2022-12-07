@@ -116,4 +116,3 @@ final class SideBarPresenter: NSObject, SideBarPresenterProtocol {
       }
   }
 }
-

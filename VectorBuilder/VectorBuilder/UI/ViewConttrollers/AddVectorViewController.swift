@@ -331,4 +331,3 @@ final class AddVectorViewController: UIViewController {
     }
   }
 }
-
