@@ -81,8 +81,8 @@
 		F24B94B929325BE0003B12E9 /* VectorBuilderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorBuilderUITests.swift; sourceTree = "<group>"; };
 		F24B94BB29325BE0003B12E9 /* VectorBuilderUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorBuilderUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F24B94C82932730E003B12E9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		F24B94D229327B94003B12E9 /* VectorEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VectorEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		F24B94D329327B94003B12E9 /* VectorEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VectorEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		F24B94D229327B94003B12E9 /* VectorEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "VectorEntity+CoreDataClass.swift"; path = "VectorBuilder/Data/Model/VectorEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		F24B94D329327B94003B12E9 /* VectorEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "VectorEntity+CoreDataProperties.swift"; path = "VectorBuilder/Data/Model/VectorEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		F24B94D629327BCE003B12E9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		F24B94D829327BF4003B12E9 /* DataBaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseDataSource.swift; sourceTree = "<group>"; };
 		F24B94DB29327C75003B12E9 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
