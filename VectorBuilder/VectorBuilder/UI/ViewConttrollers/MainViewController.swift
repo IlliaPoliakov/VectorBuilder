@@ -81,7 +81,7 @@ final class MainViewController: UIViewController {
       button.layer.borderColor = ViewData.borderColor.cgColor
       button.layer.cornerRadius = ViewData.cornerRadius
       button.backgroundColor = Colors.viewBackgroundColor
-      button.addAction(UIAction(handler: { _ in self.presenter.addVectorButtonTupped() } ),
+      button.addAction(UIAction(handler: { _ in self.presenter.onAddVectorButtonTap() } ),
                        for: .touchUpInside)
     }
     
@@ -93,7 +93,7 @@ final class MainViewController: UIViewController {
       button.layer.borderColor = ViewData.borderColor.cgColor
       button.layer.cornerRadius = ViewData.cornerRadius
       button.backgroundColor = Colors.viewBackgroundColor
-      button.addAction(UIAction(handler: { _ in self.presenter.sideBarButtonTupped() } ),
+      button.addAction(UIAction(handler: { _ in self.presenter.onSideBarButtonTap() } ),
                        for: .touchUpInside)
     }
   }

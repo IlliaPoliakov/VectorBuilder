@@ -10,7 +10,7 @@ import SpriteKit
 
 protocol AddVectorPresenterProtocol {
   func assignViewController(_ viewController: UIViewController)
-  func addVectorButtonTupped(
+  func onAddVectorButtonTap(
     withStartPointX startX: String?,
     withStartPointY startY: String?,
     withEndPointX endX: String?,
@@ -34,13 +34,13 @@ final class AddVectorPresenter: AddVectorPresenterProtocol {
     self.viewController = (viewController as? AddVectorViewController)
   }
   
-  func addVectorButtonTupped(
+  func onAddVectorButtonTap(
     withStartPointX startX: String?,
     withStartPointY startY: String?,
     withEndPointX endX: String?,
     withEndPointY endY: String?,
     withLength length: String?) {
-      let length: Int? = {
+      let length: Int? = { // simply cast if it possible
         if let str = length, let int = Int(str) { return int }
         return nil
       }()

@@ -7,10 +7,8 @@
 
 import UIKit
 
-enum VectorBuildState {
-  case withPoints
-  case withLength
-}
+
+// -MARK: - Text Constants -
 
 enum SideBarCellData {
   static let startPonint = "Start:"
@@ -32,6 +30,12 @@ Just in case:\n Origin - center of the screen.
 """
 }
 
+enum CollisionAlertData {
+  static let withPoints = "With Points"
+  static let withLength = "With Length"
+  static let cancel = "Cancel"
+}
+
 enum AlertData {
   static let tooMuch = "Oops... Too Much Data!"
   static let bothCases = "You just entered Data for both Cases of creating Vector. Please, choose One."
@@ -44,6 +48,7 @@ enum AlertData {
   
   static let wrongPoints = "Oops... Wrang points."
   static let wrongPointsBody = "Please, make sure that points values belong to (-500,500)."
+  static let ok = "Ok"
 }
 
 enum ImageName {
@@ -52,6 +57,14 @@ enum ImageName {
   static let vectorArrow = "arrow"
   static let square = "square"
   static let dollarSquare = "dollarSquare"
+}
+
+
+// -MARK: - Logyc Constants -
+
+enum VectorBuildState {
+  case withPoints
+  case withLength
 }
 
 enum Layer {
@@ -68,27 +81,9 @@ enum PhysicsCategory {
   static let vectorEnds: UInt32 = 1
 }
 
-enum CollectionViewSection {
-  case main
-}
-
 enum SceneSize {
   static let width: Int = 1000
   static let height: Int = 1000
-}
-
-enum ViewData {
-  static let borderWidth: CGFloat = 2.5
-  static let borderColor: UIColor = Colors.mainColorClear
-  static let cornerRadius: CGFloat = 10
-}
-
-enum Colors {
-  static let mainColorClear: UIColor = UIColor(named: "mainColor")!
-  static let mainColorBackground: UIColor = UIColor(named: "mainColor")!
-    .withAlphaComponent(0.2)
-  static let viewBackgroundColor: UIColor = UIColor(named: "mainColor")!
-    .withAlphaComponent(0.4)
 }
 
 enum SpriteNodeName {
@@ -111,4 +106,25 @@ enum PinEndToEndType {
 }
 
 let angleDelta: Double = 0.07
-let pi: Double = 3.14 // I'm aware about .pi, but with .pi it's not compile
+let pi: Double = 3.14 // aware about .pi, but with .pi it's not compile, too heave
+
+
+// -MARK: - UIElements Constants -
+
+enum Colors {
+  static let mainColorClear: UIColor = UIColor(named: "mainColor")!
+  static let mainColorBackground: UIColor = UIColor(named: "mainColor")!
+    .withAlphaComponent(0.2)
+  static let viewBackgroundColor: UIColor = UIColor(named: "mainColor")!
+    .withAlphaComponent(0.4)
+}
+
+enum ViewData {
+  static let borderWidth: CGFloat = 2.5
+  static let borderColor: UIColor = Colors.mainColorClear
+  static let cornerRadius: CGFloat = 10
+}
+
+enum CollectionViewSection {
+  case main
+}

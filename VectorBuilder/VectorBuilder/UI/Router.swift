@@ -14,6 +14,8 @@ final class Router {
   
   // -MARK: - View Controllers -
   
+  // when initializing container VC, initialise main and SideBar VCs
+  
   lazy var containerViewController: UIViewController = {
     let viewController: ContainerViewController =
     ContainerViewController(mainViewController as! MainViewController,
@@ -77,6 +79,7 @@ final class Router {
       return
     }
     
+    // this seems ugly, declarative aproach would be better, I'll fix it soon
     viewController.presenter.unwindFromAddViewController(withNewVector: vector)
   }
   
@@ -88,10 +91,11 @@ final class Router {
                                   message: body,
                                   preferredStyle: .alert)
     
-    let okAction = UIAlertAction(title: "Ok", style: .default)
+    let okAction = UIAlertAction(title: AlertData.ok, style: .default)
     
     alert.addAction(okAction)
     
+    // look for front VC and present common Warning Alert
     let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
     
     if var topController = keyWindow?.rootViewController {
@@ -108,13 +112,14 @@ final class Router {
                                   message: AlertData.bothCases,
                                   preferredStyle: .alert)
     
-    let cancelAction = UIAlertAction(title: "Cancel", style: .default)
-    
-    let withPointsAction = UIAlertAction(title: "With Points", style: .default) { _ in
+    let cancelAction = UIAlertAction(title: CollisionAlertData.cancel,
+                                     style: .default)
+    let withPointsAction = UIAlertAction(title: CollisionAlertData.withPoints,
+                                         style: .default) { _ in
       completion(.withPoints)
     }
-    
-    let withLengthAction = UIAlertAction(title: "With Length", style: .default) { _ in
+    let withLengthAction = UIAlertAction(title: CollisionAlertData.withLength,
+                                         style: .default) { _ in
       completion(.withLength)
     }
     
