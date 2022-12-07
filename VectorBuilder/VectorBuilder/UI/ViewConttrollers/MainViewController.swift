@@ -30,6 +30,8 @@ final class MainViewController: UIViewController {
     
     setupViews()
     layoutViews()
+    
+    setUpGestureRecognizer()
   }
   
   
@@ -56,13 +58,16 @@ final class MainViewController: UIViewController {
     scrollView = UIScrollView().then { scrollView in
       scrollView.translatesAutoresizingMaskIntoConstraints = false
       scrollView.bounces = false
+      scrollView.maximumZoomScale = 2
       scrollView.showsVerticalScrollIndicator = false
       scrollView.showsHorizontalScrollIndicator = false
+      scrollView.contentInsetAdjustmentBehavior = .never
     }
     
     spriteKitView = SKView().then { skView in
       skView.translatesAutoresizingMaskIntoConstraints = false
       skView.ignoresSiblingOrder = true
+      skView.showsPhysics = true
       
       let scene = presenter as! SKScene
       skView.presentScene(scene)
@@ -72,11 +77,11 @@ final class MainViewController: UIViewController {
       button.translatesAutoresizingMaskIntoConstraints = false
       button.setImage(UIImage(systemName: "plus"), for: .normal)
       button.tintColor = Colors.mainColorClear
-      button.layer.borderWidth = ButtonData.borderWidth
-      button.layer.borderColor = ButtonData.borderColor.cgColor
-      button.layer.cornerRadius = ButtonData.cornerRadius
-      button.backgroundColor = ButtonData.backgroundColor
-      button.addAction(UIAction(handler: {_ in self.presenter.addVectorButtonTupped()}),
+      button.layer.borderWidth = ViewData.borderWidth
+      button.layer.borderColor = ViewData.borderColor.cgColor
+      button.layer.cornerRadius = ViewData.cornerRadius
+      button.backgroundColor = Colors.viewBackgroundColor
+      button.addAction(UIAction(handler: { _ in self.presenter.addVectorButtonTupped() } ),
                        for: .touchUpInside)
     }
     
@@ -84,11 +89,11 @@ final class MainViewController: UIViewController {
       button.translatesAutoresizingMaskIntoConstraints = false
       button.setImage(UIImage(systemName: "line.3.horizontal"), for: .normal)
       button.tintColor = Colors.mainColorClear
-      button.layer.borderWidth = ButtonData.borderWidth
-      button.layer.borderColor = ButtonData.borderColor.cgColor
-      button.layer.cornerRadius = ButtonData.cornerRadius
-      button.backgroundColor = ButtonData.backgroundColor
-      button.addAction(UIAction(handler: {_ in self.presenter.sideBarButtonTupped()}),
+      button.layer.borderWidth = ViewData.borderWidth
+      button.layer.borderColor = ViewData.borderColor.cgColor
+      button.layer.cornerRadius = ViewData.cornerRadius
+      button.backgroundColor = Colors.viewBackgroundColor
+      button.addAction(UIAction(handler: { _ in self.presenter.sideBarButtonTupped() } ),
                        for: .touchUpInside)
     }
   }
@@ -104,9 +109,9 @@ final class MainViewController: UIViewController {
     }
     
     spriteKitView.snp.makeConstraints { make in
-      make.top.trailing.bottom.leading.equalToSuperview()
       make.width.equalTo(SceneSize.width)
       make.height.equalTo(SceneSize.height)
+      make.top.trailing.bottom.leading.equalToSuperview()
     }
     
     addVectorButton.snp.makeConstraints { make in
@@ -122,4 +127,33 @@ final class MainViewController: UIViewController {
     }
   }
   
+  private func setUpGestureRecognizer() {
+    let pressed:UILongPressGestureRecognizer =
+    UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
+    pressed.delegate = self
+    pressed.minimumPressDuration = 1
+    self.view.addGestureRecognizer(pressed)
+  }
 }
+
+
+// -MARK: - Long Press Handaling
+
+extension MainViewController: UIGestureRecognizerDelegate {
+  @objc func longPress(sender: UILongPressGestureRecognizer) {
+    switch sender.state {
+    case .began:
+      presenter.longTapBegan()
+      
+    case .changed:
+      presenter.longTapMoved(withSender: sender)
+      
+    case .ended:
+      presenter.longTapEnded(withSender: sender)
+    
+    default:
+      break
+    }
+  }
+}
+

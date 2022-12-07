@@ -45,39 +45,37 @@ final class AddVectorViewController: UIViewController {
   private var startPointLabel: UILabel!
   
   private var startXLabel: UILabel!
-  var startXTextField: UITextField!
+  private var startXTextField: UITextField!
   
   private var startYLabel: UILabel!
-  var startYTextField: UITextField!
+  private var startYTextField: UITextField!
   
   
   private var endPointLabel: UILabel!
   
   private var endXLabel: UILabel!
-  var endXTextField: UITextField!
+  private var endXTextField: UITextField!
   
   private var endYLabel: UILabel!
-  var endYTextField: UITextField!
+  private var endYTextField: UITextField!
   
   
   private var setLengthLabel: UILabel!
-  var lengthTextField: UITextField!
+  private var lengthTextField: UITextField!
   
   private var manualLabel: UILabel!
   
   private var addVectorButton: UIButton!
-  
+
   
   // -MARK: - Funcs -
   
   private func setupViews() {
-    self.hideKeyboardWhenTappedAround()
-    
     self.view.backgroundColor = .systemBackground
     
     createVectorLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = AddVcLabelData.createNewVector
+      label.text = AddVcLabel.createNewVector
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .largeTitle)
       label.textAlignment = .center
@@ -86,7 +84,7 @@ final class AddVectorViewController: UIViewController {
     
     startPointLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = AddVcLabelData.startPoint
+      label.text = AddVcLabel.startPoint
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .title1)
       label.textAlignment = .center
@@ -105,7 +103,7 @@ final class AddVectorViewController: UIViewController {
     startXTextField = UITextField().then { textField in
       textField.translatesAutoresizingMaskIntoConstraints = false
       textField.backgroundColor = Colors.mainColorBackground
-      textField.layer.cornerRadius = ViewData.cornerRadius
+      textField.layer.cornerRadius = ButtonData.cornerRadius
       textField.font = .preferredFont(forTextStyle: .title3)
       textField.textAlignment = .center
       textField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -123,7 +121,7 @@ final class AddVectorViewController: UIViewController {
     startYTextField = UITextField().then { textField in
       textField.translatesAutoresizingMaskIntoConstraints = false
       textField.backgroundColor = Colors.mainColorBackground
-      textField.layer.cornerRadius = ViewData.cornerRadius
+      textField.layer.cornerRadius = ButtonData.cornerRadius
       textField.font = .preferredFont(forTextStyle: .title3)
       textField.textAlignment = .center
       textField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -131,7 +129,7 @@ final class AddVectorViewController: UIViewController {
     
     endPointLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = AddVcLabelData.endPoint
+      label.text = AddVcLabel.endPoint
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .title1)
       label.textAlignment = .center
@@ -151,7 +149,7 @@ final class AddVectorViewController: UIViewController {
     endXTextField = UITextField().then { textField in
       textField.translatesAutoresizingMaskIntoConstraints = false
       textField.backgroundColor = Colors.mainColorBackground
-      textField.layer.cornerRadius = ViewData.cornerRadius
+      textField.layer.cornerRadius = ButtonData.cornerRadius
       textField.font = .preferredFont(forTextStyle: .title3)
       textField.textAlignment = .center
       textField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -169,7 +167,7 @@ final class AddVectorViewController: UIViewController {
     endYTextField = UITextField().then { textField in
       textField.translatesAutoresizingMaskIntoConstraints = false
       textField.backgroundColor = Colors.mainColorBackground
-      textField.layer.cornerRadius = ViewData.cornerRadius
+      textField.layer.cornerRadius = ButtonData.cornerRadius
       textField.font = .preferredFont(forTextStyle: .title3)
       textField.textAlignment = .center
       textField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -178,7 +176,7 @@ final class AddVectorViewController: UIViewController {
     
     setLengthLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = AddVcLabelData.setLength
+      label.text = AddVcLabel.setLength
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .largeTitle)
       label.textAlignment = .center
@@ -187,17 +185,17 @@ final class AddVectorViewController: UIViewController {
     lengthTextField = UITextField().then { textField in
       textField.translatesAutoresizingMaskIntoConstraints = false
       textField.backgroundColor = Colors.mainColorBackground
-      textField.layer.cornerRadius = ViewData.cornerRadius
+      textField.layer.cornerRadius = ButtonData.cornerRadius
       textField.font = .preferredFont(forTextStyle: .title3)
       textField.textAlignment = .center
     }
     
     manualLabel = UILabel().then { label in
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = AddVcLabelData.manual
+      label.text = AddVcLabel.manual
       label.textColor = Colors.mainColorClear
       label.font = .preferredFont(forTextStyle: .title2)
-      label.textAlignment = .center
+      label.textAlignment = .left
       label.numberOfLines = 0
       label.backgroundColor = Colors.mainColorBackground
       label.layer.cornerRadius = 8
@@ -207,15 +205,15 @@ final class AddVectorViewController: UIViewController {
     
     addVectorButton = UIButton().then { button in
       button.translatesAutoresizingMaskIntoConstraints = false
-      button.setTitle(AddVcLabelData.addVector, for: .normal)
+      button.setTitle(AddVcLabel.addVector, for: .normal)
       button.setTitleColor(Colors.mainColorClear, for: .normal)
-      button.setTitleColor(Colors.viewBackgroundColor, for: .highlighted)
+      button.setTitleColor(ButtonData.backgroundColor, for: .highlighted)
       button.tintColor = Colors.mainColorClear
       button.titleLabel?.font = .preferredFont(forTextStyle: .largeTitle)
       button.backgroundColor = Colors.mainColorBackground
-      button.layer.cornerRadius = ViewData.cornerRadius
-      button.layer.borderWidth = ViewData.borderWidth
-      button.layer.borderColor = ViewData.borderColor.cgColor
+      button.layer.cornerRadius = ButtonData.cornerRadius
+      button.layer.borderWidth = ButtonData.borderWidth
+      button.layer.borderColor = ButtonData.borderColor.cgColor
       
       button.addAction(
         UIAction(handler: { _ in
@@ -231,17 +229,14 @@ final class AddVectorViewController: UIViewController {
   
   private func layoutViews() { 
     [createVectorLabel, startPointLabel, startXLabel,
-     startXTextField, startYLabel].forEach { view in
+     startXTextField, startYLabel, startYTextField,
+     endPointLabel, endXLabel, endXTextField].forEach { view in
       self.view.addSubview(view)
     }
-    [startYTextField, endPointLabel, endXLabel,
-     endXTextField, endYLabel].forEach { view in
-      self.view.addSubview(view)
-    }
-    [endYTextField, setLengthLabel, lengthTextField,
-     manualLabel, addVectorButton].forEach { view in
-      self.view.addSubview(view)
-    }
+    [endYLabel, endYTextField, setLengthLabel,
+    lengthTextField, manualLabel, addVectorButton].forEach { view in
+     self.view.addSubview(view)
+   }
     
     //grandad
     createVectorLabel.snp.makeConstraints { make in
@@ -263,7 +258,7 @@ final class AddVectorViewController: UIViewController {
       make.centerY.equalTo(startXLabel.snp.centerY)
       make.centerX.equalTo(startPointLabel.snp.centerX)
       make.leading.equalTo(startXLabel.snp.trailing).offset(5)
-      make.width.equalTo(48)
+      make.width.equalTo(44)
       make.height.equalTo(38)
     }
     //son/daughter 1.2
@@ -274,7 +269,7 @@ final class AddVectorViewController: UIViewController {
       make.centerY.equalTo(startYLabel.snp.centerY)
       make.centerX.equalTo(startPointLabel.snp.centerX)
       make.leading.equalTo(startYLabel.snp.trailing).offset(5)
-      make.width.equalTo(48)
+      make.width.equalTo(44)
       make.height.equalTo(38)
     }
     
@@ -292,7 +287,7 @@ final class AddVectorViewController: UIViewController {
       make.centerY.equalTo(endXLabel.snp.centerY)
       make.centerX.equalTo(endPointLabel.snp.centerX)
       make.leading.equalTo(endXLabel.snp.trailing).offset(5)
-      make.width.equalTo(48)
+      make.width.equalTo(44)
       make.height.equalTo(38)
     }
     //son/daughter 2.2
@@ -303,7 +298,7 @@ final class AddVectorViewController: UIViewController {
       make.centerY.equalTo(endYLabel.snp.centerY)
       make.centerX.equalTo(endPointLabel.snp.centerX)
       make.leading.equalTo(endYLabel.snp.trailing).offset(5)
-      make.width.equalTo(48)
+      make.width.equalTo(44)
       make.height.equalTo(38)
     }
     
@@ -329,5 +324,14 @@ final class AddVectorViewController: UIViewController {
       make.leading.trailing.equalToSuperview().inset(15)
       make.bottom.equalToSuperview().offset(-20)
     }
+  }
+  
+  
+  func erraseAllTextFields() {
+    startXTextField.text = ""
+    endXTextField.text = ""
+    startYTextField.text = ""
+    endYTextField.text = ""
+    lengthTextField.text = ""
   }
 }
